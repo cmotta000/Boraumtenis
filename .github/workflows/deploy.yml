@@ -29,20 +29,15 @@ jobs:
 
       - run: npm ci
 
-      - name: Confere as variáveis do Supabase
-        env:
-          EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
-          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
-        run: |
-          if [ -z "$EXPO_PUBLIC_SUPABASE_URL" ] || [ -z "$EXPO_PUBLIC_SUPABASE_ANON_KEY" ]; then
-            echo "::error::Faltam os secrets EXPO_PUBLIC_SUPABASE_URL e/ou EXPO_PUBLIC_SUPABASE_ANON_KEY (Settings > Secrets and variables > Actions)."
-            exit 1
-          fi
-
+      # Estes dois valores NÃO são segredos: o prefixo EXPO_PUBLIC_ faz o Expo
+      # embutir ambos no bundle JS que vai para o navegador, então qualquer
+      # visitante do site consegue lê-los. Quem protege os dados é a RLS do
+      # Supabase, não o sigilo da chave publishable. Ficam aqui em texto para o
+      # build não depender de secrets configurados na interface do GitHub.
       - name: Export web
         env:
-          EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
-          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+          EXPO_PUBLIC_SUPABASE_URL: https://qtsjuaogsybnlmvpggpu.supabase.co
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: sb_publishable_4W4xI85VEAZdzxozOT1sAg_u_n0w7H2
         run: npx expo export --platform web
 
       - name: Prepara o dist para o Pages
