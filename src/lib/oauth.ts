@@ -12,9 +12,17 @@ WebBrowser.maybeCompleteAuthSession();
  *  - web  →  http://localhost:8081/auth/callback  (usa a origem atual)
  *  - nativo →  boraumtenis://auth/callback         (usa o scheme do app.json)
  *
+ * No web o `Linking.createURL` monta a URL a partir de `window.location.origin`
+ * e ignora o `experiments.baseUrl`, então em hospedagem sob subpath (GitHub
+ * Pages) precisamos prefixar o base path na mão — senão o retorno cai fora do app.
+ *
  * Esta é a URL que precisa estar na allowlist de "Redirect URLs" do Supabase.
  */
 export function authRedirectUrl() {
+  if (Platform.OS === 'web') {
+    const baseUrl = (process.env.EXPO_BASE_URL ?? '').replace(/\/$/, '');
+    return Linking.createURL(`${baseUrl}/auth/callback`);
+  }
   return Linking.createURL('/auth/callback');
 }
 
