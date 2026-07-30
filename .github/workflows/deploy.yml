@@ -22,12 +22,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Sem `cache: npm` de propósito: um cache parcial de ~/.npm é suspeito de
+      # ter produzido um node_modules incompleto (o build falhou ao resolver
+      # expo-router/entry, que existe no pacote publicado e num npm ci limpo).
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - run: npm ci
+
+      # O entry do expo-router é o ponto de partida do bundle (package.json
+      # "main"). Se ele não veio, reinstala antes de gastar minutos no export.
+      - name: Confere a instalação
+        run: |
+          npm ls expo-router || true
+          if [ ! -f node_modules/expo-router/entry.js ]; then
+            echo "::warning::expo-router/entry.js ausente após npm ci — reinstalando."
+            rm -rf node_modules
+            npm install --no-audit --no-fund
+          fi
+          ls -l node_modules/expo-router/entry.js
 
       # Estes dois valores NÃO são segredos: o prefixo EXPO_PUBLIC_ faz o Expo
       # embutir ambos no bundle JS que vai para o navegador, então qualquer
