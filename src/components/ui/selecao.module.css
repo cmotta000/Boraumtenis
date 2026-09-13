@@ -25,11 +25,14 @@
   background: var(--chalk);
 }
 
+/* O fio de --court-line marca a borda do selecionado — no escuro a pastilha e
+   o cartão ficam perto demais para se distinguirem só pelo fundo. */
 .segment[aria-checked='true'],
 .segment[aria-checked='true']:hover {
   background: var(--court);
   color: var(--court-text);
   font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--court-line);
 }
 
 .chips {
@@ -60,7 +63,7 @@
 .chip[aria-checked='true'],
 .chip[aria-checked='true']:hover {
   background: var(--court);
-  border-color: var(--court);
+  border-color: var(--court-line);
   color: var(--court-text);
   font-weight: 600;
 }

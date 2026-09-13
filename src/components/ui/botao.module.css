@@ -30,7 +30,7 @@
 
 .primary {
   background: var(--clay);
-  color: var(--card);
+  color: var(--on-clay);
 }
 
 .ink {
@@ -40,12 +40,12 @@
 
 .ball {
   background: var(--ball);
-  color: var(--ink);
+  color: var(--on-ball);
 }
 
 .ghost {
-  border-color: rgba(241, 243, 241, 0.35);
-  color: var(--chalk);
+  border-color: var(--on-clay-line);
+  color: var(--on-clay);
 }
 
 .outline {
@@ -61,11 +61,5 @@
   border-radius: var(--r-pill);
   border: 2px solid currentColor;
   border-top-color: transparent;
-  animation: girar 700ms linear infinite;
-}
-
-@keyframes girar {
-  to {
-    transform: rotate(360deg);
-  }
+  animation: var(--anim-girar) 700ms linear infinite;
 }

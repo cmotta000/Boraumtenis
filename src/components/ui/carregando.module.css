@@ -3,14 +3,8 @@
   border-style: solid;
   border-color: currentColor;
   border-top-color: transparent;
-  animation: girar 700ms linear infinite;
+  animation: var(--anim-girar) 700ms linear infinite;
   flex: none;
-}
-
-@keyframes girar {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /** Ocupa a área toda e centraliza — o estado de "abrindo a tela". */

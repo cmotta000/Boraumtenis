@@ -44,7 +44,7 @@
 }
 
 .statDestaque .statLabel {
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--on-clay-soft);
 }
 
 .statValor {
@@ -57,7 +57,7 @@
 }
 
 .statDestaque .statValor {
-  color: var(--card);
+  color: var(--on-clay);
 }
 
 .aviso {
@@ -70,7 +70,7 @@
   border-radius: var(--r-md);
   border: 1px solid var(--net);
   background: var(--clay-wash);
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .aviso:hover {
@@ -117,7 +117,7 @@
   border-radius: var(--r-md);
   padding: 18px;
   box-shadow: var(--elev-card);
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .card:hover {

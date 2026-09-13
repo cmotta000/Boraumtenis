@@ -2,11 +2,11 @@
   display: flex;
   justify-content: center;
   margin-top: 40px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .eyebrow {
-  color: var(--clay);
+  color: var(--clay-ink);
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 1.5px;
@@ -78,7 +78,7 @@
   font-family: var(--font-body);
   font-size: 16px;
   color: var(--ink);
-  background: #fff;
+  background: var(--card);
 }
 
 .input:focus {
@@ -109,11 +109,11 @@
   position: absolute;
   inset: 0;
   border-radius: var(--r-pill);
-  background: rgba(36, 22, 17, 0.45);
+  background: var(--scrim-leve);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--chalk);
+  color: var(--on-clay);
 }
 
 .fotoTextos {
@@ -129,7 +129,7 @@
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 14.5px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .fotoRemover {
@@ -151,7 +151,7 @@
   height: 50px;
   border-radius: var(--r-pill);
   background: var(--clay);
-  color: var(--chalk);
+  color: var(--on-clay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,7 +212,7 @@
   padding: 12px 14px;
   border-radius: var(--r-md);
   border: 1.5px solid var(--net);
-  background: #fff;
+  background: var(--card);
   cursor: pointer;
 }
 

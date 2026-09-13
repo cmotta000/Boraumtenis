@@ -32,7 +32,7 @@
 
 .regraForte {
   font-weight: 600;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .divisor {
@@ -51,7 +51,7 @@
   display: flex;
   justify-content: center;
   margin-top: 40px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .table {
@@ -82,7 +82,7 @@
 }
 
 .rowEu {
-  background: rgba(180, 71, 42, 0.06);
+  background: var(--clay-tint);
 }
 
 .pos {
@@ -96,7 +96,7 @@
 }
 
 .posTop {
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .jogador {
@@ -112,7 +112,7 @@
 }
 
 .nomeEu {
-  color: var(--clay);
+  color: var(--clay-ink);
   font-weight: 700;
 }
 

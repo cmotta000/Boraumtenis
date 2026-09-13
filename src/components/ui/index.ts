@@ -9,3 +9,4 @@ export { Chips, Segmented } from './selecao';
 export { Card, CourtLine, Pagina, ScreenHeader, Secao } from './superficie';
 export { Avatar, Pill, Wordmark } from './identidade';
 export { Placar } from './placar';
+export { SeletorTema } from './tema';

@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   margin-top: 40px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .empty {
@@ -134,7 +134,7 @@
 }
 
 .acaoCurtida {
-  color: var(--clay);
+  color: var(--clay-ink);
   font-weight: 600;
 }
 
@@ -150,7 +150,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .verPartidaBox:hover {

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 40px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .head {
@@ -35,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--card);
+  color: var(--on-clay);
 }
 
 .identidade {
@@ -62,7 +62,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
-  color: var(--clay);
+  color: var(--clay-ink);
   margin-top: 6px;
 }
 
@@ -131,7 +131,7 @@
 }
 
 .statDestaque .statValue {
-  color: var(--card);
+  color: var(--on-clay);
 }
 
 .divisor {
@@ -192,7 +192,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .semFotos {
@@ -220,7 +220,7 @@
   justify-content: center;
   gap: 8px;
   background: var(--clay);
-  color: var(--card);
+  color: var(--on-clay);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 14.5px;
@@ -228,4 +228,42 @@
 
 .linkBotao:hover {
   opacity: 0.9;
+}
+
+/* — Preferências — */
+
+.preferencia {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--net);
+  border-radius: var(--r-md);
+  box-shadow: var(--elev-card);
+}
+
+.preferenciaTextos {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.preferenciaLabel {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.preferenciaDica {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--ink-soft);
+  margin-top: 2px;
 }

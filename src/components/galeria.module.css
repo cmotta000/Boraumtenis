@@ -87,14 +87,14 @@
 .selo {
   position: absolute;
   inset: 0;
-  background: rgba(36, 22, 17, 0.55);
+  background: var(--scrim-leve);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 26px;
-  color: var(--chalk);
+  color: var(--on-clay);
 }
 
 /* — Lightbox — */
@@ -103,7 +103,7 @@
   position: fixed;
   inset: 0;
   z-index: 50;
-  background: rgba(20, 12, 9, 0.94);
+  background: var(--scrim-forte);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,11 +121,11 @@
   width: 44px;
   height: 44px;
   border-radius: var(--r-pill);
-  background: rgba(0, 0, 0, 0.45);
+  background: var(--scrim-leve);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--on-clay);
 }
 
 .fechar {
@@ -145,8 +145,8 @@
   transform: translateX(-50%);
   padding: 6px 14px;
   border-radius: var(--r-pill);
-  background: rgba(0, 0, 0, 0.45);
-  color: #fff;
+  background: var(--scrim-leve);
+  color: var(--on-clay);
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 1px;

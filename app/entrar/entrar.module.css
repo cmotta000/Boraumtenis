@@ -21,7 +21,7 @@
 }
 
 .brandH {
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 44px;
@@ -31,7 +31,7 @@
 .brandRisco {
   width: 90px;
   margin: 16px 0;
-  background: rgba(241, 243, 241, 0.45);
+  background: var(--on-clay-line);
 }
 
 .brandP {
@@ -104,7 +104,7 @@
   font-family: var(--font-body);
   font-size: 16px;
   color: var(--ink);
-  background: #fff;
+  background: var(--card);
 }
 
 .input:focus {
@@ -149,6 +149,11 @@
   color: var(--ink-soft);
 }
 
+/**
+ * Botão do Google: o branco do fundo e o azul do "G" são cor de marca deles,
+ * não do nosso tema. Ficam literais nos dois esquemas — o guia de marca do
+ * Google exige o botão branco (ou azul) e o logo na cor certa.
+ */
 .google {
   width: 100%;
   height: 50px;
@@ -163,7 +168,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 15px;
-  color: var(--ink);
+  color: #1f1f1f; /* o fundo é branco fixo, então o texto também precisa ser fixo */
 }
 
 .google:hover:not(:disabled) {
@@ -178,7 +183,7 @@
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 18px;
-  color: #4285f4;
+  color: #4285f4; /* azul de marca do Google — literal em qualquer tema */
 }
 
 .back {

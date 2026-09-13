@@ -6,13 +6,13 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  color: var(--chalk);
+  color: var(--on-clay);
 }
 
 .risco {
   width: 90px;
   margin: 20px 0;
-  background: rgba(241, 243, 241, 0.45);
+  background: var(--on-clay-line);
 }
 
 .msg {

@@ -77,8 +77,8 @@
   width: 22px;
   height: 22px;
   border-radius: var(--r-pill);
-  background: rgba(36, 22, 17, 0.72);
-  color: #fff;
+  background: var(--scrim);
+  color: var(--on-clay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,7 +146,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13.5px;
-  color: var(--card);
+  color: var(--on-clay);
 }
 
 .publicar:hover:not(:disabled) {
@@ -163,11 +163,5 @@
   border-radius: var(--r-pill);
   border: 2px solid currentColor;
   border-top-color: transparent;
-  animation: girar 700ms linear infinite;
-}
-
-@keyframes girar {
-  to {
-    transform: rotate(360deg);
-  }
+  animation: var(--anim-girar) 700ms linear infinite;
 }

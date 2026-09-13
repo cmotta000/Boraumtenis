@@ -46,7 +46,7 @@
   font-family: var(--font-body);
   font-size: 16px;
   color: var(--ink);
-  background: #fff;
+  background: var(--card);
 }
 
 .input:focus {
@@ -83,7 +83,7 @@
   padding: 9px 14px;
   border-radius: var(--r-md);
   border: 1.5px solid var(--net);
-  background: #fff;
+  background: var(--card);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,7 +111,7 @@
   align-items: center;
   border-radius: var(--r-pill);
   border: 1.5px solid var(--net);
-  background: #fff;
+  background: var(--card);
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 15px;
@@ -122,12 +122,12 @@
 .timeChip[aria-pressed='true'] {
   background: var(--clay);
   border-color: var(--clay);
-  color: var(--chalk);
+  color: var(--on-clay);
 }
 
 .dayChip[aria-pressed='true'] .dayChipTop,
 .dayChip[aria-pressed='true'] .dayChipSub {
-  color: var(--chalk);
+  color: var(--on-clay);
 }
 
 /* — Busca de local — */
@@ -144,7 +144,7 @@
   flex: none;
   border-radius: var(--r-sm);
   background: var(--clay);
-  color: var(--card);
+  color: var(--on-clay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -167,7 +167,7 @@
 
 .suggestBox {
   margin-top: 8px;
-  background: #fff;
+  background: var(--card);
   border-radius: var(--r-md);
   border: 1.5px solid var(--net);
   overflow: hidden;
@@ -235,7 +235,7 @@
   flex: none;
   border-radius: var(--r-pill);
   background: var(--ok);
-  color: #fff;
+  color: var(--on-clay);
   font-family: var(--font-body);
   font-weight: 800;
   font-size: 13px;

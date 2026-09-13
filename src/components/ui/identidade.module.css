@@ -21,7 +21,7 @@
 }
 
 .claro {
-  color: var(--chalk);
+  color: var(--on-clay);
 }
 
 .escuro {
@@ -65,17 +65,17 @@
 
 .pillClay {
   background: var(--clay-wash);
-  color: var(--clay-deep);
+  color: var(--clay-ink);
 }
 
 .pillOk {
-  background: #e4f1ea;
+  background: var(--ok-wash);
   color: var(--ok);
 }
 
 .pillBall {
   background: var(--ball);
-  color: var(--ink);
+  color: var(--on-ball);
 }
 
 .pillMuted {

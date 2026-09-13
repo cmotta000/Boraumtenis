@@ -28,7 +28,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .gpsLink:hover {
@@ -83,7 +83,7 @@
 .filtroChip[aria-pressed='true'],
 .filtroChip[aria-pressed='true']:hover {
   background: var(--court);
-  border-color: var(--court);
+  border-color: var(--court-line);
   color: var(--court-text);
   font-weight: 600;
 }
@@ -92,7 +92,7 @@
   display: flex;
   justify-content: center;
   margin-top: 40px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .empty {
@@ -142,6 +142,9 @@
   border: 1px solid var(--net);
   padding: 16px;
   box-shadow: var(--elev-card);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
 }
 
 .card:hover {
@@ -171,7 +174,7 @@
   font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 500;
-  color: var(--clay);
+  color: var(--clay-ink);
   font-variant-numeric: tabular-nums;
 }
 
@@ -212,5 +215,5 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }

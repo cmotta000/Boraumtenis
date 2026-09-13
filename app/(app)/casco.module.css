@@ -82,6 +82,9 @@
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 14.5px;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
 }
 
 .item:hover {
@@ -239,6 +242,9 @@
   align-items: center;
   justify-content: center;
   color: var(--ink);
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
 }
 
 .iconeBtn:hover {
@@ -261,7 +267,7 @@
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 9px;
-  color: var(--card);
+  color: var(--on-clay);
   font-variant-numeric: tabular-nums;
 }
 
@@ -275,10 +281,13 @@
   padding: 0 12px;
   border-radius: var(--r-sm);
   background: var(--clay);
-  color: var(--card);
+  color: var(--on-clay);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13.5px;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
 }
 
 .cta:hover {

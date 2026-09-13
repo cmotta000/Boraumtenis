@@ -4,7 +4,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .lerTudo:hover {
@@ -19,7 +19,7 @@
   display: flex;
   justify-content: center;
   margin-top: 30px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .grupos {
@@ -101,7 +101,7 @@
 }
 
 .rowUnread .rowIcon {
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .rowCorpo {

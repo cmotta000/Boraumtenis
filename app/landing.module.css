@@ -21,7 +21,7 @@
 }
 
 .topLink {
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 15px;
@@ -45,7 +45,7 @@
 }
 
 .h1 {
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: -1px;
@@ -56,7 +56,7 @@
 .risco {
   width: 120px;
   margin: 18px 0;
-  background: rgba(241, 243, 241, 0.45);
+  background: var(--on-clay-line);
 }
 
 .lede {
@@ -96,7 +96,7 @@
 }
 
 .scoreK {
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-mono);
   font-size: 26px;
   font-weight: 700;
@@ -134,7 +134,7 @@
   background: var(--clay);
   padding: 5px 10px;
   border-radius: var(--r-pill);
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 1px;
@@ -195,7 +195,7 @@
 }
 
 .playerVaga {
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .direita {
@@ -203,7 +203,7 @@
 }
 
 .vs {
-  color: var(--clay);
+  color: var(--clay-ink);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 15px;
@@ -217,7 +217,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--ink);
+  color: var(--on-ball);
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 15px;
@@ -239,7 +239,7 @@
 }
 
 .sectionTitle {
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 32px;
@@ -269,7 +269,7 @@
   flex: none;
   border-radius: var(--r-pill);
   background: var(--ball);
-  color: var(--ink);
+  color: var(--on-ball);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 20px;
@@ -286,7 +286,7 @@
 }
 
 .stepT {
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 20px;
@@ -316,12 +316,12 @@
   flex: 1 1 240px;
   background: var(--clay-deep);
   border-radius: var(--r-md);
-  border: 1px solid rgba(241, 233, 219, 0.18);
+  border: 1px solid var(--on-clay-line-soft);
   padding: 20px;
 }
 
 .featureT {
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 19px;
@@ -341,7 +341,7 @@
   margin-top: 64px;
   background: var(--clay-deep);
   border-radius: var(--r-lg);
-  border: 1px solid rgba(241, 233, 219, 0.18);
+  border: 1px solid var(--on-clay-line-soft);
   padding: 28px;
   display: flex;
   flex-direction: column;
@@ -349,7 +349,7 @@
 }
 
 .ctaBandTitle {
-  color: var(--chalk);
+  color: var(--on-clay);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 26px;
@@ -431,12 +431,12 @@
 
 .botaoBall {
   background: var(--ball);
-  color: var(--ink);
+  color: var(--on-ball);
 }
 
 .botaoGhost {
-  border-color: rgba(241, 243, 241, 0.35);
-  color: var(--chalk);
+  border-color: var(--on-clay-line);
+  color: var(--on-clay);
 }
 
 .botaoBall:hover,

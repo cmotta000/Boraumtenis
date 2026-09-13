@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 40px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .lede {
@@ -28,7 +28,7 @@
 /* — Cartão principal — */
 
 .card {
-  background: #fff;
+  background: var(--card);
   border-radius: var(--r-lg);
   border: 1px solid var(--net);
   padding: 22px;
@@ -46,7 +46,7 @@
   font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 700;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .local {
@@ -104,7 +104,7 @@
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 22px;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 
 .vagasLabel {
@@ -188,7 +188,7 @@
 }
 
 .okBox {
-  background: #fff;
+  background: var(--card);
   border-radius: var(--r-lg);
   border: 1.5px solid var(--ok);
   padding: 18px;
@@ -238,7 +238,7 @@
 }
 
 .reqCard {
-  background: #fff;
+  background: var(--card);
   border-radius: var(--r-md);
   border: 1px solid var(--net);
   padding: 14px;
@@ -248,7 +248,7 @@
 }
 
 .playerRow {
-  background: #fff;
+  background: var(--card);
   border-radius: var(--r-md);
   border: 1px solid var(--net);
   padding: 12px;
@@ -328,7 +328,7 @@
 
 .miniOk {
   background: var(--ok);
-  color: #fff;
+  color: var(--on-clay);
   font-weight: 700;
 }
 
@@ -392,7 +392,7 @@
 
 .bubble {
   max-width: 82%;
-  background: #fff;
+  background: var(--card);
   border: 1px solid var(--net);
   border-radius: var(--r-md);
   padding: 10px 14px;
@@ -407,7 +407,7 @@
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  color: var(--clay);
+  color: var(--clay-ink);
   margin-bottom: 3px;
 }
 
@@ -420,7 +420,7 @@
 }
 
 .bubbleMe .bubbleText {
-  color: var(--chalk);
+  color: var(--on-clay);
 }
 
 .bubbleTime {
@@ -453,7 +453,7 @@
   font-family: var(--font-body);
   font-size: 15px;
   color: var(--ink);
-  background: #fff;
+  background: var(--card);
 }
 
 .chatInput:focus {
@@ -466,7 +466,7 @@
   flex: none;
   border-radius: var(--r-pill);
   background: var(--clay);
-  color: var(--chalk);
+  color: var(--on-clay);
   display: flex;
   align-items: center;
   justify-content: center;

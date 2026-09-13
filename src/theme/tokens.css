@@ -6,6 +6,10 @@
  *
  * Esta é a fonte da verdade das cores. O `tokens.ts` só guarda as medidas que
  * o JavaScript ainda precisa ler.
+ *
+ * O bloco `:root` abaixo é a PALETA CLARA COMPLETA — toda cor nasce aqui.
+ * O tema escuro, no fim do arquivo, só redefine o que muda. Se você criar uma
+ * cor nova, ela vem para cá primeiro; senão o escuro herda um buraco.
  */
 :root {
   /* — Estrutura (barra lateral, topo, superfícies escuras) */
@@ -16,24 +20,55 @@
   --court-mute: #84968e; /* texto secundário sobre a estrutura */
 
   /* — Acento */
-  --clay: #b4472a; /* saibro */
-  --clay-deep: #8e3520; /* saibro na sombra */
-  --clay-wash: #f6eae5; /* saibro diluído, para fundos de destaque no claro */
+  --clay: #b4472a; /* saibro cheio: o que se PINTA (botões, chips ativos) */
+  --clay-deep: #8e3520; /* saibro na sombra: o hover do que está pintado */
+  --clay-ink: #b4472a; /* saibro quando é LETRA — clareia no escuro para caber no contraste */
+  --clay-wash: #f6eae5; /* saibro diluído, para fundos de destaque */
+  --clay-tint: rgba(180, 71, 42, 0.06); /* véu de saibro: a linha "você" no ranking */
   --ball: #d7f04a; /* bola de tênis — só marcadores pequenos */
   --ball-deep: #b9d42c;
+
+  /**
+   * Sobre o acento. O saibro e a bola não invertem com o tema — são a marca —,
+   * então o que vai por cima deles é fixo nos dois esquemas. Nunca use --card
+   * ou --chalk como cor de texto sobre saibro: no escuro elas viram escuras.
+   */
+  --on-clay: #ffffff; /* texto e ícone sobre saibro (e sobre véu escuro de foto) */
+  --on-clay-soft: #f9ece8; /* o secundário sobre saibro — ainda passa 4.5:1 */
+  --on-clay-line: rgba(241, 243, 241, 0.38); /* risco de giz e borda vazada sobre saibro */
+  --on-clay-line-soft: rgba(241, 233, 219, 0.18); /* o fio mais discreto da landing */
+  --on-ball: #0f1512; /* a bola é sempre clara: o que vai nela é sempre escuro */
 
   /* — Conteúdo (superfícies claras) */
   --chalk: #f1f3f1; /* giz: fundo de trabalho */
   --card: #ffffff;
-  --line: #e7eae7; /* linha clara sobre superfície escura/acento */
-  --net: #dfe3e0; /* bordas e divisórias no claro */
+  --line: #edefed; /* linha clara sobre superfície escura/acento — NÃO inverte */
+  --net: #dfe3e0; /* bordas e divisórias do conteúdo */
   --ink: #0f1512; /* texto principal */
-  --ink-soft: #69736e; /* texto secundário */
+  --ink-soft: #656e69; /* texto secundário */
 
   /* — Estado */
   --ok: #1f7a4c;
+  --ok-wash: #e4f1ea; /* verde diluído da pill de confirmado */
   --danger: #c0392b;
   --warn: #b4772a;
+
+  /**
+   * Véus. Três forças, porque os usos são diferentes: o leve escurece uma foto
+   * sem apagá-la, o normal é o fundo de um modal e o forte é o lightbox, que
+   * precisa ficar quase opaco para a foto ser a única coisa na tela.
+   */
+  --scrim-leve: rgba(36, 22, 17, 0.55);
+  --scrim: rgba(36, 22, 17, 0.72);
+  --scrim-forte: rgba(20, 12, 9, 0.94);
+
+  /**
+   * Mapa. Os tiles do OSM são sempre imagem clara, então este trio não segue o
+   * tema — se seguisse, o texto de crédito sumiria em cima do mapa no escuro.
+   */
+  --map-placeholder: #e8e4da; /* a cor do mapa enquanto os tiles não chegam */
+  --map-ink: #0f1512; /* crédito do mapa */
+  --map-chip: rgba(251, 247, 239, 0.7); /* a lasca clara atrás do crédito */
 
   /**
    * Três papéis, três vozes: Archivo dá o peso de placar de transmissão nos
@@ -60,7 +95,97 @@
   --bottom-bar: 60px;
   --max-w: 1000px;
 
+  /**
+   * O nome da única animação do app, passado por variável de propósito: dentro
+   * de um CSS Module o nome de `animation` é reescrito para o escopo do
+   * arquivo, e aí não acharia o `@keyframes girar` que mora no globais.css.
+   * Atrás de um `var()` o nome só é resolvido pelo navegador, já global.
+   */
+  --anim-girar: girar;
+
   /* Sombras */
   --elev-card: 0 1px 2px rgba(15, 21, 18, 0.05);
   --elev-raised: 0 6px 20px rgba(15, 21, 18, 0.1);
+}
+
+/**
+ * — Tema escuro —
+ *
+ * A identidade se inverte de um jeito só: a ESTRUTURA continua escura (ela já
+ * era) e sobe um tom, para ainda se destacar do conteúdo; o CONTEÚDO é que
+ * deixa de ser giz e vira o fundo mais escuro da tela. O saibro e a bola ficam
+ * onde estão — são a marca, não o papel de parede.
+ *
+ * Só entram aqui os tokens que MUDAM. O resto herda do `:root` lá em cima.
+ * `--clay`, `--clay-deep`, `--ball`, `--line`, `--on-*` e o trio do mapa são de
+ * propósito ausentes: os dois primeiros são superfície de acento (escurecê-los
+ * ou clareá-los tiraria contraste do branco que vive em cima deles), e o resto
+ * já é "claro sobre escuro" por definição.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --court: #0f1a16;
+    --court-raise: #1a2822;
+    --court-line: #26352f;
+    --court-mute: #94a79d;
+
+    --clay-ink: #e07f5c;
+    --clay-wash: #2e1811;
+    --clay-tint: rgba(224, 127, 92, 0.12);
+
+    --chalk: #131e1a;
+    --card: #1c2a25;
+    --net: #2c3a34;
+    --ink: #e9efeb;
+    --ink-soft: #9aa9a2;
+
+    --ok: #4cc98a;
+    --ok-wash: #15301f;
+    --danger: #ef6a5c;
+    --warn: #d79a4e;
+
+    --elev-card: 0 1px 2px rgba(0, 0, 0, 0.6);
+    --elev-raised: 0 10px 28px rgba(0, 0, 0, 0.65);
+  }
+}
+
+/** O mesmo escuro, mas escolhido na mão — precisa vencer o `prefers` claro. */
+:root[data-theme='dark'] {
+  --court: #0f1a16;
+  --court-raise: #1a2822;
+  --court-line: #26352f;
+  --court-mute: #94a79d;
+
+  --clay-ink: #e07f5c;
+  --clay-wash: #2e1811;
+  --clay-tint: rgba(224, 127, 92, 0.12);
+
+  --chalk: #131e1a;
+  --card: #1c2a25;
+  --net: #2c3a34;
+  --ink: #e9efeb;
+  --ink-soft: #9aa9a2;
+
+  --ok: #4cc98a;
+  --ok-wash: #15301f;
+  --danger: #ef6a5c;
+  --warn: #d79a4e;
+
+  --elev-card: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --elev-raised: 0 10px 28px rgba(0, 0, 0, 0.65);
+}
+
+/** Diz ao navegador em que esquema a página está (scrollbar, inputs nativos). */
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }

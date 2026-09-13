@@ -1,0 +1,55 @@
+/**
+ * Mesmo desenho do segmentado de `selecao.module.css` — cartão claro, trilho de
+ * 3px, ativo pintado com a estrutura —, só que com ícone antes do rótulo.
+ */
+.grupo {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  background: var(--card);
+  border: 1px solid var(--net);
+  border-radius: var(--r-sm);
+  padding: 3px;
+  gap: 3px;
+}
+
+.opcao {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--r-xs);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.opcao:hover {
+  background: var(--chalk);
+}
+
+/* O fio de --court-line desenha a borda do selecionado: no escuro o cartão e a
+   estrutura ficam perto demais e a pastilha sozinha não se leria. */
+.opcao[aria-checked='true'],
+.opcao[aria-checked='true']:hover {
+  background: var(--court);
+  color: var(--court-text);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--court-line);
+}
+
+/* Em tela estreita o rótulo some e sobra o ícone — os três cabem lado a lado. */
+@media (max-width: 380px) {
+  .opcao {
+    padding: 0 10px;
+    font-size: 0;
+    gap: 0;
+  }
+}

@@ -75,12 +75,24 @@ svg {
 
 ::selection {
   background: var(--ball);
-  color: var(--ink);
+  color: var(--on-ball);
 }
 
 /** Dígitos de largura fixa — placares, pontos, contadores. */
 .tabular {
   font-variant-numeric: tabular-nums;
+}
+
+/**
+ * A única animação do app: o giro dos spinners. Mora aqui, e não em cada
+ * module, porque `@keyframes` dentro de um CSS Module tem o nome reescrito e
+ * fica preso ao arquivo — três cópias do mesmo giro. `globais.css` não é
+ * module, então o nome `girar` é global e os três spinners o alcançam.
+ */
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
