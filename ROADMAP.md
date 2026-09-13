@@ -19,6 +19,7 @@
 | App (web) | Next.js 16 (App Router) + React 19, TypeScript |
 | UI | CSS Modules sobre as variáveis de `src/theme/tokens.css` · ícones `lucide-react` |
 | Backend | Supabase (Postgres + Auth + Realtime + Storage + Edge Functions) |
+| Schema | Migrations versionadas em `supabase/migrations/` (desde 13/09/2026) |
 | Geolocalização | PostGIS (`ST_DWithin` para raio de 70km) |
 | Notificações | In-app + Supabase Realtime (push nativo saiu junto com o Expo) |
 | Dados | TanStack Query + Supabase JS |
@@ -95,7 +96,11 @@
 - [ ] (Você) Validar o fluxo no navegador: jogar → registrar → confirmar → ver no feed e no ranking
 - [x] **Marco:** jogar → registrar → subir no ranking ✅
 
-> **Nota:** o ranking oficial passou a ser por **pontos** (regra acima). A coluna `elo_rating` continua no banco, mas saiu da interface para não competir com os pontos.
+> **Nota (revista em 13/09/2026):** o ranking oficial continua sendo por
+> **pontos**, mas o `elo_rating` deixou de ser enfeite — ele agora é calculado
+> a cada jogo e é o que define o **peso** de cada vitória (ver Fase 5). O ELO
+> aparece na tela da Liga como número de referência; quem disputa posição
+> continua disputando por pontos, então os dois não competem.
 
 ## Fase 4.5 — Fotos e feed social (pegada Strava) ✅
 - [x] (Eu) Tabela `posts` (tipo `resultado` | `foto`), com curtidas e comentários **por post** (`post_likes`, `post_comments`)
@@ -107,13 +112,55 @@
 - [x] (Eu) Storage com RLS por pasta do usuário (`{user_id}/arquivo`), buckets públicos para leitura
 - [ ] (Você) Validar no navegador: publicar foto, trocar foto de perfil e subir fotos depois do jogo
 
-## Fase 5 — Gamificação
+## Fase 5 — Gamificação: a **Liga** ✅ (13/09/2026)
+O ranking virou liga. A lista única e anual virou cinco divisões com temporada
+trimestral, e a vitória deixou de valer sempre o mesmo.
+
+- [x] (Eu) **Cinco divisões** (`divisions`): Saibro → Quadra Rápida → Grama →
+      Quadra Central → Mestres. Nomes de superfície de quadra, não de metal.
+- [x] (Eu) **Temporada trimestral** — era anual. Um ano é longo demais: quem
+      chega em agosto já chega perdendo. `temporada_atual()` recorta por
+      trimestre e a anual de 2026 foi aposentada **sem perder os pontos**.
+- [x] (Eu) **Pontos ponderados pela força do adversário.** A base continua
+      50/35 (está escrito na tela), multiplicada por um fator de ELO limitado
+      a 0.6x–1.6x: ganhar de quem é 400 acima vale 80 pts, de quem é 400
+      abaixo vale 30. Sem isso, a estratégia ótima seria caçar iniciante.
+- [x] (Eu) **ELO de verdade** — a coluna `elo_rating` existia como enfeite
+      desde a Fase 0. Agora se move a cada jogo (K=32 abaixo de 10 partidas,
+      24 depois), com piso de 100 e média do time em duplas.
+- [x] (Eu) **Promoção e rebaixamento** (`rotina_temporada()`): 20% sobem, 20%
+      descem, mínimo de 3 jogos para se mexer. Agendada no pg_cron às 06:00
+      UTC. Carry-over de 25% dos pontos na virada.
+- [x] (Eu) **Tela `/liga`**: cartão da divisão, posição, barra de progresso,
+      tendência, leaderboard com as zonas marcadas e espiada nas outras
+      divisões. A aba "Ranking" do menu virou "Liga"; `/ranking` continua de pé
+      para quem tiver o link salvo.
 - [ ] (Você) Definir lista inicial de badges e regras de premiação
-- [ ] (Eu) Badges/troféus, temporadas e pódio; conquistas no perfil
-- [ ] **Marco:** loop de engajamento completo
+- [ ] (Eu) Badges/troféus e pódio no perfil (as tabelas `badges`/`user_badges`
+      existem e estão vazias)
+- [x] **Marco:** o jogador vê sua divisão, sua posição e o que falta pra subir
+      sem abrir outra tela ✅
 
 ## Fase 6 — Polimento e Publicação WEB
+- [x] (Eu) **O build estava quebrado e ninguém tinha notado** (13/09/2026): a
+      pasta `src/app/` (Expo Router morto) continuava sendo type-checada e
+      derrubava `next build` — o projeto não subiria na Vercel. Os restos do
+      Expo foram para `local/expo-removido/` (recuperável, fora do git) e o
+      `tsconfig.json` passou a excluir `local/`.
+- [x] (Eu) **Tema claro/escuro** (13/09/2026): não existia nenhum. Os tokens
+      ganharam paleta escura completa, com seletor Claro/Escuro/Sistema no
+      perfil e script anti-flash no `<head>`. O tema claro ficou idêntico ao
+      que já era — a identidade não mudou, só ganhou um irmão.
+- [x] (Eu) Cores que estavam fora do sistema (26 `#fff` e 18 `rgba()` soltos)
+      viraram token. Sem isso o tema escuro não teria como funcionar.
+- [x] (Eu) Contraste conferido nos dois temas: todos os pares de texto
+      principais em 4.5:1 ou melhor.
+- [x] (Eu) `npm run lint` estava quebrado desde o Next 16 (que removeu
+      `next lint`) — virou `npm run typecheck`. Lint de regras ainda não existe.
 - [ ] (Eu) Estados vazios, erros, acessibilidade
+- [ ] (Eu) Escala de espaçamento tokenizada (hoje há ~859 valores em px
+      espalhados pelos CSS Modules). Deixado de fora por ser churn grande com
+      risco de regressão visual e retorno baixo.
 - [x] (Eu) Revisão de RLS/privacidade — perfis e fotos com três níveis de
       visibilidade, `profiles` fechado à própria linha, view `perfis` mascarada,
       buckets privados com URL assinada (12/09/2026)
@@ -124,6 +171,13 @@
 ## Fase 7 — App mobile
 > Fora do plano. O Expo/React Native foi removido em 12/09/2026; um app nativo
 > seria um projeto novo, decidido do zero.
+>
+> **O que essa decisão custa, para ficar registrado:** HealthKit (Apple) e
+> Health Connect (Android) só existem para app nativo. Enquanto o alvo for
+> web, a integração com wearable se limita ao que roda no navegador — GPS pela
+> Geolocation API e, quando houver credencial, Garmin por OAuth de servidor
+> (esse funciona sem app nativo, porque os dados vêm por webhook, não do
+> aparelho).
 
 ## Fase 8 — Premium (pós-MVP)
 - [ ] (Você) Definir limites do free e benefícios/preço do Premium
@@ -155,7 +209,37 @@ badges         (id, slug, nome, descricao, icone, regra)
 user_badges    (user_id, badge_id, conquistado_em)
 push_tokens    (user_id, expo_token, plataforma)   -- resquício do mobile; sem uso hoje
 notifications  (id, user_id, tipo, payload_json, lida, created_at)
+
+-- Liga (13/09/2026)
+divisions      (id=ordem 1..5, slug, nome, apelido, cor)
+seasons        (+ fechada)            -- trimestral; `fechada` = já apurada
+rankings       (+ division_id, jogos, elo_inicio,
+                pontos_anteriores, posicao_anterior)
+
+-- Atividades / tracking (13/09/2026)
+activity_sessions (id, user_id, match_id?, fonte[manual|gps_web|garmin|
+                apple_health|health_connect], inicio, fim, duracao_s,
+                distancia_m, calorias, fc_media, fc_max,
+                esforco[leve|moderado|intenso], rota GEOGRAPHY(LineString),
+                compartilhar_no_feed DEFAULT false, created_at)
 ```
+
+**Pontuação da liga (aplicada em `confirmar_resultado`):**
+```
+base        2 sets a 0 → 50 pts · 2 a 1 → 35 pts · derrota → 0
+fator       1 + (elo_adversario - elo_meu) / 400, limitado a [0.6, 1.6]
+pontos      round(base × fator)
+elo         K × (resultado - esperado), K = 32 (<10 jogos) ou 24
+```
+
+**Privacidade de dado de saúde (`activity_sessions`):** três camadas, porque
+RLS filtra linha e não coluna. (1) a policy só deixa terceiro alcançar a linha
+se o dono marcou `compartilhar_no_feed` **e** `pode_ver_perfil()` disser sim;
+(2) `authenticated` não recebe `SELECT` nas colunas `fc_media`, `fc_max` e
+`rota` — ler direto pela API dá *permission denied*; (3) `atividades_do_perfil()`
+zera a FC de terceiros e nunca devolve o trajeto. A tabela **não** entra na
+publicação do Realtime: `postgres_changes` respeita policy de linha, mas ignora
+privilégio de coluna.
 
 **Regra de pontos (aplicada em `confirmar_resultado`):**
 ```
@@ -174,6 +258,29 @@ ORDER BY distancia_m;
 ```
 
 ---
+
+## Schema do banco
+
+Até 12/09/2026 o schema existia **só no painel do Supabase** — não havia um
+único arquivo `.sql` no repositório, e a única pista local do formato das
+tabelas era o `src/lib/database.types.ts` (gerado). Quem comprasse o projeto
+receberia um banco sem história.
+
+Desde 13/09/2026 toda mudança de schema vira arquivo em `supabase/migrations/`:
+
+| Arquivo | O que faz |
+|---|---|
+| `20260913_liga.sql` | Divisões, temporada trimestral, ELO, pontos ponderados, promoção/rebaixamento |
+| `20260913_atividades.sql` | `activity_sessions`, classificação de esforço e as RPCs de tracking |
+
+Os dois já foram aplicados no projeto `bora-um-tenis` e são **idempotentes** —
+rodar de novo não quebra nem duplica nada. O schema anterior a essa data ainda
+não foi extraído para arquivo; é a dívida conhecida aqui.
+
+> **Armadilha que já nos pegou:** o Postgres concede `EXECUTE` a `PUBLIC` em
+> toda função nova. `revoke execute ... from anon` **não** fecha nada — o
+> anônimo continua entrando pela porta do `PUBLIC`. O certo é
+> `revoke execute ... from public, anon` e só então `grant ... to authenticated`.
 
 ## Como trabalhamos
 1. Uma fase por vez, na ordem acima.

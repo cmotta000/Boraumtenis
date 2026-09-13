@@ -1,0 +1,428 @@
+/**
+ * A tela da liga. A tabela repete as medidas de `ranking.module.css` de
+ * propósito: é a mesma leitura (posição, jogador, V–D, PTS) e mudar o ritmo
+ * das linhas entre as duas telas só confundiria. O que muda é o cartão de
+ * cima, que é onde a liga se explica.
+ *
+ * A cor da divisão é a ÚNICA cor que não vem de token: ela chega do banco e
+ * entra por `style` inline.
+ */
+
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  color: var(--clay-ink);
+}
+
+/* — Estado sem liga: informação, não erro. */
+.vazio {
+  padding: 28px 22px;
+  text-align: center;
+}
+
+.vazioIcone {
+  color: var(--clay-ink);
+}
+
+.vazioTitulo {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 10px;
+}
+
+.vazioTexto {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  color: var(--ink-soft);
+  margin: 8px auto 0;
+  max-width: 44ch;
+}
+
+.vazioLink {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--clay-ink);
+  text-decoration: none;
+}
+
+.vazioLink:hover {
+  text-decoration: underline;
+}
+
+/* — Cartão da minha divisão. */
+.cartao {
+  padding: 0;
+  border-top: 3px solid var(--clay);
+  overflow: hidden;
+}
+
+.cartaoTopo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px 14px;
+}
+
+.selo {
+  width: 10px;
+  height: 34px;
+  border-radius: var(--r-xs);
+  flex: none;
+}
+
+.cartaoIdentidade {
+  flex: 1;
+  min-width: 0;
+}
+
+.divisaoNome {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--ink);
+}
+
+.divisaoApelido {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 1px;
+}
+
+.posicaoBloco {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: none;
+}
+
+.posicaoNumero {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.posicaoDe {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+
+.numeros {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid var(--chalk);
+  border-bottom: 1px solid var(--chalk);
+}
+
+.numero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 10px;
+  border-right: 1px solid var(--chalk);
+}
+
+.numero:last-child {
+  border-right: none;
+}
+
+.numeroValor {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.numeroRotulo {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.temporada {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  padding: 12px 20px 0;
+}
+
+/* — Barra até a promoção. */
+.promocao {
+  padding: 10px 20px 16px;
+}
+
+.barra {
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--chalk);
+  overflow: hidden;
+}
+
+.barraCheia {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+  transition: width 240ms ease-out;
+}
+
+.promocaoTexto {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-soft);
+  margin-top: 10px;
+}
+
+.promocaoForte {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.rebaixando {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--danger);
+  margin-top: 6px;
+}
+
+/* — Tendência. */
+.tendencia {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  padding: 0 20px 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.subindo {
+  color: var(--ok);
+}
+
+.descendo {
+  color: var(--danger);
+}
+
+.estavel {
+  color: var(--ink-soft);
+}
+
+/* — Seletor de divisão: cinco nomes longos não cabem num Segmented. */
+.seletor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--net);
+  background: var(--card);
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--ink-soft);
+}
+
+.chipAtivo {
+  border-color: var(--ink);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.chipPonto {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  flex: none;
+}
+
+.secao {
+  margin-top: 22px;
+}
+
+.divisor {
+  margin: 10px 0 16px;
+}
+
+.empty {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  color: var(--ink-soft);
+}
+
+/* — Tabela (mesmas medidas do ranking). */
+.table {
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  overflow: hidden;
+  box-shadow: var(--elev-card);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--chalk);
+}
+
+.rowHead {
+  background: var(--chalk);
+  padding-top: 9px;
+  padding-bottom: 9px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+}
+
+.rowEu {
+  background: var(--clay-tint);
+}
+
+.pos {
+  width: 26px;
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.posTop {
+  color: var(--clay-ink);
+}
+
+.jogador {
+  flex: 1;
+  min-width: 0;
+}
+
+.nome {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.nomeEu {
+  color: var(--clay-ink);
+  font-weight: 700;
+}
+
+.cidade {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-top: 1px;
+}
+
+.tend {
+  width: 18px;
+  flex: none;
+  display: flex;
+  justify-content: center;
+}
+
+.vd {
+  width: 52px;
+  flex: none;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.pts {
+  width: 44px;
+  flex: none;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.rowHead .pos,
+.rowHead .nome,
+.rowHead .vd,
+.rowHead .pts {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+}
+
+/**
+ * As faixas de promoção e rebaixamento: um risco de giz, no espírito da
+ * CourtLine, com o rótulo pequeno em cima da linha.
+ */
+.zona {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  background: var(--chalk);
+  border-bottom: 1px solid var(--net);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.zona::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--net);
+}
+
+.zonaSubida {
+  color: var(--ok);
+  box-shadow: inset 0 2px 0 -1px var(--ok);
+}
+
+.zonaQueda {
+  color: var(--danger);
+  box-shadow: inset 0 2px 0 -1px var(--danger);
+}

@@ -29,6 +29,20 @@ export type LadoJogador = { id: string; nome: string; avatar: string | null };
 /** Um post do feed: o resultado de uma partida ou uma publicação de fotos. */
 export type PostTipo = 'resultado' | 'foto';
 
+/** Para onde o jogador está indo na tabela desde o último jogo dele. */
+export type Tendencia = 'subindo' | 'descendo' | 'estavel';
+
+/**
+ * De onde veio a medição da atividade. A web só produz `manual` (a pessoa
+ * digita os horários) e `gps_web` (a Geolocation API gravou o trajeto); os
+ * outros três ficam previstos no CHECK do banco para o dia em que houver
+ * integração com relógio ou app nativo.
+ */
+export type AtividadeFonte = 'manual' | 'gps_web' | 'garmin' | 'apple_health' | 'health_connect';
+
+/** Quão puxada foi a sessão. Quem classifica é o banco, não a tela. */
+export type Esforco = 'leve' | 'moderado' | 'intenso';
+
 export type Database = {
   public: {
     Tables: {
@@ -175,9 +189,30 @@ export type Database = {
         Relationships: [];
       };
       seasons: {
-        Row: { id: string; nome: string; inicio: string; fim: string; ativa: boolean };
-        Insert: { id?: string; nome: string; inicio: string; fim: string; ativa?: boolean };
+        Row: { id: string; nome: string; inicio: string; fim: string; ativa: boolean; fechada: boolean };
+        Insert: { id?: string; nome: string; inicio: string; fim: string; ativa?: boolean; fechada?: boolean };
         Update: Partial<Database['public']['Tables']['seasons']['Insert']>;
+        Relationships: [];
+      };
+      /** Catálogo fixo das cinco divisões da liga. `id` é a própria ordem: 1 = base, 5 = topo. */
+      divisions: {
+        Row: {
+          id: number;
+          slug: string;
+          nome: string;
+          apelido: string | null;
+          cor: string | null;
+          ordem: number;
+        };
+        Insert: {
+          id: number;
+          slug: string;
+          nome: string;
+          apelido?: string | null;
+          cor?: string | null;
+          ordem: number;
+        };
+        Update: Partial<Database['public']['Tables']['divisions']['Insert']>;
         Relationships: [];
       };
       rankings: {
@@ -188,6 +223,12 @@ export type Database = {
           vitorias: number;
           derrotas: number;
           posicao: number | null;
+          division_id: number;
+          jogos: number;
+          /** ELO de quando o jogador entrou na temporada — base da evolução do trimestre. */
+          elo_inicio: number | null;
+          pontos_anteriores: number;
+          posicao_anterior: number | null;
         };
         Insert: {
           season_id: string;
@@ -196,8 +237,56 @@ export type Database = {
           vitorias?: number;
           derrotas?: number;
           posicao?: number | null;
+          division_id?: number;
+          jogos?: number;
+          elo_inicio?: number | null;
+          pontos_anteriores?: number;
+          posicao_anterior?: number | null;
         };
         Update: Partial<Database['public']['Tables']['rankings']['Insert']>;
+        Relationships: [];
+      };
+      /**
+       * Uma sessão de jogo ou treino. Nasce PRIVADA: `compartilhar_no_feed`
+       * é opt-in. `rota` é `geography(LineString)` — só sai do banco em
+       * GeoJSON, pela RPC `minhas_atividades`.
+       */
+      activity_sessions: {
+        Row: {
+          id: string;
+          user_id: string;
+          match_id: string | null;
+          fonte: AtividadeFonte;
+          inicio: string;
+          fim: string | null;
+          duracao_s: number | null;
+          distancia_m: number | null;
+          calorias: number | null;
+          fc_media: number | null;
+          fc_max: number | null;
+          esforco: Esforco | null;
+          rota: unknown;
+          compartilhar_no_feed: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          match_id?: string | null;
+          fonte: AtividadeFonte;
+          inicio: string;
+          fim?: string | null;
+          duracao_s?: number | null;
+          distancia_m?: number | null;
+          calorias?: number | null;
+          fc_media?: number | null;
+          fc_max?: number | null;
+          esforco?: Esforco | null;
+          rota?: unknown;
+          compartilhar_no_feed?: boolean;
+          created_at?: string;
+        };
+        Update: Partial<Database['public']['Tables']['activity_sessions']['Insert']>;
         Relationships: [];
       };
       badges: {
@@ -429,6 +518,119 @@ export type Database = {
       temporada_nome: {
         Args: Record<string, never>;
         Returns: string | null;
+      };
+      /** Uma linha só: minha divisão, minha posição nela e o que falta pra subir. */
+      minha_liga: {
+        Args: Record<string, never>;
+        Returns: {
+          division_id: number;
+          division_slug: string;
+          division_nome: string;
+          division_apelido: string | null;
+          division_cor: string | null;
+          division_ordem: number;
+          temporada_nome: string;
+          temporada_fim: string;
+          pontos: number;
+          posicao: number;
+          total_na_divisao: number;
+          vitorias: number;
+          derrotas: number;
+          jogos: number;
+          elo: number;
+          tendencia: Tendencia;
+          /** Pontos que faltam para alcançar o último da faixa de promoção. 0 = já está nela. */
+          pontos_para_promocao: number;
+          promovendo: boolean;
+          rebaixando: boolean;
+        }[];
+      };
+      /**
+       * Grava uma sessão do usuário corrente e devolve o id dela. O banco
+       * calcula duração, distância (quando há rota) e esforço sozinho.
+       * `p_rota` é `[{ lat, lng }, ...]`; com menos de 2 pontos válidos a
+       * rota vira null sem erro.
+       */
+      registrar_atividade: {
+        Args: {
+          p_match_id: string | null;
+          p_fonte: AtividadeFonte;
+          p_inicio: string;
+          p_fim: string | null;
+          p_distancia_m: number | null;
+          p_rota: Json | null;
+          p_fc_media: number | null;
+          p_fc_max: number | null;
+          p_compartilhar?: boolean;
+        };
+        Returns: string;
+      };
+      /** Histórico do próprio usuário — a única porta por onde FC e trajeto saem. */
+      minhas_atividades: {
+        Args: { p_limite?: number };
+        Returns: {
+          id: string;
+          match_id: string | null;
+          fonte: AtividadeFonte;
+          inicio: string;
+          fim: string | null;
+          duracao_s: number | null;
+          distancia_m: number | null;
+          calorias: number | null;
+          fc_media: number | null;
+          fc_max: number | null;
+          esforco: Esforco | null;
+          /** GeoJSON do trajeto, pronto para desenhar. */
+          rota: Json | null;
+          compartilhar_no_feed: boolean;
+          created_at: string;
+        }[];
+      };
+      /**
+       * Atividades de um perfil. Para terceiros: só as compartilhadas, sem
+       * trajeto e com `fc_media`/`fc_max` sempre null — batimento é dado
+       * clínico e não viaja. Para o próprio dono, vem tudo (menos a rota).
+       */
+      atividades_do_perfil: {
+        Args: { p_user_id: string; p_limite?: number };
+        Returns: {
+          id: string;
+          match_id: string | null;
+          fonte: AtividadeFonte;
+          inicio: string;
+          fim: string | null;
+          duracao_s: number | null;
+          distancia_m: number | null;
+          calorias: number | null;
+          fc_media: number | null;
+          fc_max: number | null;
+          esforco: Esforco | null;
+          compartilhar_no_feed: boolean;
+          created_at: string;
+        }[];
+      };
+      vincular_atividade_partida: {
+        Args: { p_activity_id: string; p_match_id: string };
+        Returns: undefined;
+      };
+      /** Classificação de uma divisão. Sem `p_division_id`, a divisão de quem chamou. */
+      liga_classificacao: {
+        Args: { p_division_id?: number | null; p_limite?: number };
+        Returns: {
+          user_id: string;
+          nome: string;
+          avatar: string | null;
+          cidade: string | null;
+          uf: string | null;
+          pontos: number;
+          vitorias: number;
+          derrotas: number;
+          jogos: number;
+          elo: number;
+          posicao: number;
+          tendencia: Tendencia;
+          eu: boolean;
+        }[];
       };
       criar_partida: {
         Args: {

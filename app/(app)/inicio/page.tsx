@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  ChartNoAxesColumn,
+  Trophy,
   ChevronRight,
   CircleAlert,
   CirclePlus,
@@ -37,10 +37,10 @@ const ATALHOS: Atalho[] = [
   },
   { rota: '/feed', icone: ImageIcon, titulo: 'Feed', desc: 'Placares, fotos e histórias das quadras.' },
   {
-    rota: '/ranking',
-    icone: ChartNoAxesColumn,
-    titulo: 'Ranking',
-    desc: 'Sua posição na temporada por pontos.',
+    rota: '/liga',
+    icone: Trophy,
+    titulo: 'Liga',
+    desc: 'Sua divisão, sua posição e o que falta pra subir.',
   },
 ];
 

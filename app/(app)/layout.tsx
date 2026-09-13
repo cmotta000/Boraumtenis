@@ -2,12 +2,12 @@
 
 import {
   Bell,
-  ChartNoAxesColumn,
   ChevronRight,
   House,
   ImageIcon,
   MapPin,
   Plus,
+  Trophy,
   type LucideIcon,
 } from 'lucide-react';
 import type { Route } from 'next';
@@ -28,7 +28,7 @@ const NAV: Item[] = [
   { rota: '/inicio', label: 'Início', icone: House },
   { rota: '/partidas', label: 'Partidas', icone: MapPin },
   { rota: '/feed', label: 'Feed', icone: ImageIcon },
-  { rota: '/ranking', label: 'Ranking', icone: ChartNoAxesColumn },
+  { rota: '/liga', label: 'Liga', icone: Trophy },
 ];
 
 /** Título que a barra de topo mostra para cada rota. */
@@ -36,10 +36,12 @@ const TITULOS: { prefixo: string; titulo: string }[] = [
   { prefixo: '/inicio', titulo: 'Início' },
   { prefixo: '/partidas', titulo: 'Partidas' },
   { prefixo: '/feed', titulo: 'Feed' },
+  { prefixo: '/liga', titulo: 'Liga' },
   { prefixo: '/ranking', titulo: 'Ranking' },
   { prefixo: '/perfil', titulo: 'Perfil' },
   { prefixo: '/editar-perfil', titulo: 'Editar perfil' },
   { prefixo: '/criar-partida', titulo: 'Criar partida' },
+  { prefixo: '/atividades', titulo: 'Atividades' },
   { prefixo: '/notificacoes', titulo: 'Notificações' },
   { prefixo: '/partida/', titulo: 'Partida' },
   { prefixo: '/resultado/', titulo: 'Registrar placar' },
