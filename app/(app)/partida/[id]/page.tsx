@@ -1,6 +1,7 @@
 'use client';
 
 import { ImageIcon } from 'lucide-react';
+import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -395,7 +396,15 @@ export default function DetalhePartida() {
               />
 
               {resultado.status === 'confirmado' ? (
-                <p className={estilos.placarOk}>✓ Confirmado — os pontos já entraram no ranking.</p>
+                <>
+                  <p className={estilos.placarOk}>✓ Confirmado — os pontos já entraram no ranking.</p>
+                  <Link
+                    href={`/atividades?partida=${match.id}`}
+                    className={estilos.placarTexto}
+                    style={{ display: 'inline-block', color: 'var(--clay-ink)', fontWeight: 600 }}>
+                    Registrar atividade desta partida
+                  </Link>
+                </>
               ) : resultado.reporter_id === me ? (
                 <p className={estilos.placarTexto}>
                   Aguardando {jogadores.find((j) => j.user_id !== me)?.nome ?? 'o outro jogador'} confirmar.

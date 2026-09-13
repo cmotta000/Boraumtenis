@@ -1,0 +1,374 @@
+/**
+ * Tela de atividades. O cronômetro é a peça que precisa ser legível de longe
+ * — a pessoa olha de relance, suada, no meio da quadra — então ele é grande,
+ * mono e tabular, para os dígitos não dançarem a cada segundo.
+ *
+ * Tudo por token: o app tem tema claro e escuro, e cor literal aqui viraria
+ * texto invisível num dos dois.
+ */
+
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  color: var(--clay-ink);
+}
+
+/* — Cartões. */
+.cartao {
+  padding: 22px 20px;
+}
+
+.tituloCartao {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.subtitulo {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-soft);
+  margin: 6px 0 18px;
+}
+
+.linkSecundario {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 6px 0;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  text-align: center;
+  cursor: pointer;
+}
+
+.linkSecundario:hover {
+  color: var(--clay-ink);
+}
+
+.salvo {
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ok);
+  text-align: center;
+}
+
+/* — Gravação em curso. */
+.cartaoGravando {
+  padding: 26px 20px 20px;
+  text-align: center;
+  border: 1px solid var(--clay);
+}
+
+.cronometro {
+  font-family: var(--font-mono);
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.estadoGravacao {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--clay-ink);
+  margin-top: 8px;
+}
+
+.medidas {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0 0;
+  border-top: 1px solid var(--chalk);
+  border-bottom: 1px solid var(--chalk);
+}
+
+.medida {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 8px;
+  border-right: 1px solid var(--chalk);
+}
+
+.medida:last-child {
+  border-right: none;
+}
+
+.medidaValor {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.medidaRotulo {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* Aviso de GPS: é informação, não erro — o cronômetro continua valendo. */
+.avisoGps {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  background: var(--chalk);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 18px;
+  color: var(--ink-soft);
+}
+
+/* — Formulário de confirmação. */
+.resumo {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin: 4px 0 18px;
+}
+
+.resumoForte {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.campos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.campo {
+  flex: 1;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.rotulo {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.input {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--net);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+}
+
+.input:focus {
+  outline: 2px solid var(--clay);
+  outline-offset: -1px;
+}
+
+.dica {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 18px;
+  color: var(--ink-soft);
+  margin-top: -4px;
+}
+
+/* — O opt-in de compartilhar. */
+.switchLinha {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--chalk);
+}
+
+.switch {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  flex: none;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--net);
+  background: var(--chalk);
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease;
+}
+
+.switchLigado {
+  background: var(--clay);
+  border-color: var(--clay);
+}
+
+.switchBolinha {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: var(--elev-card);
+  transition: transform 140ms ease;
+}
+
+.switchLigado .switchBolinha {
+  transform: translateX(18px);
+  background: var(--on-clay);
+}
+
+.switchTextos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.switchLabel {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.switchDica {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 18px;
+  color: var(--ink-soft);
+}
+
+.erro {
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 19px;
+  color: var(--danger);
+}
+
+.acoes {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.acoes > * {
+  flex: 1;
+}
+
+/* — Histórico. */
+.secao {
+  margin-top: 26px;
+}
+
+.divisor {
+  margin: 10px 0 16px;
+}
+
+.vazio {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  color: var(--ink-soft);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  overflow: hidden;
+  box-shadow: var(--elev-card);
+}
+
+.item {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--chalk);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.itemTopo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.itemData {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.cadeado {
+  color: var(--ink-soft);
+  flex: none;
+}
+
+.itemNumeros {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+.itemDuracao {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.itemMedida {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.itemTrajeto {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}

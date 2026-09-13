@@ -1,14 +1,16 @@
 'use client';
 
-import { Camera, LogOut, Pencil } from 'lucide-react';
+import { Camera, Lock, LogOut, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
 import { GradeFotos } from '@/components/galeria';
-import { Avatar, Btn, CourtLine, Pagina, Secao, Spinner } from '@/components/ui';
+import { Avatar, Btn, CourtLine, Pagina, Pill, Secao, SeletorTema, Spinner } from '@/components/ui';
+import { formatarDistancia, formatarDuracao } from '@/lib/atividades';
 import { useAuth } from '@/lib/auth';
-import type { GolpePreferido, MaoDominante } from '@/lib/database.types';
+import { quando } from '@/lib/datas';
+import type { Database, Esforco, GolpePreferido, MaoDominante } from '@/lib/database.types';
 import { escolherFotoDePerfil, trocarFotoDePerfil } from '@/lib/fotos';
 import { carregarFeed } from '@/lib/posts';
 import { supabase } from '@/lib/supabase';
@@ -46,6 +48,17 @@ const GOLPE_LABEL: Record<GolpePreferido, string> = {
 /** Quantas fotos do jogador mostramos na galeria do perfil. */
 const FOTOS_NA_GALERIA = 12;
 
+/** Quantas atividades recentes cabem no perfil sem virar histórico. */
+const ATIVIDADES_NO_PERFIL = 5;
+
+type Atividade = Database['public']['Functions']['atividades_do_perfil']['Returns'][number];
+
+const TOM_ESFORCO: Record<Esforco, 'muted' | 'clay' | 'ball'> = {
+  leve: 'muted',
+  moderado: 'clay',
+  intenso: 'ball',
+};
+
 export default function PerfilScreen() {
   const { session } = useAuth();
   const router = useRouter();
@@ -57,6 +70,7 @@ export default function PerfilScreen() {
   const [saindo, setSaindo] = useState(false);
   const [trocandoFoto, setTrocandoFoto] = useState(false);
   const [erroFoto, setErroFoto] = useState<string | null>(null);
+  const [atividades, setAtividades] = useState<Atividade[]>([]);
 
   const carregar = useCallback(async () => {
     if (!uid) return;
@@ -74,6 +88,15 @@ export default function PerfilScreen() {
   useEffect(() => {
     carregar();
   }, [carregar]);
+
+  // Atividades: no perfil, nunca no feed. Mesmo as compartilhadas só contam
+  // data, duração e esforço — batimento e trajeto não saem do banco por aqui.
+  useEffect(() => {
+    if (!uid) return;
+    supabase
+      .rpc('atividades_do_perfil', { p_user_id: uid, p_limite: ATIVIDADES_NO_PERFIL })
+      .then(({ data }) => setAtividades(data ?? []));
+  }, [uid]);
 
   // Galeria: as fotos dos posts do jogador, das mais novas para as mais antigas.
   useEffect(() => {
@@ -200,6 +223,51 @@ export default function PerfilScreen() {
           Você ainda não publicou fotos. Depois do próximo jogo, publique os melhores momentos no feed.
         </p>
       )}
+
+      <CourtLine className={estilos.divisor} />
+
+      <div className={estilos.galeriaHead}>
+        <Secao className={estilos.semMargem}>Suas atividades</Secao>
+        <Link href="/atividades" className={estilos.verFeed}>
+          Registrar
+        </Link>
+      </div>
+      {atividades.length > 0 ? (
+        <div className={estilos.detailCard}>
+          {atividades.map((a) => (
+            <div key={a.id} className={estilos.detailRow}>
+              <span className={estilos.detailLabel}>{quando(a.inicio)}</span>
+              <span
+                className={estilos.detailValue}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                {formatarDuracao(a.duracao_s)}
+                {a.distancia_m !== null ? ` · ${formatarDistancia(a.distancia_m)}` : ''}
+                {a.esforco ? <Pill label={a.esforco} tone={TOM_ESFORCO[a.esforco]} /> : null}
+                {!a.compartilhar_no_feed ? (
+                  <Lock size={12} aria-label="Só você vê" style={{ color: 'var(--ink-soft)' }} />
+                ) : null}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className={estilos.semFotos}>
+          Nenhuma atividade registrada. Cronometre o próximo jogo e o seu histórico começa.
+        </p>
+      )}
+
+      <CourtLine className={estilos.divisor} />
+
+      <Secao>Preferências</Secao>
+      <div className={estilos.preferencia}>
+        <div className={estilos.preferenciaTextos}>
+          <span className={estilos.preferenciaLabel}>Tema</span>
+          <span className={estilos.preferenciaDica}>
+            No modo Sistema o app segue o ajuste de claro/escuro do seu aparelho.
+          </span>
+        </div>
+        <SeletorTema />
+      </div>
 
       <div className={estilos.acoes}>
         <Link href="/editar-perfil" className={estilos.linkBotao}>
