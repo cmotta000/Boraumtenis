@@ -1,12 +1,10 @@
 'use client';
 
 import { MapPin, Plus, Search } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
-import { Btn, CourtLine, Pagina, Pill, Spinner } from '@/components/ui';
-import { quando } from '@/lib/datas';
+import { Btn, CardPartida, CourtLine, Pagina, Spinner } from '@/components/ui';
 import type { MatchTipo, PlayerStatus } from '@/lib/database.types';
 import { origemDeBusca, type Origem } from '@/lib/location';
 import { supabase } from '@/lib/supabase';
@@ -26,20 +24,6 @@ type Partida = {
 };
 
 const RAIOS = [10, 25, 50, 70];
-
-/** Etiqueta do meu vínculo com a partida — só quando já existe algum. */
-function meuVinculo(s: Partida['meu_status']): { label: string; tone: 'clay' | 'ok' | 'ball' } | null {
-  switch (s) {
-    case 'criador':
-      return { label: 'sua partida', tone: 'clay' };
-    case 'confirmado':
-      return { label: 'você está dentro', tone: 'ok' };
-    case 'convidado':
-      return { label: 'aguardando', tone: 'ball' };
-    default:
-      return null;
-  }
-}
 
 export default function Partidas() {
   const router = useRouter();
@@ -132,33 +116,20 @@ export default function Partidas() {
         </div>
       ) : (
         <div className={estilos.lista}>
-          {itens.map((p) => {
-            const restantes = Math.max(0, p.vagas_total - p.confirmados);
-            const vinculo = meuVinculo(p.meu_status);
-            return (
-              <Link key={p.id} href={`/partida/${p.id}`} className={estilos.card}>
-                <span className={estilos.cardTop}>
-                  <span className={estilos.cardPlace}>{p.local_texto ?? 'Partida de tênis'}</span>
-                  <span className={estilos.cardDist}>{(p.distancia_m / 1000).toFixed(1)} km</span>
-                </span>
-                <span className={estilos.cardWhen}>
-                  {quando(p.data_hora)} · {p.tipo === 'duplas' ? 'duplas' : 'simples'}
-                </span>
-                <span className={estilos.cardHost}>Anfitrião: {p.criador_nome}</span>
-                <span className={estilos.cardFoot}>
-                  <span className={estilos.cardPills}>
-                    {restantes > 0 ? (
-                      <Pill label={`${restantes} vaga${restantes > 1 ? 's' : ''}`} tone="ok" />
-                    ) : (
-                      <Pill label="completa" tone="muted" />
-                    )}
-                    {vinculo && <Pill label={vinculo.label} tone={vinculo.tone} />}
-                  </span>
-                  <span className={estilos.cardGo}>Ver partida →</span>
-                </span>
-              </Link>
-            );
-          })}
+          {itens.map((p) => (
+            <CardPartida
+              key={p.id}
+              id={p.id}
+              local={p.local_texto}
+              dataHora={p.data_hora}
+              tipo={p.tipo}
+              distanciaM={p.distancia_m}
+              anfitriao={p.criador_nome}
+              vagasTotal={p.vagas_total}
+              confirmados={p.confirmados}
+              meuStatus={p.meu_status}
+            />
+          ))}
         </div>
       )}
     </Pagina>

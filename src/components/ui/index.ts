@@ -4,6 +4,8 @@
  * sem arrastar as telas junto.
  */
 export { Btn } from './botao';
+export { CardPartida } from './card-partida';
+export type { CardPartidaProps, MeuStatus } from './card-partida';
 export { Spinner, TelaCarregando } from './carregando';
 export { Chips, Segmented } from './selecao';
 export { Card, CourtLine, Pagina, ScreenHeader, Secao } from './superficie';
