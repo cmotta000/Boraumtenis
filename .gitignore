@@ -29,3 +29,6 @@ yarn-error.*
 
 # anotações e credenciais locais — nunca versionadas
 local/
+
+# ferramenta de orquestração local — não faz parte do produto
+.maestri/

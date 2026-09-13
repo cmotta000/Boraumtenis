@@ -34,7 +34,8 @@ describe('quando', () => {
   it('trata o passado como data distante, não como "hoje"', () => {
     // Uma partida de ontem não pode aparecer como "hoje" no feed.
     const ontem = maisDias(-1, 20);
-    assert.match(quando(ontem.toISOString()), /^\w+ \d{2}\/\d{2}, 20:00$/u);
+    // \p{L} e não \w: a abreviação do sábado tem acento, e \w só cobre ASCII.
+    assert.match(quando(ontem.toISOString()), /^\p{L}+ \d{2}\/\d{2}, 20:00$/u);
   });
 });
 
