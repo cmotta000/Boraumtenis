@@ -1,12 +1,12 @@
 .carregando {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: var(--esp-40);
   color: var(--clay-ink);
 }
 
 .contexto {
-  margin-top: 14px;
+  margin-top: var(--esp-14);
 }
 
 .contextoLocal {
@@ -24,7 +24,7 @@
 }
 
 .divisor {
-  margin: 22px 0;
+  margin: var(--esp-22) 0;
 }
 
 .passo {
@@ -33,7 +33,7 @@
   letter-spacing: 1.2px;
   color: var(--clay-ink);
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: var(--esp-12);
 }
 
 .passoSeguinte {
@@ -44,7 +44,7 @@
   font-family: var(--font-body);
   font-size: 13.5px;
   color: var(--ink-soft);
-  margin-top: 8px;
+  margin-top: var(--esp-8);
   line-height: 19px;
 }
 
@@ -53,7 +53,7 @@
 .jogadores {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--esp-10);
 }
 
 .jogador {
@@ -61,11 +61,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: var(--esp-12);
   background: var(--card);
   border-radius: var(--r-md);
   border: 1.5px solid var(--net);
-  padding: 12px;
+  padding: var(--esp-12);
   text-align: left;
 }
 
@@ -97,15 +97,15 @@
 .sets {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 14px;
+  gap: var(--esp-10);
+  margin-top: var(--esp-14);
 }
 
 .setLinha {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: var(--esp-10);
 }
 
 .setLabel {
@@ -144,13 +144,13 @@
   font-family: var(--font-body);
   font-size: 13px;
   color: var(--danger);
-  margin-left: 6px;
+  margin-left: var(--esp-6);
 }
 
 .addSet {
   align-self: flex-start;
   display: block;
-  margin-top: 12px;
+  margin-top: var(--esp-12);
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
@@ -165,11 +165,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
-  margin-top: 20px;
+  gap: var(--esp-16);
+  margin-top: var(--esp-20);
   background: var(--court);
   border-radius: var(--r-lg);
-  padding: 18px;
+  padding: var(--esp-18);
 }
 
 .pontosVazio {
@@ -207,7 +207,7 @@
   font-family: var(--font-body);
   font-size: 12.5px;
   color: var(--line);
-  margin-top: 2px;
+  margin-top: var(--esp-2);
 }
 
 /* — 3: post — */
@@ -218,7 +218,7 @@
   border-radius: var(--r-sm);
   border: 1.5px solid var(--net);
   background: var(--card);
-  padding: 14px;
+  padding: var(--esp-14);
   font-family: var(--font-body);
   font-size: 15px;
   color: var(--ink);
@@ -233,8 +233,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
+  gap: var(--esp-10);
+  margin-top: var(--esp-14);
 }
 
 .fotoBox {
@@ -289,18 +289,18 @@
   font-family: var(--font-body);
   font-size: 12px;
   color: var(--ink-soft);
-  margin-top: 4px;
+  margin-top: var(--esp-4);
 }
 
 .erro {
   color: var(--danger);
   font-family: var(--font-body);
   font-size: 14px;
-  margin-top: 18px;
+  margin-top: var(--esp-18);
 }
 
 .publicar {
-  margin-top: 24px;
+  margin-top: var(--esp-24);
 }
 
 .rodape {
@@ -308,6 +308,6 @@
   font-size: 13px;
   color: var(--ink-soft);
   text-align: center;
-  margin-top: 12px;
+  margin-top: var(--esp-12);
   line-height: 19px;
 }

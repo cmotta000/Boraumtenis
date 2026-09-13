@@ -54,7 +54,7 @@
 .pill {
   align-self: flex-start;
   display: inline-block;
-  padding: 3px 8px;
+  padding: 3px var(--esp-8);
   border-radius: var(--r-xs);
   font-family: var(--font-mono);
   font-size: 9.5px;

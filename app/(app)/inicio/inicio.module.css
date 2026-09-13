@@ -10,15 +10,15 @@
   font-family: var(--font-body);
   font-size: 15px;
   color: var(--ink-soft);
-  margin-top: 4px;
+  margin-top: var(--esp-4);
 }
 
 .stats {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 24px;
+  gap: var(--esp-10);
+  margin-top: var(--esp-24);
 }
 
 .stat {
@@ -26,7 +26,7 @@
   background: var(--card);
   border: 1px solid var(--net);
   border-radius: var(--r-md);
-  padding: 12px 14px;
+  padding: var(--esp-12) var(--esp-14);
   box-shadow: var(--elev-card);
 }
 
@@ -52,7 +52,7 @@
   font-weight: 600;
   font-size: 24px;
   color: var(--ink);
-  margin-top: 6px;
+  margin-top: var(--esp-6);
   font-variant-numeric: tabular-nums;
 }
 
@@ -64,9 +64,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-  padding: 14px;
+  gap: var(--esp-12);
+  margin-top: var(--esp-16);
+  padding: var(--esp-14);
   border-radius: var(--r-md);
   border: 1px solid var(--net);
   background: var(--clay-wash);
@@ -91,18 +91,18 @@
   font-size: 13px;
   line-height: 19px;
   color: var(--ink-soft);
-  margin-top: 2px;
+  margin-top: var(--esp-2);
 }
 
 .divisor {
-  margin: 26px 0;
+  margin: var(--esp-26) 0;
 }
 
 .grid {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--esp-12);
 }
 
 .card {
@@ -111,11 +111,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: var(--esp-10);
   background: var(--card);
   border: 1px solid var(--net);
   border-radius: var(--r-md);
-  padding: 18px;
+  padding: var(--esp-18);
   box-shadow: var(--elev-card);
   color: var(--clay-ink);
 }

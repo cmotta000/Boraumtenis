@@ -47,6 +47,6 @@
   font-size: 9px;
   color: var(--map-ink);
   background: var(--map-chip);
-  padding: 0 4px;
+  padding: 0 var(--esp-4);
   border-radius: 3px;
 }

@@ -1,7 +1,7 @@
 .carregando {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: var(--esp-40);
   color: var(--clay-ink);
 }
 
@@ -14,15 +14,15 @@
 
 .centralizado {
   text-align: center;
-  margin-top: 24px;
+  margin-top: var(--esp-24);
 }
 
 .bloco {
-  margin-top: 22px;
+  margin-top: var(--esp-22);
 }
 
 .blocoCurto {
-  margin-top: 16px;
+  margin-top: var(--esp-16);
 }
 
 /* — Cartão principal — */
@@ -31,8 +31,8 @@
   background: var(--card);
   border-radius: var(--r-lg);
   border: 1px solid var(--net);
-  padding: 22px;
-  margin-top: 8px;
+  padding: var(--esp-22);
+  margin-top: var(--esp-8);
 }
 
 .cardTop {
@@ -54,22 +54,22 @@
   font-weight: 800;
   font-size: 24px;
   color: var(--ink);
-  margin-top: 14px;
+  margin-top: var(--esp-14);
 }
 
 .quando {
   font-family: var(--font-body);
   font-size: 15px;
   color: var(--ink-soft);
-  margin-top: 4px;
+  margin-top: var(--esp-4);
 }
 
 .host {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
-  margin-top: 16px;
+  gap: var(--esp-10);
+  margin-top: var(--esp-16);
 }
 
 .hostText {
@@ -88,7 +88,7 @@
   font-size: 15px;
   font-style: italic;
   color: var(--ink);
-  margin-top: 16px;
+  margin-top: var(--esp-16);
   line-height: 22px;
 }
 
@@ -96,8 +96,8 @@
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  gap: 10px;
-  margin-top: 18px;
+  gap: var(--esp-10);
+  margin-top: var(--esp-18);
 }
 
 .vagasNum {
@@ -117,7 +117,7 @@
   color: var(--danger);
   font-family: var(--font-body);
   font-size: 14px;
-  margin-top: 14px;
+  margin-top: var(--esp-14);
 }
 
 .section {
@@ -126,7 +126,7 @@
   letter-spacing: 1.2px;
   color: var(--ink-soft);
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: var(--esp-12);
 }
 
 /* — Placar — */
@@ -135,7 +135,7 @@
   background: var(--card);
   border-radius: var(--r-md);
   border: 1px solid var(--net);
-  padding: 16px;
+  padding: var(--esp-16);
 }
 
 .placarTitulo {
@@ -150,7 +150,7 @@
   font-size: 13.5px;
   line-height: 20px;
   color: var(--ink-soft);
-  margin-top: 6px;
+  margin-top: var(--esp-6);
 }
 
 .placarOk {
@@ -158,11 +158,11 @@
   font-weight: 600;
   font-size: 13.5px;
   color: var(--ok);
-  margin-top: 14px;
+  margin-top: var(--esp-14);
 }
 
 .registrar {
-  margin-top: 16px;
+  margin-top: var(--esp-16);
 }
 
 /* — Estado do visitante — */
@@ -170,7 +170,7 @@
 .waitBox {
   background: var(--court);
   border-radius: var(--r-lg);
-  padding: 18px;
+  padding: var(--esp-18);
 }
 
 .waitTitle {
@@ -184,14 +184,14 @@
   font-family: var(--font-body);
   font-size: 14px;
   color: var(--line);
-  margin-top: 4px;
+  margin-top: var(--esp-4);
 }
 
 .okBox {
   background: var(--card);
   border-radius: var(--r-lg);
   border: 1.5px solid var(--ok);
-  padding: 18px;
+  padding: var(--esp-18);
 }
 
 .okTitle {
@@ -205,7 +205,7 @@
   font-family: var(--font-body);
   font-size: 14px;
   color: var(--ink-soft);
-  margin-top: 4px;
+  margin-top: var(--esp-4);
 }
 
 .linkDanger {
@@ -214,7 +214,7 @@
   font-weight: 600;
   font-size: 14px;
   color: var(--danger);
-  margin-top: 12px;
+  margin-top: var(--esp-12);
 }
 
 .cancelarPartida {
@@ -228,40 +228,40 @@
 .lista {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--esp-12);
 }
 
 .listaCurta {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--esp-8);
 }
 
 .reqCard {
   background: var(--card);
   border-radius: var(--r-md);
   border: 1px solid var(--net);
-  padding: 14px;
+  padding: var(--esp-14);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--esp-12);
 }
 
 .playerRow {
   background: var(--card);
   border-radius: var(--r-md);
   border: 1px solid var(--net);
-  padding: 12px;
+  padding: var(--esp-12);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--esp-10);
 }
 
 .reqHead {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: var(--esp-12);
 }
 
 .reqCorpo {
@@ -280,7 +280,7 @@
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--ink-soft);
-  margin-top: 2px;
+  margin-top: var(--esp-2);
 }
 
 .reqSemPerfil {
@@ -293,21 +293,21 @@
 .reqActions {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: var(--esp-10);
 }
 
 .tags {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--esp-6);
 }
 
 .tag {
   background: var(--chalk);
   border: 1px solid var(--net);
   border-radius: var(--r-pill);
-  padding: 4px 10px;
+  padding: var(--esp-4) var(--esp-10);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 12.5px;
@@ -316,7 +316,7 @@
 
 .miniBtn {
   flex: 1;
-  padding: 0 14px;
+  padding: 0 var(--esp-14);
   height: 40px;
   border-radius: var(--r-pill);
   display: inline-flex;
@@ -353,21 +353,21 @@
 /* — Chat — */
 
 .chat {
-  margin-top: 26px;
+  margin-top: var(--esp-26);
 }
 
 .chatDivisor {
-  margin-bottom: 18px;
+  margin-bottom: var(--esp-18);
 }
 
 .chatBox {
   background: var(--chalk);
   border-radius: var(--r-lg);
   border: 1px solid var(--net);
-  padding: 14px;
+  padding: var(--esp-14);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--esp-10);
   min-height: 120px;
   max-height: 460px;
   overflow-y: auto;
@@ -378,7 +378,7 @@
   font-size: 14px;
   color: var(--ink-soft);
   text-align: center;
-  padding: 24px 0;
+  padding: var(--esp-24) 0;
 }
 
 .bubbleWrap {
@@ -395,7 +395,7 @@
   background: var(--card);
   border: 1px solid var(--net);
   border-radius: var(--r-md);
-  padding: 10px 14px;
+  padding: var(--esp-10) var(--esp-14);
 }
 
 .bubbleMe {
@@ -427,7 +427,7 @@
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--ink-soft);
-  margin-top: 4px;
+  margin-top: var(--esp-4);
   text-align: right;
 }
 
@@ -438,8 +438,8 @@
 .chatInputRow {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  margin-top: 12px;
+  gap: var(--esp-10);
+  margin-top: var(--esp-12);
   align-items: center;
 }
 
@@ -449,7 +449,7 @@
   height: 48px;
   border-radius: var(--r-pill);
   border: 1.5px solid var(--net);
-  padding: 0 18px;
+  padding: 0 var(--esp-18);
   font-family: var(--font-body);
   font-size: 15px;
   color: var(--ink);
@@ -486,5 +486,5 @@
 
 .fotosBtn {
   align-self: flex-start;
-  margin-top: 14px;
+  margin-top: var(--esp-14);
 }

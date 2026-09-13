@@ -1,12 +1,12 @@
 .btn {
   height: 44px;
-  padding: 0 18px;
+  padding: 0 var(--esp-18);
   border-radius: var(--r-sm);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  gap: 8px;
+  gap: var(--esp-8);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 14.5px;

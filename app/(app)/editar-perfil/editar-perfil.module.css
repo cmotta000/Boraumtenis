@@ -1,7 +1,7 @@
 .carregando {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: var(--esp-40);
   color: var(--clay-ink);
 }
 
@@ -10,7 +10,7 @@
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 1.5px;
-  margin-bottom: 8px;
+  margin-bottom: var(--esp-8);
 }
 
 .title {
@@ -25,26 +25,26 @@
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 22px;
-  margin-top: 6px;
+  margin-top: var(--esp-6);
 }
 
 .divisor {
-  margin: 22px 0;
+  margin: var(--esp-22) 0;
 }
 
 .row {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: var(--esp-12);
 }
 
 .rowLocal {
-  margin-top: 14px;
+  margin-top: var(--esp-14);
 }
 
 /** É um <fieldset> pelo rótulo de grupo; o desenho vem todo daqui. */
 .grupo {
-  margin: 0 0 16px;
+  margin: 0 0 var(--esp-16);
   padding: 0;
   border: 0;
   min-width: 0;
@@ -65,7 +65,7 @@
   font-size: 11px;
   letter-spacing: 1px;
   color: var(--ink-soft);
-  margin-bottom: 8px;
+  margin-bottom: var(--esp-8);
   text-transform: uppercase;
 }
 
@@ -74,7 +74,7 @@
   height: 50px;
   border-radius: var(--r-sm);
   border: 1.5px solid var(--net);
-  padding: 0 14px;
+  padding: 0 var(--esp-14);
   font-family: var(--font-body);
   font-size: 16px;
   color: var(--ink);
@@ -91,7 +91,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: var(--esp-16);
 }
 
 .fotoBox {
@@ -122,7 +122,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: var(--esp-8);
 }
 
 .fotoAcao {
@@ -155,7 +155,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 14px;
+  margin-top: var(--esp-14);
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 15px;
@@ -173,18 +173,18 @@
   color: var(--ok);
   font-family: var(--font-body);
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: var(--esp-10);
 }
 
 .erro {
   color: var(--danger);
   font-family: var(--font-body);
   font-size: 14px;
-  margin-top: 16px;
+  margin-top: var(--esp-16);
 }
 
 .salvar {
-  margin-top: 24px;
+  margin-top: var(--esp-24);
 }
 
 .cancel {
@@ -193,7 +193,7 @@
   font-family: var(--font-body);
   font-size: 14px;
   text-align: center;
-  margin-top: 16px;
+  margin-top: var(--esp-16);
 }
 
 /* — Privacidade — */
@@ -201,15 +201,15 @@
 .privRadios {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--esp-8);
 }
 
 .privOpcao {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
+  gap: var(--esp-10);
+  padding: var(--esp-12) var(--esp-14);
   border-radius: var(--r-md);
   border: 1.5px solid var(--net);
   background: var(--card);
@@ -226,7 +226,7 @@
 }
 
 .privOpcao input {
-  margin: 2px 0 0;
+  margin: var(--esp-2) 0 0;
   accent-color: var(--clay);
   flex: none;
 }
@@ -250,7 +250,7 @@
   font-size: 13px;
   line-height: 19px;
   color: var(--ink-soft);
-  margin-top: 2px;
+  margin-top: var(--esp-2);
 }
 
 .privNota {
@@ -261,13 +261,13 @@
   background: var(--card);
   border: 1px solid var(--net);
   border-radius: var(--r-md);
-  padding: 12px 14px;
-  margin-top: 4px;
+  padding: var(--esp-12) var(--esp-14);
+  margin-top: var(--esp-4);
 }
 
 .privSalvo {
   font-family: var(--font-body);
   font-size: 13.5px;
   color: var(--ok);
-  margin-top: 10px;
+  margin-top: var(--esp-10);
 }

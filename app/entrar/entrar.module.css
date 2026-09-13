@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 22px;
+  padding: var(--esp-22);
 }
 
 .shell {
@@ -25,12 +25,12 @@
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 44px;
-  margin-top: 22px;
+  margin-top: var(--esp-22);
 }
 
 .brandRisco {
   width: 90px;
-  margin: 16px 0;
+  margin: var(--esp-16) 0;
   background: var(--on-clay-line);
 }
 
@@ -46,23 +46,23 @@
   flex: 1;
   background: var(--card);
   border-radius: var(--r-lg);
-  padding: 26px;
+  padding: var(--esp-26);
   box-shadow: var(--elev-raised);
 }
 
 .marcaMobile {
-  margin-bottom: 22px;
+  margin-bottom: var(--esp-22);
 }
 
 .tabs {
   display: flex;
   flex-direction: row;
-  gap: 24px;
-  margin-bottom: 20px;
+  gap: var(--esp-24);
+  margin-bottom: var(--esp-20);
 }
 
 .tab {
-  padding-bottom: 8px;
+  padding-bottom: var(--esp-8);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 20px;
@@ -78,11 +78,11 @@
   height: 3px;
   background: var(--ball);
   border-radius: 2px;
-  margin-top: 6px;
+  margin-top: var(--esp-6);
 }
 
 .campo {
-  margin-bottom: 14px;
+  margin-bottom: var(--esp-14);
 }
 
 .label {
@@ -91,7 +91,7 @@
   font-size: 11px;
   letter-spacing: 1px;
   color: var(--ink-soft);
-  margin-bottom: 6px;
+  margin-bottom: var(--esp-6);
   text-transform: uppercase;
 }
 
@@ -100,7 +100,7 @@
   height: 50px;
   border-radius: var(--r-sm);
   border: 1.5px solid var(--net);
-  padding: 0 14px;
+  padding: 0 var(--esp-14);
   font-family: var(--font-body);
   font-size: 16px;
   color: var(--ink);
@@ -115,26 +115,26 @@
   color: var(--danger);
   font-family: var(--font-body);
   font-size: 14px;
-  margin-top: 4px;
+  margin-top: var(--esp-4);
 }
 
 .aviso {
   color: var(--ok);
   font-family: var(--font-body);
   font-size: 14px;
-  margin-top: 4px;
+  margin-top: var(--esp-4);
 }
 
 .enviar {
-  margin-top: 18px;
+  margin-top: var(--esp-18);
 }
 
 .divider {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
-  margin: 18px 0;
+  gap: var(--esp-12);
+  margin: var(--esp-18) 0;
 }
 
 .dividerLine {
@@ -164,7 +164,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: var(--esp-10);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 15px;
@@ -192,7 +192,7 @@
   font-family: var(--font-body);
   font-size: 14px;
   text-align: center;
-  margin-top: 18px;
+  margin-top: var(--esp-18);
 }
 
 /** A partir daqui entra o painel de marca ao lado do formulário. */

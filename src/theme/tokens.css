@@ -88,6 +88,37 @@
   --r-xl: 20px;
   --r-pill: 999px;
 
+  /**
+   * Escala de espaçamento. Não é escala de livro: saiu de contar o que já
+   * existe nos CSS Modules — a interface foi construída numa grade de 2px, com
+   * 12, 10, 14, 16 e 8 respondendo por metade de todo o respiro do app, e um
+   * salto para 40 nos vazios grandes. Por isso a escala é densa embaixo e não
+   * tenta ser uma progressão elegante: ela descreve o app que existe.
+   *
+   * Só entra aqui o que é ESPAÇO (margin, padding, gap). Raio, borda, fonte e
+   * medida de casco têm token próprio ou ficam literais — misturar os papéis
+   * é como um número vira o outro por engano.
+   *
+   * Medida fora da escala (13px, 7px, 30px…) continua literal de propósito:
+   * inventar degrau para cobrir caso único transformaria a escala numa lista,
+   * e arredondar para "encaixar" mudaria a tela. O nome é o próprio valor,
+   * para nenhuma troca poder mentir sobre quanto mede.
+   */
+  --esp-2: 2px;
+  --esp-4: 4px;
+  --esp-6: 6px;
+  --esp-8: 8px;
+  --esp-10: 10px;
+  --esp-12: 12px;
+  --esp-14: 14px;
+  --esp-16: 16px;
+  --esp-18: 18px;
+  --esp-20: 20px;
+  --esp-22: 22px;
+  --esp-24: 24px;
+  --esp-26: 26px;
+  --esp-40: 40px;
+
   /* Medidas do casco do app (espelhadas em tokens.ts para o JS). */
   --sidebar: 252px;
   --rail: 76px;

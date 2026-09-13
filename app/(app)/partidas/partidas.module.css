@@ -10,8 +10,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 6px;
-  margin-top: 6px;
+  gap: var(--esp-6);
+  margin-top: var(--esp-6);
   color: var(--ink-soft);
 }
 
@@ -24,7 +24,7 @@
 .gpsLink {
   align-self: flex-start;
   display: block;
-  margin-top: 8px;
+  margin-top: var(--esp-8);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
@@ -36,15 +36,15 @@
 }
 
 .criar {
-  margin-top: 18px;
+  margin-top: var(--esp-18);
 }
 
 .divisor {
-  margin: 20px 0;
+  margin: var(--esp-20) 0;
 }
 
 .filtros {
-  margin-bottom: 18px;
+  margin-bottom: var(--esp-18);
 }
 
 .filtroLabel {
@@ -52,14 +52,14 @@
   font-size: 10.5px;
   letter-spacing: 1.4px;
   color: var(--ink-soft);
-  margin-bottom: 10px;
+  margin-bottom: var(--esp-10);
 }
 
 .filtroChips {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--esp-8);
 }
 
 .filtroChip {
@@ -91,7 +91,7 @@
 .carregando {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: var(--esp-40);
   color: var(--clay-ink);
 }
 
@@ -111,7 +111,7 @@
   font-weight: 600;
   font-size: 18px;
   color: var(--ink);
-  margin-top: 12px;
+  margin-top: var(--esp-12);
   text-align: center;
 }
 
@@ -121,16 +121,16 @@
   line-height: 21px;
   color: var(--ink-soft);
   text-align: center;
-  margin-top: 8px;
+  margin-top: var(--esp-8);
   max-width: 420px;
 }
 
 .emptyBtn {
-  margin-top: 18px;
+  margin-top: var(--esp-18);
 }
 
 .lista {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--esp-12);
 }

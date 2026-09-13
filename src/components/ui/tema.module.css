@@ -20,7 +20,7 @@
   justify-content: center;
   gap: 7px;
   height: 36px;
-  padding: 0 14px;
+  padding: 0 var(--esp-14);
   border-radius: var(--r-xs);
   font-family: var(--font-body);
   font-weight: 500;

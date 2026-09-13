@@ -39,7 +39,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--esp-8);
 }
 
 .chip {

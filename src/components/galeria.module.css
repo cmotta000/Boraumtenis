@@ -1,5 +1,5 @@
 .mosaico {
-  margin-top: 14px;
+  margin-top: var(--esp-14);
 }
 
 .img {
@@ -32,7 +32,7 @@
 .linha {
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: var(--esp-4);
   height: 300px;
   border-radius: var(--r-md);
   overflow: hidden;
@@ -46,7 +46,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--esp-4);
 }
 
 .meio {
@@ -67,7 +67,7 @@
 .grade {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
+  gap: var(--esp-4);
 }
 
 .gradeItem {
@@ -76,7 +76,7 @@
 
 .gradePerfil {
   display: grid;
-  gap: 6px;
+  gap: var(--esp-6);
 }
 
 .quadrada {
@@ -107,7 +107,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: var(--esp-24);
 }
 
 .cheia {
@@ -143,7 +143,7 @@
   bottom: 26px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 6px 14px;
+  padding: var(--esp-6) var(--esp-14);
   border-radius: var(--r-pill);
   background: var(--scrim-leve);
   color: var(--on-clay);

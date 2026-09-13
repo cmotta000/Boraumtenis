@@ -10,13 +10,13 @@
 .carregando {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: var(--esp-40);
   color: var(--clay-ink);
 }
 
 /* — Cartões. */
 .cartao {
-  padding: 22px 20px;
+  padding: var(--esp-22) var(--esp-20);
 }
 
 .tituloCartao {
@@ -31,14 +31,14 @@
   font-size: 14px;
   line-height: 20px;
   color: var(--ink-soft);
-  margin: 6px 0 18px;
+  margin: var(--esp-6) 0 var(--esp-18);
 }
 
 .linkSecundario {
   display: block;
   width: 100%;
-  margin-top: 12px;
-  padding: 6px 0;
+  margin-top: var(--esp-12);
+  padding: var(--esp-6) 0;
   background: none;
   border: none;
   font-family: var(--font-body);
@@ -53,7 +53,7 @@
 }
 
 .salvo {
-  margin-top: 12px;
+  margin-top: var(--esp-12);
   font-family: var(--font-body);
   font-size: 13.5px;
   font-weight: 600;
@@ -63,7 +63,7 @@
 
 /* — Gravação em curso. */
 .cartaoGravando {
-  padding: 26px 20px 20px;
+  padding: var(--esp-26) var(--esp-20) var(--esp-20);
   text-align: center;
   border: 1px solid var(--clay);
 }
@@ -84,13 +84,13 @@
   letter-spacing: 1.4px;
   text-transform: uppercase;
   color: var(--clay-ink);
-  margin-top: 8px;
+  margin-top: var(--esp-8);
 }
 
 .medidas {
   display: flex;
   flex-direction: row;
-  margin: 20px 0 0;
+  margin: var(--esp-20) 0 0;
   border-top: 1px solid var(--chalk);
   border-bottom: 1px solid var(--chalk);
 }
@@ -99,8 +99,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 12px 8px;
+  gap: var(--esp-2);
+  padding: var(--esp-12) var(--esp-8);
   border-right: 1px solid var(--chalk);
 }
 
@@ -126,8 +126,8 @@
 
 /* Aviso de GPS: é informação, não erro — o cronômetro continua valendo. */
 .avisoGps {
-  margin-top: 14px;
-  padding: 10px 12px;
+  margin-top: var(--esp-14);
+  padding: var(--esp-10) var(--esp-12);
   border-radius: var(--r-sm);
   background: var(--chalk);
   font-family: var(--font-body);
@@ -141,7 +141,7 @@
   font-family: var(--font-body);
   font-size: 14.5px;
   color: var(--ink-soft);
-  margin: 4px 0 18px;
+  margin: var(--esp-4) 0 var(--esp-18);
 }
 
 .resumoForte {
@@ -155,7 +155,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--esp-12);
 }
 
 .campo {
@@ -164,7 +164,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-bottom: 14px;
+  margin-bottom: var(--esp-14);
 }
 
 .rotulo {
@@ -178,7 +178,7 @@
 .input {
   width: 100%;
   height: 42px;
-  padding: 0 12px;
+  padding: 0 var(--esp-12);
   border-radius: var(--r-sm);
   border: 1px solid var(--net);
   background: var(--card);
@@ -205,9 +205,9 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 12px;
-  margin-top: 18px;
-  padding-top: 16px;
+  gap: var(--esp-12);
+  margin-top: var(--esp-18);
+  padding-top: var(--esp-16);
   border-top: 1px solid var(--chalk);
 }
 
@@ -268,7 +268,7 @@
 }
 
 .erro {
-  margin-top: 14px;
+  margin-top: var(--esp-14);
   font-family: var(--font-body);
   font-size: 13.5px;
   line-height: 19px;
@@ -278,8 +278,8 @@
 .acoes {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  margin-top: 18px;
+  gap: var(--esp-10);
+  margin-top: var(--esp-18);
 }
 
 .acoes > * {
@@ -288,11 +288,11 @@
 
 /* — Histórico. */
 .secao {
-  margin-top: 26px;
+  margin-top: var(--esp-26);
 }
 
 .divisor {
-  margin: 10px 0 16px;
+  margin: var(--esp-10) 0 var(--esp-16);
 }
 
 .vazio {
@@ -313,7 +313,7 @@
 }
 
 .item {
-  padding: 13px 16px;
+  padding: 13px var(--esp-16);
   border-bottom: 1px solid var(--chalk);
 }
 
@@ -325,7 +325,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: var(--esp-8);
 }
 
 .itemData {
@@ -345,7 +345,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: var(--esp-12);
   margin-top: 5px;
 }
 
@@ -367,7 +367,7 @@
 .itemTrajeto {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--esp-4);
   font-family: var(--font-body);
   font-size: 12.5px;
   color: var(--ink-soft);

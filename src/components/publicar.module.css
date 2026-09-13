@@ -2,14 +2,14 @@
   background: var(--card);
   border-radius: var(--r-md);
   border: 1px solid var(--net);
-  padding: 16px;
+  padding: var(--esp-16);
   box-shadow: var(--elev-card);
 }
 
 .linha {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: var(--esp-12);
   align-items: flex-start;
 }
 
@@ -22,7 +22,7 @@
   border-radius: var(--r-sm);
   border: 1px solid var(--net);
   background: var(--chalk);
-  padding: 0 14px;
+  padding: 0 var(--esp-14);
   font-family: var(--font-body);
   font-size: 14.5px;
   color: var(--ink-soft);
@@ -38,7 +38,7 @@
   min-height: 62px;
   border-radius: var(--r-sm);
   border: 1px solid var(--net);
-  padding: 12px;
+  padding: var(--esp-12);
   font-family: var(--font-body);
   font-size: 14.5px;
   line-height: 21px;
@@ -51,8 +51,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
+  gap: var(--esp-8);
+  margin-top: var(--esp-12);
 }
 
 .thumbBox {
@@ -88,15 +88,15 @@
   font-family: var(--font-body);
   font-size: 13.5px;
   color: var(--danger);
-  margin-top: 10px;
+  margin-top: var(--esp-10);
 }
 
 .acoes {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
-  margin-top: 12px;
+  gap: var(--esp-10);
+  margin-top: var(--esp-12);
 }
 
 .addFoto {
@@ -105,7 +105,7 @@
   align-items: center;
   gap: 7px;
   height: 38px;
-  padding: 0 12px;
+  padding: 0 var(--esp-12);
   border-radius: var(--r-sm);
   border: 1px solid var(--net);
   font-family: var(--font-body);
@@ -128,7 +128,7 @@
 
 .cancelar {
   height: 38px;
-  padding: 0 10px;
+  padding: 0 var(--esp-10);
   font-family: var(--font-body);
   font-size: 13px;
   color: var(--ink-soft);
@@ -137,7 +137,7 @@
 .publicar {
   height: 38px;
   min-width: 96px;
-  padding: 0 18px;
+  padding: 0 var(--esp-18);
   border-radius: var(--r-sm);
   background: var(--clay);
   display: inline-flex;
