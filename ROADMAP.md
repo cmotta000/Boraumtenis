@@ -49,7 +49,7 @@
 - [x] (Eu) Perfil auto-criado no cadastro (trigger) + tela de perfil com logout real
 - [ ] (Você) Ativar OAuth Google/Apple no console (opcional) e decidir se mantém confirmação de e-mail
 - [~] (Eu) Onboarding completo: foto ✅, nível ✅, mão dominante ✅ — falta disponibilidade
-- [ ] (Eu) Captura e persistência de localização no perfil (GEOGRAPHY) — usada em Partidas, falta salvar no perfil
+- [x] (Eu) Captura e persistência de localização no perfil (GEOGRAPHY) — usada em Partidas e salva no perfil por `definir_minha_localizacao`
 - [~] **Marco:** usuário entra e vê o menu com opções ✅ (perfil completo/edição fica na sequência)
 
 ## Fase 2 — Criar e Descobrir Partidas (núcleo)

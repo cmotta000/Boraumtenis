@@ -69,8 +69,14 @@ drop policy if exists divisoes_leitura on public.divisions;
 create policy divisoes_leitura on public.divisions
   for select to authenticated using (true);
 
+-- O revoke vem ANTES do grant, e tira de `authenticated` também. Tirar só de
+-- `anon` não bastava: os default privileges do Supabase entregam a tabela nova
+-- inteira para `authenticated`, e o que sobrava era INSERT/UPDATE/DELETE — que
+-- a RLS barra, porque a única policy aqui é de SELECT — e TRUNCATE, que a RLS
+-- NÃO barra. Catálogo de cinco linhas que qualquer sessão logada podia esvaziar.
+-- É o mesmo formato de 20260913_atividades.sql.
+revoke all on public.divisions from anon, authenticated;
 grant select on public.divisions to authenticated;
-revoke all on public.divisions from anon;
 
 
 -- ----------------------------------------------------------------------------

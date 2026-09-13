@@ -36,6 +36,12 @@ function faixa(total: number): number {
   return Math.max(1, Math.floor(total * 0.2));
 }
 
+/** Quantas linhas a classificação pede de uma vez. */
+const LIMITE_CLASSIFICACAO = 50;
+
+/** Sem este tanto de jogos ninguém sobe, por mais pontos que tenha. */
+const JOGOS_PARA_PROMOVER = 3;
+
 /** Dias que faltam até o fim da temporada. `fim` vem como 'AAAA-MM-DD'. */
 function diasAte(fim: string): { dias: number; data: Date } {
   const [a, m, d] = fim.split('-').map(Number);
@@ -134,21 +140,35 @@ export default function Liga() {
 
   const cor = minha.division_cor ?? 'var(--clay)';
   const noTopo = minha.division_ordem >= 5;
-  const naFaixa = minha.pontos_para_promocao === 0;
+  // `pontos_para_promocao` chega 0 tanto para quem está na faixa quanto para
+  // quem apenas EMPATOU em pontos com o último dela — e numa temporada recém-
+  // semeada isso é quase todo mundo, zerado. Quem sabe se eu subo de verdade é
+  // a RPC: `promovendo` exige posição na faixa E os 3 jogos.
   const alvo = minha.pontos + minha.pontos_para_promocao;
-  const progresso = noTopo ? 100 : alvo > 0 ? Math.round((minha.pontos / alvo) * 100) : 0;
+  const empatadoNoCorte = !minha.promovendo && minha.pontos_para_promocao === 0;
+  const faltamJogos = Math.max(0, JOGOS_PARA_PROMOVER - minha.jogos);
+  const progresso =
+    noTopo || minha.promovendo ? 100 : alvo > 0 ? Math.round((minha.pontos / alvo) * 100) : 0;
   const proxima = divisoes.find((d) => d.ordem === minha.division_ordem + 1);
   const IconeTendencia = ICONE_TENDENCIA[minha.tendencia];
 
-  const total = linhas.length;
-  const corte = faixa(total);
   const divisaoAtual = divisoes.find((d) => d.id === divisaoVista);
+  const vendoMinhaDivisao = divisaoVista === minha.division_id;
+  // `linhas` vem truncada em LIMITE_CLASSIFICACAO. Contar as linhas da tela
+  // como se fossem a divisão inteira jogaria o corte de rebaixamento no meio
+  // da tabela: numa divisão de 120, a marca cairia na 41ª linha, informando
+  // errado em silêncio. Na minha divisão a RPC diz o total exato; nas outras,
+  // ter voltado menos que o limite é a prova de que a lista acabou.
+  const total = vendoMinhaDivisao ? minha.total_na_divisao : linhas.length;
+  const listaCompleta = vendoMinhaDivisao
+    ? linhas.length >= minha.total_na_divisao
+    : linhas.length < LIMITE_CLASSIFICACAO;
+  const corte = faixa(total);
   // O Saibro não tem degrau abaixo e os Mestres não têm degrau acima: marcar
   // "zona de rebaixamento" na divisão de entrada é assustar à toa.
   const ordemVista = divisaoAtual?.ordem ?? 1;
   const rotuloDaTabela =
-    (divisaoAtual?.nome ?? 'Classificação') +
-    (divisaoVista === minha.division_id ? ' · sua divisão' : '');
+    (divisaoAtual?.nome ?? 'Classificação') + (vendoMinhaDivisao ? ' · sua divisão' : '');
 
   return (
     <Pagina>
@@ -208,10 +228,22 @@ export default function Liga() {
 
           {noTopo ? (
             <p className={estilos.promocaoTexto}>Não tem andar acima. Só dá pra cair.</p>
-          ) : naFaixa ? (
+          ) : minha.promovendo ? (
             <p className={estilos.promocaoTexto}>
               <strong className={estilos.promocaoForte}>Você está na zona de promoção.</strong>{' '}
               Terminando a temporada aí, sobe para {proxima?.nome ?? 'a divisão de cima'}.
+            </p>
+          ) : faltamJogos > 0 ? (
+            <p className={estilos.promocaoTexto}>
+              A promoção pede{' '}
+              <strong className={estilos.promocaoForte}>{JOGOS_PARA_PROMOVER} jogos</strong> na
+              temporada — {minha.jogos === 0 ? 'você ainda não jogou nenhum' : `você tem ${minha.jogos}`}.
+              Ponto não basta, tem que aparecer.
+            </p>
+          ) : empatadoNoCorte ? (
+            <p className={estilos.promocaoTexto}>
+              Você empatou em pontos com a faixa de promoção. O desempate é por vitórias — falta
+              ganhar uma.
             </p>
           ) : (
             <p className={estilos.promocaoTexto}>
@@ -289,9 +321,10 @@ export default function Liga() {
             const Icone = ICONE_TENDENCIA[l.tendencia];
             // A linha divisória cai DEPOIS do último promovido e ANTES do
             // primeiro rebaixado — o mesmo corte que a rotina do banco usa.
-            const fimDaPromocao = ordemVista < 5 && i + 1 === corte && total > corte * 2;
+            const fimDaPromocao =
+              listaCompleta && ordemVista < 5 && i + 1 === corte && total > corte * 2;
             const inicioDoRebaixamento =
-              ordemVista > 1 && i === total - corte && total > corte * 2;
+              listaCompleta && ordemVista > 1 && i === total - corte && total > corte * 2;
 
             return (
               <div key={l.user_id}>
@@ -299,7 +332,8 @@ export default function Liga() {
                   <p className={`${estilos.zona} ${estilos.zonaQueda}`}>zona de rebaixamento</p>
                 )}
                 <div className={`${estilos.row} ${l.eu ? estilos.rowEu : ''}`}>
-                  <span className={`${estilos.pos} ${i < corte ? estilos.posTop : ''}`}>
+                  <span
+                    className={`${estilos.pos} ${listaCompleta && i < corte ? estilos.posTop : ''}`}>
                     {l.posicao}
                   </span>
                   <div className={estilos.jogador}>
