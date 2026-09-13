@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 
 import { Avatar, Spinner } from '@/components/ui';
 import { useAuth } from '@/lib/auth';
+import { useMinhaTemporada } from '@/lib/liga';
 import { useNaoLidas } from '@/lib/notificacoes';
 import { useMeuPerfil } from '@/lib/perfil';
 
@@ -52,6 +53,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { perfil } = useMeuPerfil();
+  const { temporada } = useMinhaTemporada();
   const naoLidas = useNaoLidas();
 
   useEffect(() => {
@@ -97,14 +99,22 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
 
+        {/*
+          Estes números são os da temporada corrente, não os de carreira de
+          `profiles` — é o que o rótulo promete e é o que a /liga mostra.
+          Enquanto a resposta não chega, a barra fica com o travessão: piscar
+          um número errado aqui é pior, porque esta barra está em toda tela.
+        */}
         <div className={estilos.temporada}>
           <p className={estilos.temporadaLabel}>TEMPORADA</p>
           <p className={estilos.temporadaLinha}>
-            <span className={estilos.temporadaPontos}>{perfil?.pontos ?? 0}</span>
+            <span className={estilos.temporadaPontos}>{temporada ? temporada.pontos : '—'}</span>
             <span className={estilos.temporadaUnidade}>pts</span>
           </p>
           <p className={estilos.temporadaSaldo}>
-            {perfil?.vitorias ?? 0}V · {perfil?.derrotas ?? 0}D
+            {temporada
+              ? `${temporada.vitorias}V · ${temporada.derrotas}D · ${temporada.jogos}J`
+              : '\u00a0'}
           </p>
         </div>
 
