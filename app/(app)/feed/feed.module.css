@@ -1,0 +1,268 @@
+.compositor {
+  margin-bottom: 16px;
+}
+
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  color: var(--clay);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  color: var(--ink-soft);
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+  margin-top: 12px;
+}
+
+.emptyText {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 8px;
+  max-width: 420px;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.post {
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  padding: 18px;
+  box-shadow: var(--elev-card);
+}
+
+.postHead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.postIdentidade {
+  flex: 1;
+  min-width: 0;
+}
+
+.postNome {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 21px;
+}
+
+.postVerbo {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.postMeta {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.excluir {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+}
+
+.excluir:hover {
+  opacity: 0.6;
+}
+
+.placar {
+  margin-top: 14px;
+}
+
+.legenda {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  color: var(--ink);
+  margin-top: 14px;
+  white-space: pre-wrap;
+}
+
+.acoes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.acao {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.acao:hover {
+  opacity: 0.7;
+}
+
+.acaoCurtida {
+  color: var(--clay);
+  font-weight: 600;
+}
+
+.espaco {
+  flex: 1;
+}
+
+.verPartidaBox {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--clay);
+}
+
+.verPartidaBox:hover {
+  opacity: 0.7;
+}
+
+.suaVitoria {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--ok);
+  font-weight: 500;
+  margin-top: 12px;
+}
+
+.comentarios {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--net);
+  padding-top: 14px;
+}
+
+.comentario {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.comentarioCorpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.comentarioNome {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.comentarioTempo {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.comentarioTexto {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+.comentarInput {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.comentarCampo {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--net);
+  padding: 0 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--card);
+}
+
+.comentarBtn {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--r-sm);
+  background: var(--court);
+  color: var(--court-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.comentarBtn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.comentarBtn:disabled {
+  opacity: 0.4;
+}
+
+.mais {
+  align-self: center;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--net);
+  background: var(--card);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.mais:hover {
+  opacity: 0.8;
+}

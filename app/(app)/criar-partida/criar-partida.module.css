@@ -1,0 +1,270 @@
+.lede {
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  margin-top: 12px;
+}
+
+.divisor {
+  margin: 20px 0;
+}
+
+/** É um <fieldset> pelo rótulo de grupo; o desenho vem todo daqui. */
+.grupo {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.label {
+  display: block;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.escolhaCurta {
+  max-width: 420px;
+}
+
+.escolhaEstreita {
+  max-width: 240px;
+}
+
+.input {
+  width: 100%;
+  min-height: 50px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--net);
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+  background: #fff;
+}
+
+.input:focus {
+  border-color: var(--clay);
+}
+
+.textarea {
+  height: 96px;
+  resize: vertical;
+}
+
+/**
+ * Fileiras que rolam de lado: dias e horários. A barra fica escondida — a
+ * fileira já se anuncia pelos chips cortados na borda, e o desenho original
+ * também não a mostrava.
+ */
+.hRow {
+  display: flex;
+  flex-direction: row;
+  gap: 9px;
+  padding: 2px 8px 2px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hRow::-webkit-scrollbar {
+  display: none;
+}
+
+.dayChip {
+  min-width: 66px;
+  flex: none;
+  padding: 9px 14px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--net);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dayChipTop {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.dayChipSub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.timeChip {
+  padding: 0 15px;
+  height: 44px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--net);
+  background: #fff;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.dayChip[aria-pressed='true'],
+.timeChip[aria-pressed='true'] {
+  background: var(--clay);
+  border-color: var(--clay);
+  color: var(--chalk);
+}
+
+.dayChip[aria-pressed='true'] .dayChipTop,
+.dayChip[aria-pressed='true'] .dayChipSub {
+  color: var(--chalk);
+}
+
+/* — Busca de local — */
+
+.searchRow {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.gpsMini {
+  width: 50px;
+  flex: none;
+  border-radius: var(--r-sm);
+  background: var(--clay);
+  color: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gpsMini:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.gpsMini:disabled {
+  opacity: 0.6;
+}
+
+.searchHint {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.suggestBox {
+  margin-top: 8px;
+  background: #fff;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--net);
+  overflow: hidden;
+}
+
+.suggestRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  text-align: left;
+  color: var(--ink-soft);
+}
+
+.suggestRow + .suggestRow {
+  border-top: 1px solid var(--net);
+}
+
+.suggestRow:hover {
+  background: var(--chalk);
+}
+
+.suggestCorpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.suggestNome {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.suggestDesc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mapa {
+  margin-top: 12px;
+}
+
+.confirmRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.confirmPin {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: var(--ok);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 13px;
+  text-align: center;
+  line-height: 22px;
+}
+
+.confirmText {
+  flex: 1;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.geoMsg {
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.erro {
+  color: var(--danger);
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.publicar {
+  margin-top: 22px;
+}

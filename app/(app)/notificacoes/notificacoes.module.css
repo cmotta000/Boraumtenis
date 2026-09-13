@@ -1,0 +1,136 @@
+.lerTudo {
+  align-self: flex-start;
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--clay);
+}
+
+.lerTudo:hover {
+  opacity: 0.75;
+}
+
+.divisor {
+  margin: 18px 0;
+}
+
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  color: var(--clay);
+}
+
+.grupos {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grupoTitulo {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 1.4px;
+  color: var(--ink-soft);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  color: var(--ink-soft);
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+  margin-top: 12px;
+}
+
+.emptyText {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 8px;
+  max-width: 400px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 13px;
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  padding: 14px;
+  text-align: left;
+}
+
+.row:hover {
+  opacity: 0.9;
+}
+
+.rowUnread {
+  border-left: 3px solid var(--clay);
+}
+
+.rowIcon {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: var(--r-sm);
+  background: var(--chalk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+}
+
+.rowUnread .rowIcon {
+  color: var(--clay);
+}
+
+.rowCorpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.rowText {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  color: var(--ink);
+}
+
+.rowUnread .rowText {
+  font-weight: 600;
+}
+
+.rowTime {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: var(--clay);
+}

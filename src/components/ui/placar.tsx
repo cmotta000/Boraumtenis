@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
-
 import type { LadoJogador, SetPlacar } from '@/lib/database.types';
-import { colors, font, radius, tabular } from '@/theme/tokens';
+
+import estilos from './placar.module.css';
 
 /**
  * Placar de transmissão — o objeto característico do app.
@@ -28,76 +27,29 @@ export function Placar({
   const linhaP = perdedores.map(nome).join(' e ') || 'Adversário';
 
   return (
-    <View style={[styles.placar, compacto && { padding: 12 }]}>
-      <View style={styles.placarLinha}>
-        <View style={styles.placarRisco} />
-        <View style={styles.placarBola} />
-        <Text style={[styles.placarNome, styles.placarNomeV]} numberOfLines={1}>
-          {linhaV}
-        </Text>
+    <div className={`${estilos.placar} ${compacto ? estilos.compacto : ''}`}>
+      <div className={estilos.linha}>
+        <span className={estilos.risco} aria-hidden />
+        <span className={estilos.bola} aria-hidden />
+        <span className={`${estilos.nome} ${estilos.nomeV}`}>{linhaV}</span>
         {sets.map((s, i) => (
-          <Text key={i} style={[styles.placarGame, styles.placarGameV]}>
+          <span key={i} className={`${estilos.game} ${estilos.gameV}`}>
             {s.v}
-          </Text>
+          </span>
         ))}
-      </View>
+      </div>
 
-      <View style={[styles.placarLinha, { marginTop: 6 }]}>
-        <View style={styles.placarBolaVazia} />
-        <Text style={styles.placarNome} numberOfLines={1}>
-          {linhaP}
-        </Text>
+      <div className={`${estilos.linha} ${estilos.linhaP}`}>
+        <span className={estilos.bolaVazia} aria-hidden />
+        <span className={estilos.nome}>{linhaP}</span>
         {sets.map((s, i) => (
-          <Text key={i} style={styles.placarGame}>
+          <span key={i} className={estilos.game}>
             {s.p}
-          </Text>
+          </span>
         ))}
-      </View>
+      </div>
 
-      {pontos != null && (
-        <View style={styles.placarPontos}>
-          <Text style={styles.placarPontosTexto}>+{pontos} pts</Text>
-        </View>
-      )}
-    </View>
+      {pontos != null && <p className={estilos.pontos}>+{pontos} pts</p>}
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  placar: {
-    backgroundColor: colors.chalk,
-    borderRadius: radius.sm,
-    padding: 14,
-    paddingLeft: 16,
-  },
-  placarLinha: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  placarRisco: {
-    position: 'absolute',
-    left: -16,
-    top: -2,
-    bottom: -2,
-    width: 3,
-    borderRadius: 2,
-    backgroundColor: colors.clay,
-  },
-  placarBola: { width: 7, height: 7, borderRadius: 4, backgroundColor: colors.ball },
-  placarBolaVazia: { width: 7, height: 7 },
-  placarNome: {
-    flex: 1,
-    fontFamily: font.body,
-    fontSize: 14.5,
-    color: colors.inkSoft,
-  },
-  placarNomeV: { fontWeight: '600', color: colors.ink },
-  placarGame: {
-    width: 26,
-    textAlign: 'center',
-    fontFamily: font.mono,
-    fontSize: 15,
-    color: colors.inkSoft,
-    ...tabular,
-  },
-  placarGameV: { fontWeight: '600', color: colors.ink },
-  placarPontos: { marginTop: 12, borderTopWidth: 1, borderTopColor: colors.net, paddingTop: 10 },
-  placarPontosTexto: { fontFamily: font.mono, fontSize: 11.5, color: colors.clayDeep, letterSpacing: 0.4 },
-});

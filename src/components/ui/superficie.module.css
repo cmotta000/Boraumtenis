@@ -1,0 +1,69 @@
+/** Linha de quadra (giz). Divisor estrutural da identidade. */
+.courtLine {
+  height: 1px;
+  background: var(--net);
+  border: 0;
+  margin: 0;
+}
+
+/** Rótulo de seção: mono, versalete, discreto. */
+.secao {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 1.4px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/** Cartão branco padrão do conteúdo. */
+.card {
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  padding: 18px;
+  box-shadow: var(--elev-card);
+}
+
+.voltar {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--net);
+  background: var(--card);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.voltar:hover {
+  border-color: var(--ink);
+}
+
+/**
+ * Moldura padrão das telas de dentro do app: fundo de giz, respiro nas
+ * laterais e a coluna de conteúdo centralizada na largura máxima.
+ */
+.pagina {
+  display: flex;
+  justify-content: center;
+  background: var(--chalk);
+  min-height: 100%;
+  padding: 30px 22px 44px;
+}
+
+.paginaConteudo {
+  width: 100%;
+  max-width: var(--max-w);
+}
+
+/** Coluna de leitura: texto e foto pedem uma medida menor que a do app todo. */
+.paginaConteudo.paginaEstreita {
+  max-width: 720px;
+}

@@ -1,0 +1,87 @@
+.placar {
+  background: var(--chalk);
+  border-radius: var(--r-sm);
+  padding: 14px 14px 14px 16px;
+}
+
+.compacto {
+  padding: 12px;
+}
+
+.linha {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.linhaP {
+  margin-top: 6px;
+}
+
+/** Risco de saibro na borda, marcando o lado vencedor. */
+.risco {
+  position: absolute;
+  left: -16px;
+  top: -2px;
+  bottom: -2px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--clay);
+}
+
+.bola {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
+  background: var(--ball);
+  flex: none;
+}
+
+.bolaVazia {
+  width: 7px;
+  height: 7px;
+  flex: none;
+}
+
+.nome {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nomeV {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.game {
+  width: 26px;
+  flex: none;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.gameV {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pontos {
+  margin-top: 12px;
+  border-top: 1px solid var(--net);
+  padding-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--clay-deep);
+  letter-spacing: 0.4px;
+}

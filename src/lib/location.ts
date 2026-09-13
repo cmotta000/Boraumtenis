@@ -1,6 +1,3 @@
-import * as Location from 'expo-location';
-import { Platform } from 'react-native';
-
 import { reverseGeocode } from '@/lib/geocode';
 import { supabase } from '@/lib/supabase';
 
@@ -25,49 +22,63 @@ export type Origem = {
 /** Centro de São Paulo — só quando não há GPS nem localização no perfil. */
 const PADRAO = { lat: -23.5505, lng: -46.6333 };
 
+/** `navigator.geolocation` em forma de promessa. */
+function posicaoAtual(): Promise<GeolocationPosition> {
+  return new Promise((resolve, reject) => {
+    if (!('geolocation' in navigator)) {
+      reject(new Error('Este navegador não sabe informar a localização.'));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      enableHighAccuracy: false, // equivale ao "Balanced" que usávamos antes
+      timeout: 15_000,
+      maximumAge: 60_000,
+    });
+  });
+}
+
 /**
- * Captura a posição atual (GPS/navegador) e resolve cidade/UF.
- *
- * Em nativo usamos o geocoder do sistema; na web ele não existe, então caímos
- * no Nominatim (mesmo serviço usado na busca de endereços). Assim a cidade
- * também é preenchida no navegador, que é onde o app roda hoje.
+ * Estado da permissão sem provocar o diálogo. Nem todo navegador implementa a
+ * Permissions API para geolocalização — quando não dá pra saber, devolvemos
+ * 'prompt', que é o caso conservador (só pede se o usuário mandou pedir).
+ */
+async function estadoDaPermissao(): Promise<PermissionState> {
+  try {
+    const p = await navigator.permissions.query({ name: 'geolocation' as PermissionName });
+    return p.state;
+  } catch {
+    return 'prompt';
+  }
+}
+
+/**
+ * Captura a posição atual e resolve cidade/UF pelo Nominatim (o mesmo serviço
+ * usado na busca de endereços). Precisa partir de um gesto do usuário — é
+ * quando o navegador aceita abrir o pedido de permissão.
  */
 export async function capturarLocalizacao(): Promise<LocalCapturado> {
-  const { status } = await Location.requestForegroundPermissionsAsync();
-  if (status !== 'granted') {
+  let pos: GeolocationPosition;
+  try {
+    pos = await posicaoAtual();
+  } catch {
     throw new Error('Permissão de localização negada. Você pode digitar a cidade manualmente.');
   }
 
-  const pos = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
   const lat = pos.coords.latitude;
   const lng = pos.coords.longitude;
 
   let cidade: string | null = null;
   let uf: string | null = null;
 
-  if (Platform.OS !== 'web') {
-    try {
-      const [addr] = await Location.reverseGeocodeAsync({ latitude: lat, longitude: lng });
-      if (addr) {
-        cidade = addr.city ?? addr.subregion ?? null;
-        uf = normalizarUf(addr.region);
-      }
-    } catch {
-      // cai no geocoder web abaixo
-    }
-  }
-
-  if (!cidade) {
-    try {
-      const local = await reverseGeocode(lat, lng);
-      // `descricao` vem como "Bairro, Cidade/UF" — a última parte é o que queremos.
-      const ultima = local.descricao.split(',').pop()?.trim() ?? '';
-      const [c, u] = ultima.split('/');
-      cidade = c?.trim() || null;
-      uf = normalizarUf(u?.trim() ?? null);
-    } catch {
-      // silencioso — ficamos só com as coordenadas
-    }
+  try {
+    const local = await reverseGeocode(lat, lng);
+    // `descricao` vem como "Bairro, Cidade/UF" — a última parte é o que queremos.
+    const ultima = local.descricao.split(',').pop()?.trim() ?? '';
+    const [c, u] = ultima.split('/');
+    cidade = c?.trim() || null;
+    uf = normalizarUf(u?.trim() ?? null);
+  } catch {
+    // silencioso — ficamos só com as coordenadas
   }
 
   return { lat, lng, cidade, uf };
@@ -88,13 +99,9 @@ export async function salvarLocalizacaoNoPerfil(lat: number, lng: number): Promi
  */
 export async function origemDeBusca(pedirPermissao = false): Promise<Origem> {
   try {
-    const atual = await Location.getForegroundPermissionsAsync();
-    const permitido =
-      atual.status === 'granted' ||
-      (pedirPermissao && (await Location.requestForegroundPermissionsAsync()).status === 'granted');
-
-    if (permitido) {
-      const pos = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
+    const estado = await estadoDaPermissao();
+    if (estado === 'granted' || (estado === 'prompt' && pedirPermissao)) {
+      const pos = await posicaoAtual();
       const { latitude: lat, longitude: lng } = pos.coords;
       // Guarda pro próximo acesso funcionar mesmo sem GPS.
       salvarLocalizacaoNoPerfil(lat, lng).catch(() => {});

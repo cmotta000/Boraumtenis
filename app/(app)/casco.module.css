@@ -1,0 +1,385 @@
+/**
+ * O casco do app em três estados, todos resolvidos por media query (nada de
+ * medir a janela em JavaScript — assim o servidor já entrega o HTML certo):
+ *
+ *   < 900px   barra inferior, sem lateral
+ *   900–1179  lateral recolhida (só ícones)
+ *   >= 1180   lateral completa, com rótulos
+ */
+
+.boot {
+  min-height: 100dvh;
+  background: var(--court);
+  color: var(--court-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: row;
+  background: var(--court);
+}
+
+/* — Barra lateral — */
+
+.sidebar {
+  display: none;
+  width: var(--rail);
+  flex: none;
+  background: var(--court);
+  padding: 18px 12px;
+  flex-direction: column;
+}
+
+.marca {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 10px;
+  margin-bottom: 26px;
+}
+
+.bola {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: var(--ball);
+}
+
+.marcaTexto {
+  display: none;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 12.5px;
+  letter-spacing: 1.4px;
+  line-height: 15px;
+  color: var(--court-text);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 40px;
+  padding: 0;
+  border-radius: var(--r-sm);
+  color: var(--court-mute);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14.5px;
+}
+
+.item:hover {
+  background: var(--court-raise);
+}
+
+.item[aria-current='page'] {
+  background: var(--court-raise);
+  color: var(--court-text);
+  font-weight: 600;
+}
+
+/** Ativo = risco de giz da bola na borda. */
+.marcador {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--ball);
+}
+
+.itemTexto {
+  display: none;
+}
+
+.temporada {
+  display: none;
+  margin: 22px 4px 0;
+  padding: 18px 8px 0;
+  border-top: 1px solid var(--court-line);
+}
+
+.temporadaLabel {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.4px;
+  color: var(--court-mute);
+}
+
+.temporadaLinha {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.temporadaPontos {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--court-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.temporadaUnidade {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--court-mute);
+}
+
+.temporadaSaldo {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--court-mute);
+  margin-top: 2px;
+}
+
+.espaco {
+  flex: 1;
+}
+
+.usuario {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+}
+
+.usuario:hover {
+  background: var(--court-raise);
+}
+
+.usuarioDados {
+  display: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.usuarioNome {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--court-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.usuarioLink {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  color: var(--court-mute);
+  margin-top: 1px;
+}
+
+/* — Área principal — */
+
+.principal {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--chalk);
+}
+
+.topbar {
+  height: var(--topbar);
+  flex: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  background: var(--card);
+  border-bottom: 1px solid var(--net);
+}
+
+.topbarTitulo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.2px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iconeBtn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+
+.iconeBtn:hover {
+  background: var(--chalk);
+}
+
+.badge {
+  position: absolute;
+  top: 1px;
+  right: 0;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3.5px;
+  border-radius: var(--r-pill);
+  background: var(--clay);
+  border: 1.5px solid var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 9px;
+  color: var(--card);
+  font-variant-numeric: tabular-nums;
+}
+
+.cta {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  flex: none;
+  padding: 0 12px;
+  border-radius: var(--r-sm);
+  background: var(--clay);
+  color: var(--card);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+.cta:hover {
+  background: var(--clay-deep);
+}
+
+.ctaTexto {
+  display: none;
+}
+
+.conteudo {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--chalk);
+}
+
+/* — Navegação inferior (telas estreitas) — */
+
+.barraInferior {
+  display: flex;
+  flex-direction: row;
+  height: var(--bottom-bar);
+  flex: none;
+  background: var(--court);
+  padding-bottom: 4px;
+}
+
+.itemInferior {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding-top: 4px;
+  color: var(--court-mute);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 10.5px;
+}
+
+.itemInferior[aria-current='page'] {
+  color: var(--court-text);
+}
+
+/** O ícone acompanha a cor do item, e o ativo ganha a bola. */
+.itemInferior[aria-current='page'] svg {
+  color: var(--ball);
+}
+
+/* — A lateral entra — */
+
+@media (min-width: 900px) {
+  .sidebar {
+    display: flex;
+  }
+
+  .barraInferior {
+    display: none;
+  }
+
+  .ctaTexto {
+    display: inline;
+  }
+}
+
+/* — A lateral abre com rótulos — */
+
+@media (min-width: 1180px) {
+  .sidebar {
+    width: var(--sidebar);
+  }
+
+  .marca {
+    justify-content: flex-start;
+  }
+
+  .marcaTexto {
+    display: block;
+  }
+
+  .item {
+    justify-content: flex-start;
+    padding: 0 12px;
+  }
+
+  .itemTexto {
+    display: inline;
+  }
+
+  .temporada {
+    display: block;
+  }
+
+  .usuario {
+    justify-content: flex-start;
+    border-color: var(--court-line);
+  }
+
+  .usuarioDados {
+    display: block;
+  }
+}

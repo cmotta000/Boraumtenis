@@ -1,59 +1,68 @@
-import { Image } from 'expo-image';
-import { useState } from 'react';
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+'use client';
 
-import { urlDaFoto } from '@/lib/fotos';
-import { colors, font, radius } from '@/theme/tokens';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+
+import { prefetchFotos, useFotoUrl } from '@/lib/fotos';
+
+import estilos from './galeria.module.css';
 
 /**
  * Mosaico de fotos de um post, no espírito do feed do Strava: uma foto grande
- * quando é só uma, mosaico quando são várias. Tocar abre a foto inteira.
+ * quando é só uma, mosaico quando são várias. Clicar abre a foto inteira.
  */
 export function GaleriaFotos({ fotos }: { fotos: string[] }) {
   const [aberta, setAberta] = useState<number | null>(null);
+  // Um pedido de assinatura para o post inteiro, em vez de um por miniatura.
+  useEffect(() => {
+    prefetchFotos(fotos);
+  }, [fotos]);
   if (fotos.length === 0) return null;
 
-  const abrir = (i: number) => setAberta(i);
   const visiveis = fotos.slice(0, 4);
   const extras = fotos.length - visiveis.length;
 
   return (
     <>
-      <View style={styles.mosaico}>
-        {fotos.length === 1 && <Foto caminho={fotos[0]} onPress={() => abrir(0)} style={styles.hero} />}
+      <div className={estilos.mosaico}>
+        {fotos.length === 1 && (
+          <Foto caminho={fotos[0]} onClick={() => setAberta(0)} classe={estilos.hero} indice={0} />
+        )}
 
         {fotos.length === 2 && (
-          <View style={styles.linha}>
+          <div className={estilos.linha}>
             {fotos.map((f, i) => (
-              <Foto key={f} caminho={f} onPress={() => abrir(i)} style={styles.meio} />
+              <Foto key={f} caminho={f} onClick={() => setAberta(i)} classe={estilos.meio} indice={i} />
             ))}
-          </View>
+          </div>
         )}
 
         {fotos.length === 3 && (
-          <View style={styles.linha}>
-            <Foto caminho={fotos[0]} onPress={() => abrir(0)} style={styles.principal} />
-            <View style={styles.coluna}>
-              <Foto caminho={fotos[1]} onPress={() => abrir(1)} style={styles.secundaria} />
-              <Foto caminho={fotos[2]} onPress={() => abrir(2)} style={styles.secundaria} />
-            </View>
-          </View>
+          <div className={estilos.linha}>
+            <Foto caminho={fotos[0]} onClick={() => setAberta(0)} classe={estilos.principal} indice={0} />
+            <div className={estilos.coluna}>
+              <Foto caminho={fotos[1]} onClick={() => setAberta(1)} classe={estilos.secundaria} indice={1} />
+              <Foto caminho={fotos[2]} onClick={() => setAberta(2)} classe={estilos.secundaria} indice={2} />
+            </div>
+          </div>
         )}
 
         {fotos.length >= 4 && (
-          <View style={styles.grade}>
+          <div className={estilos.grade}>
             {visiveis.map((f, i) => (
               <Foto
                 key={f}
                 caminho={f}
-                onPress={() => abrir(i)}
-                style={styles.gradeItem}
+                onClick={() => setAberta(i)}
+                classe={estilos.gradeItem}
+                indice={i}
                 selo={i === 3 && extras > 0 ? `+${extras}` : undefined}
               />
             ))}
-          </View>
+          </div>
         )}
-      </View>
+      </div>
 
       <Lightbox fotos={fotos} indice={aberta} onIndice={setAberta} />
     </>
@@ -63,18 +72,20 @@ export function GaleriaFotos({ fotos }: { fotos: string[] }) {
 /** Grade quadrada de fotos — usada na galeria do perfil. */
 export function GradeFotos({ fotos, colunas = 3 }: { fotos: string[]; colunas?: number }) {
   const [aberta, setAberta] = useState<number | null>(null);
+  useEffect(() => {
+    prefetchFotos(fotos);
+  }, [fotos]);
   if (fotos.length === 0) return null;
-  const largura = `${100 / colunas}%` as const;
 
   return (
     <>
-      <View style={styles.gradePerfil}>
+      <div
+        className={estilos.gradePerfil}
+        style={{ gridTemplateColumns: `repeat(${colunas}, minmax(0, 1fr))` }}>
         {fotos.map((f, i) => (
-          <View key={f + i} style={{ width: largura, padding: 3 }}>
-            <Foto caminho={f} onPress={() => setAberta(i)} style={styles.quadrada} />
-          </View>
+          <Foto key={f + i} caminho={f} onClick={() => setAberta(i)} classe={estilos.quadrada} indice={i} />
         ))}
-      </View>
+      </div>
       <Lightbox fotos={fotos} indice={aberta} onIndice={setAberta} />
     </>
   );
@@ -82,24 +93,25 @@ export function GradeFotos({ fotos, colunas = 3 }: { fotos: string[]; colunas?: 
 
 function Foto({
   caminho,
-  onPress,
-  style,
+  onClick,
+  classe,
+  indice,
   selo,
 }: {
   caminho: string;
-  onPress: () => void;
-  style: object;
+  onClick: () => void;
+  classe: string;
+  indice: number;
   selo?: string;
 }) {
+  const url = useFotoUrl(caminho);
+
   return (
-    <Pressable onPress={onPress} style={({ hovered }: any) => [style, hovered && { opacity: 0.92 }]}>
-      <Image source={{ uri: urlDaFoto(caminho) }} style={styles.img} contentFit="cover" transition={150} />
-      {selo && (
-        <View style={styles.selo}>
-          <Text style={styles.seloText}>{selo}</Text>
-        </View>
-      )}
-    </Pressable>
+    <button type="button" onClick={onClick} className={`${estilos.foto} ${classe}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element -- URL assinada, de vida curta. */}
+      {url && <img src={url} alt={`Foto ${indice + 1}`} loading="lazy" className={estilos.img} />}
+      {selo && <span className={estilos.selo}>{selo}</span>}
+    </button>
   );
 }
 
@@ -113,90 +125,81 @@ function Lightbox({
   indice: number | null;
   onIndice: (i: number | null) => void;
 }) {
-  if (indice === null) return null;
+  const aberto = indice !== null;
+
+  // Teclado: Esc fecha, setas navegam. E o fundo não rola enquanto está aberto.
+  useEffect(() => {
+    if (!aberto) return;
+    const onTecla = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onIndice(null);
+      if (e.key === 'ArrowLeft') onIndice((indice! - 1 + fotos.length) % fotos.length);
+      if (e.key === 'ArrowRight') onIndice((indice! + 1) % fotos.length);
+    };
+    document.addEventListener('keydown', onTecla);
+    const antes = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onTecla);
+      document.body.style.overflow = antes;
+    };
+  }, [aberto, indice, fotos.length, onIndice]);
+
+  if (!aberto) return null;
+
   const anterior = () => onIndice((indice - 1 + fotos.length) % fotos.length);
   const proxima = () => onIndice((indice + 1) % fotos.length);
 
-  return (
-    <Modal visible transparent animationType="fade" onRequestClose={() => onIndice(null)}>
-      <Pressable style={styles.backdrop} onPress={() => onIndice(null)}>
-        <Image source={{ uri: urlDaFoto(fotos[indice]) }} style={styles.cheia} contentFit="contain" />
-      </Pressable>
+  return createPortal(
+    <div className={estilos.backdrop} role="dialog" aria-modal="true" aria-label="Foto ampliada">
+      {/* Clicar no fundo fecha; o clique na foto não sobe. */}
+      <button
+        type="button"
+        aria-label="Fechar"
+        onClick={() => onIndice(null)}
+        style={{ position: 'absolute', inset: 0, cursor: 'default' }}
+      />
+      <FotoCheia caminho={fotos[indice]} alt={`Foto ${indice + 1} de ${fotos.length}`} />
 
-      <Pressable onPress={() => onIndice(null)} style={[styles.circulo, { top: 20, right: 20 }]}>
-        <Text style={styles.circuloText}>×</Text>
-      </Pressable>
+      <button
+        type="button"
+        onClick={() => onIndice(null)}
+        aria-label="Fechar"
+        className={`${estilos.circulo} ${estilos.fechar}`}>
+        <X size={22} />
+      </button>
 
       {fotos.length > 1 && (
         <>
-          <Pressable onPress={anterior} style={[styles.circulo, styles.seta, { left: 16 }]}>
-            <Text style={styles.circuloText}>‹</Text>
-          </Pressable>
-          <Pressable onPress={proxima} style={[styles.circulo, styles.seta, { right: 16 }]}>
-            <Text style={styles.circuloText}>›</Text>
-          </Pressable>
-          <View style={styles.contador}>
-            <Text style={styles.contadorText}>
-              {indice + 1} / {fotos.length}
-            </Text>
-          </View>
+          <button
+            type="button"
+            onClick={anterior}
+            aria-label="Foto anterior"
+            className={`${estilos.circulo} ${estilos.seta}`}
+            style={{ left: 16 }}>
+            <ChevronLeft size={24} />
+          </button>
+          <button
+            type="button"
+            onClick={proxima}
+            aria-label="Próxima foto"
+            className={`${estilos.circulo} ${estilos.seta}`}
+            style={{ right: 16 }}>
+            <ChevronRight size={24} />
+          </button>
+          <span className={estilos.contador}>
+            {indice + 1} / {fotos.length}
+          </span>
         </>
       )}
-    </Modal>
+    </div>,
+    document.body,
   );
 }
 
-const styles = StyleSheet.create({
-  mosaico: { marginTop: 14 },
-  img: { width: '100%', height: '100%', backgroundColor: colors.net },
-  hero: { width: '100%', aspectRatio: 4 / 3, borderRadius: radius.md, overflow: 'hidden' },
-  linha: { flexDirection: 'row', gap: 4, height: 300, borderRadius: radius.md, overflow: 'hidden' },
-  coluna: { flex: 1, gap: 4 },
-  meio: { flex: 1, height: '100%' },
-  principal: { flex: 2, height: '100%' },
-  secundaria: { flex: 1, width: '100%' },
-  grade: { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
-  gradeItem: { width: '49%', aspectRatio: 1, borderRadius: radius.sm, overflow: 'hidden' },
-  quadrada: { width: '100%', aspectRatio: 1, borderRadius: radius.sm, overflow: 'hidden' },
-  gradePerfil: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -3 },
-  selo: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    backgroundColor: 'rgba(36,22,17,0.55)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  seloText: { fontFamily: font.display, fontWeight: '800', fontSize: 26, color: colors.chalk },
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(20,12,9,0.94)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-  },
-  cheia: { width: '100%', height: '100%' },
-  circulo: {
-    position: 'absolute',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: 'rgba(0,0,0,0.45)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  seta: { top: '50%', marginTop: -22 },
-  circuloText: { color: '#fff', fontSize: 26, fontWeight: '700', marginTop: -4 },
-  contador: {
-    position: 'absolute',
-    bottom: 26,
-    alignSelf: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    borderRadius: radius.pill,
-    backgroundColor: 'rgba(0,0,0,0.45)',
-  },
-  contadorText: { color: '#fff', fontFamily: font.mono, fontSize: 12, letterSpacing: 1 },
-});
+/** A foto ampliada: a assinatura chega por hook, então vive no próprio componente. */
+function FotoCheia({ caminho, alt }: { caminho: string; alt: string }) {
+  const url = useFotoUrl(caminho);
+  if (!url) return null;
+  // eslint-disable-next-line @next/next/no-img-element -- URL assinada, de vida curta.
+  return <img src={url} alt={alt} className={estilos.cheia} />;
+}

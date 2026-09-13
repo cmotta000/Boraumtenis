@@ -1,56 +1,77 @@
-# Welcome to your Expo app 👋
+# Bora um Tênis 🎾
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+O ponto de encontro dos tenistas amadores: ache partidas abertas num raio de até
+70 km, combine o jogo no chat, registre o placar e suba no ranking da sua região.
 
-## Get started
+App **web** feito com [Next.js 16](https://nextjs.org) (App Router) e
+[Supabase](https://supabase.com).
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Rodando localmente
 
 ```bash
-npm run reset-project
+npm install
+cp .env.example .env   # preencha com as credenciais do seu projeto Supabase
+npm run dev            # http://localhost:3000
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Outros comandos:
 
-### Other setup steps
+| Comando | O que faz |
+| --- | --- |
+| `npm run dev` | servidor de desenvolvimento |
+| `npm run build` | build de produção |
+| `npm start` | roda o build |
+| `npm test` | testes unitários (`node --test`) |
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Como o projeto é organizado
 
-## Learn more
+```
+app/                     rotas (App Router)
+  page.tsx               landing pública, renderizada no servidor
+  entrar/  auth/callback/ login por e-mail e retorno do Google
+  (app)/                 tudo que exige sessão — layout com a barra lateral
+src/
+  components/            vocabulário visual (ui/), galeria, compositor, mini-mapa
+  lib/                   supabase, auth, fotos, privacidade, geocode, datas…
+  theme/tokens.css       a identidade visual em variáveis CSS
+public/                  imagens estáticas
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Cada tela tem um CSS Module irmão (`page.tsx` + `nome.module.css`). Cores, raios
+e medidas saem sempre das variáveis de `src/theme/tokens.css`.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Identidade
 
-## Join the community
+"Quadra à noite": a estrutura do app é escura como um piso rápido sob refletor, o
+conteúdo é claro como giz, o saibro entra só como acento e a bola de tênis aparece
+uma vez por tela, no marcador da navegação. Três vozes tipográficas — Archivo nos
+títulos, IBM Plex Sans no texto e IBM Plex Mono nos números (dígitos tabulares,
+para placares não dançarem entre linhas).
 
-Join our community of developers creating universal apps.
+## Privacidade
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Cada pessoa escolhe, em **Editar perfil → Privacidade**, quem vê seu perfil e
+quem vê suas fotos, em três níveis: todo mundo, só quem já jogou com ela, ou
+ninguém.
+
+A regra é aplicada no banco, não na interface:
+
+- a tabela `profiles` só devolve a própria linha; o perfil dos outros vem da
+  view `public.perfis`, que mascara coluna a coluna;
+- as RPCs `SECURITY DEFINER` (`feed`, `ranking_*`, `comentarios_post`,
+  `perfis_da_partida`) aplicam o mesmo mascaramento, já que passam por cima do RLS;
+- os buckets `avatares` e `partidas` são **privados**: as fotos só saem por URL
+  assinada de curta duração, emitida apenas para quem a policy autoriza;
+- idade, altura e a localização exata nunca aparecem para quem nunca jogou com
+  você, em nenhum dos níveis.
+
+Uma exceção deliberada: quem pede pra entrar na sua partida mostra a você as tags
+de jogo (anos jogando, mão, golpe) mesmo com o perfil fechado — sem isso não dá
+pra decidir quem entra. Idade e cidade continuam guardadas.
+
+## Deploy
+
+Vercel, por push na branch `principal`. As variáveis `NEXT_PUBLIC_SUPABASE_URL` e
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` ficam no painel do projeto. A URL de produção
+precisa estar na allowlist de **Redirect URLs** do Supabase para o login com o
+Google funcionar.

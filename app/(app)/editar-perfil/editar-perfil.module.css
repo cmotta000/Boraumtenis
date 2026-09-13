@@ -1,0 +1,273 @@
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  color: var(--clay);
+}
+
+.eyebrow {
+  color: var(--clay);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.title {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 32px;
+}
+
+.lede {
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 22px;
+  margin-top: 6px;
+}
+
+.divisor {
+  margin: 22px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.rowLocal {
+  margin-top: 14px;
+}
+
+/** É um <fieldset> pelo rótulo de grupo; o desenho vem todo daqui. */
+.grupo {
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.flex2 {
+  flex: 2;
+}
+
+.label {
+  display: block;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--net);
+  padding: 0 14px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+  background: #fff;
+}
+
+.input:focus {
+  border-color: var(--clay);
+}
+
+/* — Foto — */
+
+.fotoLinha {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.fotoBox {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex: none;
+}
+
+.fotoBox:hover {
+  opacity: 0.9;
+}
+
+.fotoCarregando {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-pill);
+  background: rgba(36, 22, 17, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--chalk);
+}
+
+.fotoTextos {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.fotoAcao {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--clay);
+}
+
+.fotoRemover {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.fotoDica {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* — Localização — */
+
+.gps {
+  width: 100%;
+  height: 50px;
+  border-radius: var(--r-pill);
+  background: var(--clay);
+  color: var(--chalk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.gps:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.gps:disabled {
+  opacity: 0.6;
+}
+
+.geoMsg {
+  color: var(--ok);
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.erro {
+  color: var(--danger);
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.salvar {
+  margin-top: 24px;
+}
+
+.cancel {
+  display: block;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* — Privacidade — */
+
+.privRadios {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.privOpcao {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--net);
+  background: #fff;
+  cursor: pointer;
+}
+
+.privOpcao:hover {
+  border-color: var(--clay);
+}
+
+.privOpcao:has(input:checked) {
+  border-color: var(--clay);
+  background: var(--clay-wash);
+}
+
+.privOpcao input {
+  margin: 2px 0 0;
+  accent-color: var(--clay);
+  flex: none;
+}
+
+.privTextos {
+  flex: 1;
+  min-width: 0;
+}
+
+.privLabel {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.privExplicacao {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.privNota {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 1px solid var(--net);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  margin-top: 4px;
+}
+
+.privSalvo {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--ok);
+  margin-top: 10px;
+}

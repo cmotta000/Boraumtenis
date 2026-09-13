@@ -1,0 +1,66 @@
+/**
+ * Identidade "quadra à noite": a estrutura do app é escura como uma quadra sob
+ * refletor (verde-preto de piso rápido), o conteúdo é claro como giz — cinza
+ * frio, nunca creme. O saibro entra só como acento e a bola de tênis aparece
+ * uma vez por tela, no marcador da navegação.
+ *
+ * Esta é a fonte da verdade das cores. O `tokens.ts` só guarda as medidas que
+ * o JavaScript ainda precisa ler.
+ */
+:root {
+  /* — Estrutura (barra lateral, topo, superfícies escuras) */
+  --court: #0d1714; /* verde-preto de quadra sob refletor */
+  --court-raise: #16241f; /* item elevado dentro da estrutura */
+  --court-line: #22332c; /* divisórias dentro da estrutura */
+  --court-text: #eaefec; /* texto sobre a estrutura */
+  --court-mute: #84968e; /* texto secundário sobre a estrutura */
+
+  /* — Acento */
+  --clay: #b4472a; /* saibro */
+  --clay-deep: #8e3520; /* saibro na sombra */
+  --clay-wash: #f6eae5; /* saibro diluído, para fundos de destaque no claro */
+  --ball: #d7f04a; /* bola de tênis — só marcadores pequenos */
+  --ball-deep: #b9d42c;
+
+  /* — Conteúdo (superfícies claras) */
+  --chalk: #f1f3f1; /* giz: fundo de trabalho */
+  --card: #ffffff;
+  --line: #e7eae7; /* linha clara sobre superfície escura/acento */
+  --net: #dfe3e0; /* bordas e divisórias no claro */
+  --ink: #0f1512; /* texto principal */
+  --ink-soft: #69736e; /* texto secundário */
+
+  /* — Estado */
+  --ok: #1f7a4c;
+  --danger: #c0392b;
+  --warn: #b4772a;
+
+  /**
+   * Três papéis, três vozes: Archivo dá o peso de placar de transmissão nos
+   * títulos, Plex Sans conduz a leitura e Plex Mono numera — dígitos tabulares
+   * para placares e pontos não dançarem entre linhas.
+   * As famílias em si são injetadas pelo next/font no app/layout.tsx.
+   */
+  --font-display: var(--fonte-archivo), system-ui, sans-serif;
+  --font-body: var(--fonte-plex-sans), system-ui, sans-serif;
+  --font-mono: var(--fonte-plex-mono), ui-monospace, Menlo, monospace;
+
+  /* Cantos contidos: nada de cápsula, exceto onde a forma é o significado. */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+
+  /* Medidas do casco do app (espelhadas em tokens.ts para o JS). */
+  --sidebar: 252px;
+  --rail: 76px;
+  --topbar: 60px;
+  --bottom-bar: 60px;
+  --max-w: 1000px;
+
+  /* Sombras */
+  --elev-card: 0 1px 2px rgba(15, 21, 18, 0.05);
+  --elev-raised: 0 6px 20px rgba(15, 21, 18, 0.1);
+}

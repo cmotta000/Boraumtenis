@@ -1,0 +1,445 @@
+.fill {
+  background: var(--clay);
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 48px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  padding: 0 22px;
+}
+
+.topbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 0;
+}
+
+.topLink {
+  color: var(--chalk);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* — Hero — */
+
+.hero {
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.eyebrow {
+  color: var(--ball);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  margin-bottom: 18px;
+}
+
+.h1 {
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -1px;
+  font-size: 46px;
+  line-height: 46px;
+}
+
+.risco {
+  width: 120px;
+  margin: 18px 0;
+  background: rgba(241, 243, 241, 0.45);
+}
+
+.lede {
+  color: var(--line);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 26px;
+  max-width: 460px;
+}
+
+.ctaRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.score {
+  display: flex;
+  flex-direction: row;
+  margin-top: 34px;
+}
+
+.scoreItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.scoreDiv {
+  width: 1px;
+  height: 34px;
+  background: var(--line);
+  opacity: 0.4;
+  margin: 0 18px;
+}
+
+.scoreK {
+  color: var(--chalk);
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.scoreU {
+  color: var(--line);
+  font-family: var(--font-body);
+  font-size: 13px;
+  margin-left: 8px;
+  max-width: 70px;
+}
+
+/* — Card de partida aberta: o objeto característico — */
+
+.matchCard {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  box-shadow: var(--elev-raised);
+}
+
+.matchTop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.livePill {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  background: var(--clay);
+  padding: 5px 10px;
+  border-radius: var(--r-pill);
+  color: var(--chalk);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
+  background: var(--ball);
+}
+
+.matchDist {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.matchPlace {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 21px;
+  margin-top: 14px;
+}
+
+.matchWhen {
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.matchLinha {
+  margin: 16px 0;
+}
+
+.matchRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.playerName {
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.playerElo {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.playerVaga {
+  color: var(--clay);
+}
+
+.direita {
+  text-align: right;
+}
+
+.vs {
+  color: var(--clay);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.matchCta {
+  margin-top: 20px;
+  background: var(--ball);
+  border-radius: var(--r-pill);
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* — Como funciona — */
+
+.howHead {
+  margin-top: 72px;
+  margin-bottom: 24px;
+}
+
+.sectionEyebrow {
+  color: var(--ball);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+.sectionTitle {
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: -0.5px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step {
+  flex: 1;
+}
+
+.stepNumWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.stepNum {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: var(--ball);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  text-align: center;
+  line-height: 42px;
+}
+
+.stepBar {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  opacity: 0.35;
+  margin-left: 12px;
+}
+
+.stepT {
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.stepD {
+  color: var(--line);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 22px;
+  margin-top: 6px;
+  max-width: 300px;
+}
+
+/* — Features — */
+
+.features {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.feature {
+  min-width: 240px;
+  flex: 1 1 240px;
+  background: var(--clay-deep);
+  border-radius: var(--r-md);
+  border: 1px solid rgba(241, 233, 219, 0.18);
+  padding: 20px;
+}
+
+.featureT {
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+}
+
+.featureD {
+  color: var(--line);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  margin-top: 8px;
+}
+
+/* — Faixa final — */
+
+.ctaBand {
+  margin-top: 64px;
+  background: var(--clay-deep);
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(241, 233, 219, 0.18);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ctaBandTitle {
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+}
+
+.ctaBandText {
+  color: var(--line);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 23px;
+  margin-top: 6px;
+}
+
+.foot {
+  color: var(--line);
+  font-family: var(--font-body);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 44px;
+}
+
+/** A partir daqui o hero se abre em duas colunas (era o `wide` de 860px). */
+@media (min-width: 860px) {
+  .hero {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+    padding-top: 40px;
+  }
+
+  .heroText {
+    flex: 1.1;
+  }
+
+  /**
+   * A coluna do hero tem ~475px na largura máxima do casco, e 68px fixos
+   * estouravam "Ache com quem" — o título caía em quatro linhas em vez das duas
+   * que a quebra manual pede. O corpo acompanha a largura disponível.
+   */
+  .h1 {
+    font-size: clamp(44px, 4.8vw, 58px);
+    line-height: 0.97;
+  }
+
+  .matchCard {
+    flex: 0.9;
+  }
+
+  .steps {
+    flex-direction: row;
+  }
+
+  .ctaBand {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+}
+
+/**
+ * Os dois CTAs da landing navegam, então são links — com o mesmo desenho das
+ * variantes `ball` e `ghost` do Btn, que é um botão de ação.
+ */
+.botaoBall,
+.botaoGhost {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--r-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14.5px;
+  border: 1px solid transparent;
+  transition: opacity 120ms ease;
+}
+
+.botaoBall {
+  background: var(--ball);
+  color: var(--ink);
+}
+
+.botaoGhost {
+  border-color: rgba(241, 243, 241, 0.35);
+  color: var(--chalk);
+}
+
+.botaoBall:hover,
+.botaoGhost:hover {
+  opacity: 0.9;
+}

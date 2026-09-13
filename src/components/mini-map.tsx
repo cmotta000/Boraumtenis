@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import { Image, LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
+'use client';
 
-import { colors, font, radius } from '@/theme/tokens';
+import { useEffect, useRef, useState } from 'react';
+
+import estilos from './mini-map.module.css';
 
 /**
  * Mini-mapa estático usando os tiles do OpenStreetMap (sem API key).
  * Monta um mosaico de tiles centralizado exatamente no ponto e desenha um
- * pino no centro. Funciona na web e no nativo (usa <Image>).
+ * pino no centro.
  */
 export function MiniMap({
   lat,
@@ -19,8 +20,8 @@ export function MiniMap({
   zoom?: number;
   height?: number;
 }) {
-  const [w, setW] = useState(0);
-  const onLayout = (e: LayoutChangeEvent) => setW(Math.round(e.nativeEvent.layout.width));
+  const ref = useRef<HTMLDivElement>(null);
+  const w = useLargura(ref);
 
   const n = 2 ** zoom;
   const xf = ((lng + 180) / 360) * n;
@@ -37,20 +38,18 @@ export function MiniMap({
     const jRange = Math.ceil(height / 2 / 256) + 1;
     for (let i = -iRange; i <= iRange; i++) {
       for (let j = -jRange; j <= jRange; j++) {
-        const tx = ((cx + i) % n + n) % n;
+        const tx = (((cx + i) % n) + n) % n;
         const ty = cy + j;
         if (ty < 0 || ty >= n) continue;
         tiles.push(
-          <Image
+          // eslint-disable-next-line @next/next/no-img-element -- tile do OSM, montado no cliente.
+          <img
             key={`${i},${j}`}
-            source={{ uri: `https://tile.openstreetmap.org/${zoom}/${tx}/${ty}.png` }}
-            style={{
-              position: 'absolute',
-              width: 256,
-              height: 256,
-              left: w / 2 - px + i * 256,
-              top: height / 2 - py + j * 256,
-            }}
+            src={`https://tile.openstreetmap.org/${zoom}/${tx}/${ty}.png`}
+            alt=""
+            aria-hidden
+            className={estilos.tile}
+            style={{ left: w / 2 - px + i * 256, top: height / 2 - py + j * 256 }}
           />,
         );
       }
@@ -58,51 +57,29 @@ export function MiniMap({
   }
 
   return (
-    <View onLayout={onLayout} style={[styles.wrap, { height }]}>
+    <div ref={ref} className={estilos.wrap} style={{ height }} role="img" aria-label="Mapa do local">
       {tiles}
       {/* pino no centro exato */}
-      <View style={[styles.pinWrap, { left: w / 2, top: height / 2 }]} pointerEvents="none">
-        <View style={styles.pin} />
-        <View style={styles.pinStem} />
-      </View>
-      <Text style={styles.attr}>© OpenStreetMap</Text>
-    </View>
+      <div className={estilos.pinWrap} style={{ left: w / 2, top: height / 2 }}>
+        <span className={estilos.pin} />
+        <span className={estilos.pinStem} />
+      </div>
+      <span className={estilos.attr}>© OpenStreetMap</span>
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: {
-    width: '100%',
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.net,
-    overflow: 'hidden',
-    backgroundColor: '#e8e4da',
-  },
-  pinWrap: { position: 'absolute', alignItems: 'center', marginLeft: -11, marginTop: -26 },
-  pin: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: colors.clay,
-    borderWidth: 3,
-    borderColor: '#fff',
-  },
-  pinStem: {
-    width: 3,
-    height: 8,
-    backgroundColor: colors.clay,
-    marginTop: -1,
-  },
-  attr: {
-    position: 'absolute',
-    right: 4,
-    bottom: 2,
-    fontFamily: font.mono,
-    fontSize: 9,
-    color: colors.ink,
-    backgroundColor: 'rgba(251,247,239,0.7)',
-    paddingHorizontal: 4,
-    borderRadius: 3,
-  },
-});
+/** Largura atual do elemento — o mosaico depende dela para saber quantos tiles montar. */
+function useLargura(ref: React.RefObject<HTMLElement | null>): number {
+  const [w, setW] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new ResizeObserver(([entrada]) => setW(Math.round(entrada.contentRect.width)));
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [ref]);
+
+  return w;
+}

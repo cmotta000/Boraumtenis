@@ -1,0 +1,52 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  overflow: hidden;
+  background: #e8e4da;
+}
+
+.tile {
+  position: absolute;
+  width: 256px;
+  height: 256px;
+  max-width: none;
+}
+
+.pinWrap {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -11px;
+  margin-top: -26px;
+  pointer-events: none;
+}
+
+.pin {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-pill);
+  background: var(--clay);
+  border: 3px solid #fff;
+}
+
+.pinStem {
+  width: 3px;
+  height: 8px;
+  background: var(--clay);
+  margin-top: -1px;
+}
+
+.attr {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink);
+  background: rgba(251, 247, 239, 0.7);
+  padding: 0 4px;
+  border-radius: 3px;
+}

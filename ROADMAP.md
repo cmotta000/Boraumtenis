@@ -2,7 +2,10 @@
 
 **Match-making de tênis por raio de 70km**, com **ranking ELO** e **premiações virtuais (gamificação)**. MVP sem aluguel de quadra e sem pagamento de partida.
 
-> **Estratégia de plataforma:** **primeira versão WEB** (validar rápido no navegador, sem lojas). O app mobile (iOS/Android) vem depois **a partir do mesmo código** — usamos Expo + React Native Web, então web agora e app nativo na sequência sem reescrever.
+> **Estratégia de plataforma:** **só WEB** (validar rápido no navegador, sem lojas).
+> Em 12/09/2026 o Expo/React Native saiu do projeto — o layout já era de site e o
+> React Native tinha virado peso morto. Mobile não está no plano agora; se voltar,
+> será uma decisão nova, não a continuação deste código.
 
 > Documento de execução — fonte única de progresso. Marcar `[x]` a cada entrega.
 > **(Você)** = decisões de produto / criação de contas · **(Eu)** = implementação (Claude).
@@ -13,11 +16,11 @@
 
 | Camada | Tecnologia |
 |---|---|
-| App (web agora, mobile depois) | React Native + Expo (TypeScript), Expo Router, **React Native Web** |
-| UI | Nativewind (Tailwind) |
+| App (web) | Next.js 16 (App Router) + React 19, TypeScript |
+| UI | CSS Modules sobre as variáveis de `src/theme/tokens.css` · ícones `lucide-react` |
 | Backend | Supabase (Postgres + Auth + Realtime + Storage + Edge Functions) |
 | Geolocalização | PostGIS (`ST_DWithin` para raio de 70km) |
-| Push | Expo Notifications |
+| Notificações | In-app + Supabase Realtime (push nativo saiu junto com o Expo) |
 | Dados | TanStack Query + Supabase JS |
 | Assinatura (fase 7) | RevenueCat (IAP das lojas) |
 | Observabilidade | Sentry + PostHog |
@@ -25,17 +28,17 @@
 ---
 
 ## Fase 0 — Fundação ✅
-- [x] (Eu) Inicializar repo Git + projeto Expo SDK 57 (TypeScript) + Expo Router + tema/UI base
-- [x] (Eu) Home inicial com identidade do produto (`src/app/index.tsx`)
+- [x] (Eu) Inicializar repo Git + projeto (era Expo SDK 57; hoje Next.js 16) + tema/UI base
+- [x] (Eu) Home inicial com identidade do produto (`app/page.tsx`)
 - [x] (Eu) Criar **projeto Supabase dedicado** `bora-um-tenis` (região São Paulo / sa-east-1) — base de usuários **própria**, separada do UNIVERSUS
 - [x] (Eu) Client Supabase tipado (`src/lib/supabase.ts` + `database.types.ts`) + `.env`/`.env.example`
 - [x] (Eu) PostGIS + migration inicial (10 tabelas + RLS + RPC `partidas_proximas` + trigger de perfil)
 - [x] (Eu) Verificação: `tsc` limpo, build web OK, REST `HTTP 200` com a chave publishable
-- [ ] (Você) Rodar `npm run web` e ver a home no navegador (validação visual)
+- [ ] (Você) Rodar `npm run dev` e ver a home no navegador (validação visual)
 - [ ] (Eu) Sentry + PostHog (observabilidade) — pendente
 - [x] **Marco:** app compila para web e conecta ao backend
 
-> **Pendências suas na Fase 0:** criar conta **Expo/EAS** (só necessária para builds mobile na Fase 7) e definir/registrar o nome do app + domínio.
+> **Pendências suas na Fase 0:** definir/registrar o nome do app + domínio.
 
 ## Fase 1 — Auth e Perfil
 - [x] (Eu) **Landing page** completa (identidade "saibro", `src/app/index.tsx`)
@@ -59,7 +62,7 @@
 - [x] (Eu) Entrar/solicitar + confirmação do criador + status "cheia" (RPCs `solicitar_entrada`, `responder_solicitacao`, `sair_partida`, `cancelar_partida`)
 - [x] (Eu) Notificações **in-app** + Realtime (sino com badge no Início, tela `notificacoes.tsx`)
 - [x] (Eu) Chat da partida (Supabase Realtime, tabela `match_messages`)
-- [ ] (Eu) Push nativo (Expo Notifications) — fica na Fase 7 mobile; hoje é in-app/Realtime
+- [ ] (Eu) Push no navegador (Web Push) — hoje as notificações são in-app/Realtime
 - [x] **Marco:** dois jogadores marcam e combinam ponta a ponta ✅
 
 ### Refinamento da Fase 3
@@ -88,7 +91,7 @@
 - [x] (Eu) Pontos aplicados em `rankings` (temporada, criada sozinha) + totais no perfil
 - [x] (Eu) Tela de ranking por **pontos**, com abas Temporada / Geral
 - [x] (Eu) **Feed social (estilo Strava, de tênis)**: cada resultado confirmado vira post com placar, pontos, legenda e **fotos**; curtir e comentar
-- [x] (Eu) Upload de fotos (`expo-image-picker` + Storage bucket `partidas`, até 6 por partida)
+- [x] (Eu) Upload de fotos (seletor de arquivos do navegador + Storage bucket `partidas`, até 6 por partida)
 - [ ] (Você) Validar o fluxo no navegador: jogar → registrar → confirmar → ver no feed e no ranking
 - [x] **Marco:** jogar → registrar → subir no ranking ✅
 
@@ -110,15 +113,17 @@
 - [ ] **Marco:** loop de engajamento completo
 
 ## Fase 6 — Polimento e Publicação WEB
-- [ ] (Eu) Estados vazios, erros, acessibilidade, revisão de RLS/privacidade
-- [ ] (Você) Criar conta de hospedagem (Vercel/Netlify) + domínio
-- [ ] (Eu) `expo export --platform web` + deploy do site (PWA instalável)
+- [ ] (Eu) Estados vazios, erros, acessibilidade
+- [x] (Eu) Revisão de RLS/privacidade — perfis e fotos com três níveis de
+      visibilidade, `profiles` fechado à própria linha, view `perfis` mascarada,
+      buckets privados com URL assinada (12/09/2026)
+- [ ] (Você) Criar conta na **Vercel** + apontar domínio
+- [ ] (Eu) Deploy na Vercel por push (o workflow do GitHub Pages foi removido)
 - [ ] **Marco:** MVP **web** publicado e acessível por link
 
-## Fase 7 — App mobile (mesmo código)
-- [ ] (Você) Contas Apple Developer (US$99/ano) e Google Play (US$25 único) + assets de loja
-- [ ] (Eu) Ajustes específicos de mobile (push nativo, permissões) + build EAS + submissão
-- [ ] **Marco:** app publicado nas lojas (ou beta TestFlight/Internal Testing)
+## Fase 7 — App mobile
+> Fora do plano. O Expo/React Native foi removido em 12/09/2026; um app nativo
+> seria um projeto novo, decidido do zero.
 
 ## Fase 8 — Premium (pós-MVP)
 - [ ] (Você) Definir limites do free e benefícios/preço do Premium
@@ -148,7 +153,7 @@ seasons        (id, nome, inicio, fim, ativa)
 rankings       (season_id, user_id, pontos, vitorias, derrotas, posicao)
 badges         (id, slug, nome, descricao, icone, regra)
 user_badges    (user_id, badge_id, conquistado_em)
-push_tokens    (user_id, expo_token, plataforma)
+push_tokens    (user_id, expo_token, plataforma)   -- resquício do mobile; sem uso hoje
 notifications  (id, user_id, tipo, payload_json, lida, created_at)
 ```
 

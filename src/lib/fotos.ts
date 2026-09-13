@@ -1,4 +1,6 @@
-import * as ImagePicker from 'expo-image-picker';
+'use client';
+
+import { useEffect, useState } from 'react';
 
 import { supabase } from '@/lib/supabase';
 
@@ -9,56 +11,37 @@ export const BUCKET_AVATARES = 'avatares';
 
 export const MAX_FOTOS = 6;
 
+/** O que o bucket aceita — o mesmo `allowed_mime_types` configurado no Storage. */
+const TIPOS_ACEITOS = 'image/jpeg,image/png,image/webp,image/heic';
+
 export type FotoLocal = {
-  /** URI local, só para o preview antes do envio. */
+  /** URL de objeto, só para o preview antes do envio. Solte com `descartarPreview`. */
   uri: string;
-  base64: string;
+  bytes: Uint8Array;
   mime: string;
 };
 
 /**
- * Abre a galeria e devolve as fotos escolhidas (com os bytes em base64).
+ * Abre o seletor de arquivos do navegador e devolve as fotos escolhidas.
  *
- * Precisa ser chamado a partir de um toque do usuário — na web o navegador só
- * abre o seletor de arquivos depois de uma interação.
+ * Precisa ser chamado a partir de um clique do usuário — o navegador só abre o
+ * seletor durante o gesto. Resolve com lista vazia se a pessoa cancelar.
  */
 export async function escolherFotos(restantes: number): Promise<FotoLocal[]> {
   if (restantes <= 0) return [];
-
-  const res = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ['images'],
-    allowsMultipleSelection: restantes > 1,
-    selectionLimit: restantes,
-    quality: 0.6,
-    base64: true,
-  });
-  if (res.canceled || !res.assets) return [];
-
-  return res.assets
-    .filter((a) => !!a.base64)
-    .slice(0, restantes)
-    .map((a) => ({
-      uri: a.uri,
-      base64: a.base64!,
-      mime: a.mimeType ?? 'image/jpeg',
-    }));
+  const arquivos = await abrirSeletor(restantes > 1);
+  return Promise.all(arquivos.slice(0, restantes).map(lerArquivo));
 }
 
-/**
- * Escolhe uma única foto para o perfil. `allowsEditing` recorta no celular
- * (não existe na web — lá o corte fica por conta do enquadramento circular).
- */
+/** Escolhe uma única foto para o perfil. O enquadramento circular faz o corte. */
 export async function escolherFotoDePerfil(): Promise<FotoLocal | null> {
-  const res = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ['images'],
-    allowsEditing: true,
-    aspect: [1, 1],
-    quality: 0.7,
-    base64: true,
-  });
-  const a = res.canceled ? null : res.assets?.[0];
-  if (!a?.base64) return null;
-  return { uri: a.uri, base64: a.base64, mime: a.mimeType ?? 'image/jpeg' };
+  const [arquivo] = await abrirSeletor(false);
+  return arquivo ? lerArquivo(arquivo) : null;
+}
+
+/** Libera a URL de objeto de um preview que não vai mais ser mostrado. */
+export function descartarPreview(foto: FotoLocal | null | undefined): void {
+  if (foto?.uri.startsWith('blob:')) URL.revokeObjectURL(foto.uri);
 }
 
 /**
@@ -77,7 +60,7 @@ export async function enviarFotos(
     const caminho = `${userId}/${Date.now()}-${i}.${ext}`;
     const { error } = await supabase.storage
       .from(bucket)
-      .upload(caminho, bytesDeBase64(foto.base64), { contentType: foto.mime, upsert: false });
+      .upload(caminho, foto.bytes, { contentType: foto.mime, upsert: false });
     if (error) throw new Error('Não foi possível enviar a foto. Tente de novo.');
     caminhos.push(caminho);
   }
@@ -115,30 +98,155 @@ export async function removerFotoDePerfil(userId: string, atual: string | null):
   }
 }
 
-/** URL pública de uma foto já enviada (o bucket é de leitura aberta). */
-export function urlDaFoto(caminho: string): string {
-  return supabase.storage.from(BUCKET_FOTOS).getPublicUrl(caminho).data.publicUrl;
+/**
+ * ── URLs assinadas ───────────────────────────────────────────────────────────
+ *
+ * Os buckets são privados: a URL de uma foto é assinada na hora e vale uma
+ * hora. Como o feed e a galeria pedem dezenas de fotos por vez, guardamos as
+ * assinaturas em memória, renovamos só perto de expirar e assinamos em lote.
+ */
+
+type Assinatura = { url: string; expiraEm: number };
+
+/** Validade pedida ao Storage, em segundos. */
+const VALIDADE = 3600;
+/** Renova com folga: uma foto que abre agora não pode expirar no meio do scroll. */
+const MARGEM_MS = 10 * 60 * 1000;
+
+const cache = new Map<string, Assinatura>();
+/** Assinaturas em voo, para dez avatares da mesma pessoa não virarem dez requisições. */
+const emVoo = new Map<string, Promise<string | null>>();
+
+const chave = (bucket: string, caminho: string) => `${bucket}/${caminho}`;
+
+function doCache(bucket: string, caminho: string): string | null {
+  const guardada = cache.get(chave(bucket, caminho));
+  if (guardada && guardada.expiraEm - MARGEM_MS > Date.now()) return guardada.url;
+  return null;
+}
+
+function guardar(bucket: string, caminho: string, url: string) {
+  cache.set(chave(bucket, caminho), { url, expiraEm: Date.now() + VALIDADE * 1000 });
+}
+
+/** Assina um lote de caminhos do mesmo bucket, pulando o que já está em cache. */
+async function assinarLote(bucket: string, caminhos: string[]): Promise<void> {
+  const faltando = [...new Set(caminhos.filter((c) => c && !doCache(bucket, c)))];
+  if (faltando.length === 0) return;
+
+  const { data } = await supabase.storage.from(bucket).createSignedUrls(faltando, VALIDADE);
+  for (const item of data ?? []) {
+    if (item.signedUrl && item.path) guardar(bucket, item.path, item.signedUrl);
+  }
+}
+
+/** URL assinada de um caminho. Devolve null quando a privacidade do dono barra. */
+export async function urlAssinada(caminho: string, bucket: string = BUCKET_FOTOS): Promise<string | null> {
+  const guardada = doCache(bucket, caminho);
+  if (guardada) return guardada;
+
+  const k = chave(bucket, caminho);
+  const jaPedida = emVoo.get(k);
+  if (jaPedida) return jaPedida;
+
+  const pedido = supabase.storage
+    .from(bucket)
+    .createSignedUrl(caminho, VALIDADE)
+    .then(({ data }) => {
+      if (!data?.signedUrl) return null;
+      guardar(bucket, caminho, data.signedUrl);
+      return data.signedUrl;
+    })
+    .catch(() => null)
+    .finally(() => emVoo.delete(k));
+
+  emVoo.set(k, pedido);
+  return pedido;
 }
 
 /**
- * URL da foto de perfil. Aceita tanto um caminho do nosso bucket quanto uma
- * URL pronta (o avatar que vem do login social, por exemplo).
+ * Adianta as assinaturas de uma página do feed ou da galeria, num pedido só.
+ * Falha em silêncio: quem não conseguir assinar cai no caminho individual.
  */
-export function urlDoAvatar(caminho: string | null | undefined): string | null {
-  if (!caminho) return null;
-  if (ehUrlExterna(caminho)) return caminho;
-  return supabase.storage.from(BUCKET_AVATARES).getPublicUrl(caminho).data.publicUrl;
+export function prefetchFotos(caminhos: string[], bucket: string = BUCKET_FOTOS): void {
+  assinarLote(bucket, caminhos).catch(() => {});
 }
 
-const ehUrlExterna = (s: string) => /^https?:\/\//i.test(s);
+/**
+ * URL de uma foto para usar no `src` de uma imagem. `null` enquanto a
+ * assinatura não volta — ou para sempre, se o dono não deixa você ver.
+ */
+export function useFotoUrl(
+  caminho: string | null | undefined,
+  bucket: string = BUCKET_FOTOS,
+): string | null {
+  // URL pronta (avatar do login social) não passa pelo Storage.
+  const externa = caminho && ehUrlExterna(caminho) ? caminho : null;
+  const [url, setUrl] = useState<string | null>(
+    externa ?? (caminho ? doCache(bucket, caminho) : null),
+  );
+
+  useEffect(() => {
+    if (!caminho || externa) {
+      setUrl(externa);
+      return;
+    }
+    const guardada = doCache(bucket, caminho);
+    if (guardada) {
+      setUrl(guardada);
+      return;
+    }
+
+    let vivo = true;
+    urlAssinada(caminho, bucket).then((u) => {
+      if (vivo) setUrl(u);
+    });
+    return () => {
+      vivo = false;
+    };
+  }, [caminho, bucket, externa]);
+
+  return url;
+}
+
+/** Atalho para a foto de perfil, que mora no outro bucket. */
+export function useAvatarUrl(caminho: string | null | undefined): string | null {
+  return useFotoUrl(caminho, BUCKET_AVATARES);
+}
+
+export const ehUrlExterna = (s: string) => /^https?:\/\//i.test(s);
 
 /**
- * base64 → bytes. Fazemos na mão para o mesmo código valer na web e no
- * nativo, sem depender de `Blob`/`FileReader` (instáveis no React Native).
+ * Abre o seletor de arquivos e espera a escolha.
+ *
+ * O `<input>` fica fora do documento de propósito: ninguém o vê e ele some com
+ * a promessa. O evento `cancel` existe nos navegadores atuais; sem ele a
+ * promessa simplesmente nunca resolveria, então tratamos os dois casos.
  */
-function bytesDeBase64(b64: string): Uint8Array {
-  const bin = globalThis.atob(b64);
-  const out = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
-  return out;
+function abrirSeletor(multiplo: boolean): Promise<File[]> {
+  return new Promise((resolve) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = TIPOS_ACEITOS;
+    input.multiple = multiplo;
+
+    const encerrar = (arquivos: File[]) => {
+      input.remove();
+      resolve(arquivos);
+    };
+
+    input.addEventListener('change', () => encerrar(Array.from(input.files ?? [])), { once: true });
+    input.addEventListener('cancel', () => encerrar([]), { once: true });
+    input.click();
+  });
+}
+
+/** Lê os bytes do arquivo e monta a URL do preview. */
+async function lerArquivo(arquivo: File): Promise<FotoLocal> {
+  const bytes = new Uint8Array(await arquivo.arrayBuffer());
+  return {
+    uri: URL.createObjectURL(arquivo),
+    bytes,
+    mime: arquivo.type || 'image/jpeg',
+  };
 }

@@ -1,10 +1,27 @@
-import type { Feather } from '@expo/vector-icons';
+'use client';
+
+import type { Route } from 'next';
+import {
+  Award,
+  Bell,
+  CircleCheck,
+  CircleX,
+  Clock,
+  Flag,
+  Heart,
+  MessageCircle,
+  MessageSquare,
+  Slash,
+  SquarePen,
+  TriangleAlert,
+  UserMinus,
+  UserPlus,
+  type LucideIcon,
+} from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
-
-type IconeFeather = React.ComponentProps<typeof Feather>['name'];
 
 export type NotificacaoPayload = {
   match_id?: string;
@@ -67,47 +84,48 @@ export async function marcarLidas(ids?: string[]): Promise<void> {
 }
 
 /** Ícone e texto de uma notificação, já com nome de quem originou e o local. */
-export function apresentar(n: Notificacao): { icone: IconeFeather; texto: string } {
+export function apresentar(n: Notificacao): { icone: LucideIcon; texto: string } {
   const p = n.payload_json ?? {};
   const nome = p.from_nome ?? 'Alguém';
   const onde = p.match_local ? ` em ${p.match_local}` : '';
 
   switch (n.tipo) {
     case 'solicitacao':
-      return { icone: 'user-plus', texto: `${nome} pediu pra entrar na sua partida${onde}.` };
+      return { icone: UserPlus, texto: `${nome} pediu pra entrar na sua partida${onde}.` };
     case 'confirmacao':
-      return { icone: 'check-circle', texto: `Você foi confirmado na partida${onde}. Bora jogar!` };
+      return { icone: CircleCheck, texto: `Você foi confirmado na partida${onde}. Bora jogar!` };
     case 'recusa':
-      return { icone: 'x-circle', texto: 'Sua solicitação não foi aceita desta vez.' };
+      return { icone: CircleX, texto: 'Sua solicitação não foi aceita desta vez.' };
     case 'cancelamento':
-      return { icone: 'slash', texto: `A partida${onde} foi cancelada.` };
+      return { icone: Slash, texto: `A partida${onde} foi cancelada.` };
     case 'saida':
-      return { icone: 'user-minus', texto: `${nome} saiu da sua partida${onde} — abriu vaga.` };
+      return { icone: UserMinus, texto: `${nome} saiu da sua partida${onde} — abriu vaga.` };
     case 'mensagem':
-      return { icone: 'message-circle', texto: `${nome} mandou mensagem no chat da partida${onde}.` };
+      return { icone: MessageCircle, texto: `${nome} mandou mensagem no chat da partida${onde}.` };
     case 'lembrete':
-      return { icone: 'clock', texto: `Sua partida${onde} é nas próximas 24 horas.` };
+      return { icone: Clock, texto: `Sua partida${onde} é nas próximas 24 horas.` };
     case 'placar_pendente':
-      return { icone: 'edit-3', texto: `E aí, como foi o jogo${onde}? Registre o placar.` };
+      return { icone: SquarePen, texto: `E aí, como foi o jogo${onde}? Registre o placar.` };
     case 'resultado':
-      return { icone: 'flag', texto: `${nome} registrou o placar${onde}. Confirme se está certo.` };
+      return { icone: Flag, texto: `${nome} registrou o placar${onde}. Confirme se está certo.` };
     case 'resultado_confirmado':
-      return { icone: 'award', texto: `Placar confirmado${onde}. Os pontos já entraram no ranking.` };
+      return { icone: Award, texto: `Placar confirmado${onde}. Os pontos já entraram no ranking.` };
     case 'resultado_contestado':
-      return { icone: 'alert-triangle', texto: `${nome} contestou o placar${onde}. Registre de novo.` };
+      return { icone: TriangleAlert, texto: `${nome} contestou o placar${onde}. Registre de novo.` };
     case 'curtida':
-      return { icone: 'heart', texto: `${nome} curtiu sua publicação${onde}.` };
+      return { icone: Heart, texto: `${nome} curtiu sua publicação${onde}.` };
     case 'comentario':
-      return { icone: 'message-square', texto: `${nome} comentou na sua publicação${onde}.` };
+      return { icone: MessageSquare, texto: `${nome} comentou na sua publicação${onde}.` };
     default:
-      return { icone: 'bell', texto: 'Você tem uma novidade.' };
+      return { icone: Bell, texto: 'Você tem uma novidade.' };
   }
 }
 
 /** Para onde a notificação leva ao ser tocada. */
-export function destino(n: Notificacao): string | null {
+export function destino(n: Notificacao): Route | null {
   const p = n.payload_json ?? {};
-  if (p.match_id) return `/partida/${p.match_id}`;
+  // O id vem do banco (uuid), então não quebra o segmento da rota.
+  if (p.match_id) return `/partida/${p.match_id}` as Route;
   return null;
 }
 

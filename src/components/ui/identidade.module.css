@@ -1,0 +1,84 @@
+.wordmark {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+}
+
+.ballDot {
+  width: 11px;
+  height: 11px;
+  border-radius: var(--r-pill);
+  background: var(--ball);
+  flex: none;
+}
+
+.wordmarkText {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.claro {
+  color: var(--chalk);
+}
+
+.escuro {
+  color: var(--ink);
+}
+
+.avatar {
+  background: var(--court);
+  border-radius: var(--r-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+  flex: none;
+  overflow: hidden;
+}
+
+.aro {
+  border: 2px solid var(--card);
+}
+
+.avatarText {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--court-text);
+  line-height: 1;
+  user-select: none;
+}
+
+.pill {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--r-xs);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.pillClay {
+  background: var(--clay-wash);
+  color: var(--clay-deep);
+}
+
+.pillOk {
+  background: #e4f1ea;
+  color: var(--ok);
+}
+
+.pillBall {
+  background: var(--ball);
+  color: var(--ink);
+}
+
+.pillMuted {
+  background: var(--chalk);
+  color: var(--ink-soft);
+}

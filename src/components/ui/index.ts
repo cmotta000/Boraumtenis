@@ -4,7 +4,8 @@
  * sem arrastar as telas junto.
  */
 export { Btn } from './botao';
+export { Spinner, TelaCarregando } from './carregando';
 export { Chips, Segmented } from './selecao';
-export { Card, CourtLine, ScreenHeader, Secao } from './superficie';
+export { Card, CourtLine, Pagina, ScreenHeader, Secao } from './superficie';
 export { Avatar, Pill, Wordmark } from './identidade';
 export { Placar } from './placar';

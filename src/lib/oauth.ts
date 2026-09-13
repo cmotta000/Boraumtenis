@@ -1,65 +1,24 @@
-import * as Linking from 'expo-linking';
-import * as WebBrowser from 'expo-web-browser';
-import { Platform } from 'react-native';
-
 import { supabase } from './supabase';
 
-// Fecha automaticamente a aba/popup do fluxo de auth quando o app volta ao foco.
-WebBrowser.maybeCompleteAuthSession();
-
 /**
- * URL de retorno do login social.
- *  - web  →  http://localhost:8081/auth/callback  (usa a origem atual)
- *  - nativo →  boraumtenis://auth/callback         (usa o scheme do app.json)
+ * URL de retorno do login social — a origem atual mais `/auth/callback`.
  *
- * No web o `Linking.createURL` monta a URL a partir de `window.location.origin`
- * e ignora o `experiments.baseUrl`, então em hospedagem sob subpath (GitHub
- * Pages) precisamos prefixar o base path na mão — senão o retorno cai fora do app.
- *
- * Esta é a URL que precisa estar na allowlist de "Redirect URLs" do Supabase.
+ * Esta é a URL que precisa estar na allowlist de "Redirect URLs" do Supabase
+ * (uma entrada para o localhost do desenvolvimento e outra para o domínio de
+ * produção).
  */
 export function authRedirectUrl() {
-  if (Platform.OS === 'web') {
-    const baseUrl = (process.env.EXPO_BASE_URL ?? '').replace(/\/$/, '');
-    return Linking.createURL(`${baseUrl}/auth/callback`);
-  }
-  return Linking.createURL('/auth/callback');
+  return `${window.location.origin}/auth/callback`;
 }
 
 /**
- * Inicia o login com o Google via Supabase.
- *  - No web, o supabase-js redireciona a própria aba para o Google e, no
- *    retorno, a rota /auth/callback resolve a sessão automaticamente.
- *  - No nativo, abrimos o navegador do sistema e, ao voltar pelo deep link,
- *    trocamos o `code` por uma sessão manualmente.
+ * Inicia o login com o Google via Supabase: o supabase-js redireciona a própria
+ * aba para o Google e, no retorno, a rota /auth/callback resolve a sessão.
  */
 export async function signInWithGoogle() {
-  const redirectTo = authRedirectUrl();
-
-  const { data, error } = await supabase.auth.signInWithOAuth({
+  const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
-    options: {
-      redirectTo,
-      // No nativo não deixamos o supabase abrir o navegador — quem abre é o
-      // WebBrowser abaixo, para capturarmos o retorno.
-      skipBrowserRedirect: Platform.OS !== 'web',
-    },
+    options: { redirectTo: authRedirectUrl() },
   });
   if (error) throw error;
-
-  // Web: a navegação para o Google já aconteceu.
-  if (Platform.OS === 'web') return;
-
-  // Nativo: abre o navegador e espera o retorno pelo deep link.
-  if (!data?.url) throw new Error('Não foi possível iniciar o login com o Google.');
-
-  const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
-  if (result.type !== 'success') return; // usuário cancelou
-
-  const { queryParams } = Linking.parse(result.url);
-  const code = queryParams?.code;
-  if (typeof code === 'string') {
-    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-    if (exchangeError) throw exchangeError;
-  }
 }

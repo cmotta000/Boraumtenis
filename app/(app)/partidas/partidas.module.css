@@ -1,0 +1,216 @@
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.6px;
+  color: var(--ink);
+}
+
+.localLinha {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: var(--ink-soft);
+}
+
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.gpsLink {
+  align-self: flex-start;
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--clay);
+}
+
+.gpsLink:hover {
+  opacity: 0.75;
+}
+
+.criar {
+  margin-top: 18px;
+}
+
+.divisor {
+  margin: 20px 0;
+}
+
+.filtros {
+  margin-bottom: 18px;
+}
+
+.filtroLabel {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 1.4px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+.filtroChips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filtroChip {
+  padding: 0 13px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--net);
+  background: var(--card);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.filtroChip:hover {
+  border-color: var(--clay);
+}
+
+.filtroChip[aria-pressed='true'],
+.filtroChip[aria-pressed='true']:hover {
+  background: var(--court);
+  border-color: var(--court);
+  color: var(--court-text);
+  font-weight: 600;
+}
+
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  color: var(--clay);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  color: var(--ink-soft);
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+  margin-top: 12px;
+  text-align: center;
+}
+
+.emptyText {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 21px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 8px;
+  max-width: 420px;
+}
+
+.emptyBtn {
+  margin-top: 18px;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  display: block;
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  padding: 16px;
+  box-shadow: var(--elev-card);
+}
+
+.card:hover {
+  border-color: var(--clay);
+}
+
+.cardTop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardPlace {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16.5px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardDist {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--clay);
+  font-variant-numeric: tabular-nums;
+}
+
+.cardWhen {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.cardHost {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.cardFoot {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  gap: 10px;
+}
+
+.cardPills {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.cardGo {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--clay);
+}

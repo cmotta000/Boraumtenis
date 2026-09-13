@@ -1,0 +1,231 @@
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  color: var(--clay);
+}
+
+.head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatarBox {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  flex: none;
+}
+
+.avatarBox:hover {
+  opacity: 0.9;
+}
+
+.camera {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-pill);
+  background: var(--clay);
+  border: 2px solid var(--chalk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--card);
+}
+
+.identidade {
+  flex: 1;
+  min-width: 0;
+}
+
+.nome {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.email {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.trocarFoto {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--clay);
+  margin-top: 6px;
+}
+
+.erro {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--danger);
+  margin-top: 10px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.statsSegunda {
+  margin-top: 12px;
+}
+
+.stat {
+  flex: 1;
+  min-width: 0;
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  padding: 12px 14px;
+  box-shadow: var(--elev-card);
+}
+
+.statDestaque {
+  background: var(--clay);
+  border-color: var(--clay);
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.statDestaque .statLabel {
+  color: var(--line);
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/** Quando o valor é texto (cidade, "a definir"), a voz é a de títulos. */
+.statValueTexto {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.statDestaque .statValue {
+  color: var(--card);
+}
+
+.divisor {
+  margin: 24px 0;
+}
+
+.detailCard {
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--net);
+  padding: 0 16px;
+  box-shadow: var(--elev-card);
+}
+
+.detailRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 0;
+}
+
+.detailRow + .detailRow {
+  border-top: 1px solid var(--net);
+}
+
+.detailLabel {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.detailValue {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.detailEmpty {
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.galeriaHead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.semMargem {
+  margin-bottom: 0;
+}
+
+.verFeed {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--clay);
+}
+
+.semFotos {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--ink-soft);
+}
+
+.acoes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+/** O "Editar perfil" navega, então é link — com o desenho da variante primary. */
+.linkBotao {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--r-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--clay);
+  color: var(--card);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14.5px;
+}
+
+.linkBotao:hover {
+  opacity: 0.9;
+}

@@ -17,6 +17,9 @@ export type ResultStatus = 'pendente' | 'confirmado' | 'contestado';
 export type MaoDominante = 'destro' | 'canhoto' | 'ambidestro';
 export type GolpePreferido = 'forehand' | 'backhand' | 'saque' | 'voleio' | 'smash';
 
+/** Escala de privacidade — vale para os dados do perfil e para as fotos. */
+export type Visibilidade = 'publico' | 'parceiros' | 'privado';
+
 /** Um set do placar: games de quem venceu (`v`) contra quem perdeu (`p`). */
 export type SetPlacar = { v: number; p: number };
 
@@ -49,6 +52,8 @@ export type Database = {
           pontos: number;
           vitorias: number;
           derrotas: number;
+          visibilidade_perfil: Visibilidade;
+          visibilidade_fotos: Visibilidade;
           created_at: string;
           updated_at: string;
         };
@@ -71,6 +76,8 @@ export type Database = {
           pontos?: number;
           vitorias?: number;
           derrotas?: number;
+          visibilidade_perfil?: Visibilidade;
+          visibilidade_fotos?: Visibilidade;
           created_at?: string;
           updated_at?: string;
         };
@@ -386,6 +393,37 @@ export type Database = {
           vitorias: number;
           derrotas: number;
           posicao: number;
+        }[];
+      };
+      ranking_geral: {
+        Args: { p_limite?: number };
+        Returns: {
+          user_id: string;
+          nome: string;
+          avatar: string | null;
+          cidade: string | null;
+          uf: string | null;
+          pontos: number;
+          vitorias: number;
+          derrotas: number;
+          posicao: number;
+        }[];
+      };
+      /** Quem está (ou quer estar) na partida, já mascarado pela privacidade de cada um. */
+      perfis_da_partida: {
+        Args: { p_match_id: string };
+        Returns: {
+          user_id: string;
+          status: 'criador' | PlayerStatus;
+          nome: string;
+          avatar_url: string | null;
+          elo_rating: number;
+          idade: number | null;
+          anos_jogando: number | null;
+          mao_dominante: MaoDominante | null;
+          golpe_preferido: GolpePreferido | null;
+          cidade: string | null;
+          uf: string | null;
         }[];
       };
       temporada_nome: {

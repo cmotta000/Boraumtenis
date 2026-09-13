@@ -1,16 +1,17 @@
-import { Feather } from '@expo/vector-icons';
-import { Image } from 'expo-image';
+'use client';
+
+import { ImageIcon } from 'lucide-react';
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { Avatar } from '@/components/ui';
-import { escolherFotos, MAX_FOTOS, type FotoLocal } from '@/lib/fotos';
+import { descartarPreview, escolherFotos, MAX_FOTOS, type FotoLocal } from '@/lib/fotos';
 import { publicarFotos } from '@/lib/posts';
-import { colors, elev, font, radius } from '@/theme/tokens';
+
+import estilos from './publicar.module.css';
 
 /**
  * Caixa de publicação do feed: escolhe fotos, escreve uma legenda e publica.
- * Fica recolhida até o primeiro toque para não roubar a atenção do feed.
+ * Fica recolhida até o primeiro clique para não roubar a atenção do feed.
  */
 export function Compositor({
   userId,
@@ -45,188 +46,111 @@ export function Compositor({
     }
   }
 
+  function remover(i: number) {
+    setFotos((prev) => {
+      descartarPreview(prev[i]);
+      return prev.filter((_, idx) => idx !== i);
+    });
+  }
+
+  /** Limpa o rascunho e devolve as URLs de preview ao navegador. */
+  function limpar() {
+    fotos.forEach(descartarPreview);
+    setFotos([]);
+    setLegenda('');
+    setAberto(false);
+  }
+
   async function publicar() {
     if (vazio) return;
     setErro(null);
     setEnviando(true);
     try {
       await publicarFotos({ userId, fotos, legenda, matchId });
-      setFotos([]);
-      setLegenda('');
-      setAberto(false);
+      limpar();
       onPublicado();
-    } catch (e: any) {
-      setErro(e?.message ?? 'Não foi possível publicar. Tente de novo.');
+    } catch (e) {
+      setErro(e instanceof Error ? e.message : 'Não foi possível publicar. Tente de novo.');
     } finally {
       setEnviando(false);
     }
   }
 
   function cancelar() {
-    setFotos([]);
-    setLegenda('');
     setErro(null);
-    setAberto(false);
+    limpar();
   }
 
+  const convite = matchId ? 'Publique as fotos dessa partida…' : 'Compartilhe um momento da quadra…';
+
   return (
-    <View style={styles.box}>
-      <View style={styles.linha}>
+    <div className={estilos.box}>
+      <div className={estilos.linha}>
         <Avatar nome={nome} foto={avatar} size={42} />
         {aberto ? (
-          <TextInput
+          <textarea
             value={legenda}
-            onChangeText={setLegenda}
+            onChange={(e) => setLegenda(e.target.value)}
             placeholder={matchId ? 'Como foi o jogo?' : 'Como foi o treino de hoje?'}
-            placeholderTextColor={colors.inkSoft}
-            multiline
             autoFocus
             maxLength={600}
-            style={styles.campo}
+            className={estilos.campo}
           />
         ) : (
-          <Pressable
-            onPress={() => setAberto(true)}
-            style={({ hovered }: any) => [styles.gatilho, hovered && { borderColor: colors.clay }]}>
-            <Text style={styles.gatilhoText}>
-              {matchId ? 'Publique as fotos dessa partida…' : 'Compartilhe um momento da quadra…'}
-            </Text>
-          </Pressable>
+          <button type="button" onClick={() => setAberto(true)} className={estilos.gatilho}>
+            {convite}
+          </button>
         )}
-      </View>
+      </div>
 
       {fotos.length > 0 && (
-        <View style={styles.grid}>
+        <div className={estilos.grid}>
           {fotos.map((f, i) => (
-            <View key={f.uri + i} style={styles.thumbBox}>
-              <Image source={{ uri: f.uri }} style={styles.thumb} contentFit="cover" />
-              <Pressable
-                onPress={() => setFotos((prev) => prev.filter((_, idx) => idx !== i))}
-                style={styles.remover}>
-                <Text style={styles.removerText}>×</Text>
-              </Pressable>
-            </View>
+            <div key={f.uri} className={estilos.thumbBox}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- preview local (blob:). */}
+              <img src={f.uri} alt={`Foto ${i + 1} escolhida`} className={estilos.thumb} />
+              <button
+                type="button"
+                onClick={() => remover(i)}
+                aria-label={`Remover foto ${i + 1}`}
+                className={estilos.remover}>
+                ×
+              </button>
+            </div>
           ))}
-        </View>
+        </div>
       )}
 
-      {erro && <Text style={styles.erro}>{erro}</Text>}
+      {erro && <p className={estilos.erro}>{erro}</p>}
 
-      <View style={styles.acoes}>
-        <Pressable
-          onPress={adicionar}
+      <div className={estilos.acoes}>
+        <button
+          type="button"
+          onClick={adicionar}
           disabled={fotos.length >= MAX_FOTOS || enviando}
-          style={({ hovered }: any) => [
-            styles.addFoto,
-            fotos.length >= MAX_FOTOS && { opacity: 0.45 },
-            hovered && { borderColor: colors.clay },
-          ]}>
-          <Feather name="image" size={15} color={colors.inkSoft} />
-          <Text style={styles.addFotoText}>
-            {fotos.length > 0 ? `${fotos.length}/${MAX_FOTOS} fotos` : 'Adicionar fotos'}
-          </Text>
-        </Pressable>
+          className={estilos.addFoto}>
+          <ImageIcon size={15} aria-hidden />
+          {fotos.length > 0 ? `${fotos.length}/${MAX_FOTOS} fotos` : 'Adicionar fotos'}
+        </button>
 
-        <View style={{ flex: 1 }} />
+        <span className={estilos.espaco} />
 
         {aberto && (
           <>
-            <Pressable onPress={cancelar} disabled={enviando} style={styles.cancelar}>
-              <Text style={styles.cancelarText}>Cancelar</Text>
-            </Pressable>
-            <Pressable
-              onPress={publicar}
+            <button type="button" onClick={cancelar} disabled={enviando} className={estilos.cancelar}>
+              Cancelar
+            </button>
+            <button
+              type="button"
+              onClick={publicar}
               disabled={vazio || enviando}
-              style={({ hovered }: any) => [
-                styles.publicar,
-                (vazio || enviando) && { opacity: 0.45 },
-                hovered && { opacity: 0.92 },
-              ]}>
-              {enviando ? (
-                <ActivityIndicator color={colors.card} size="small" />
-              ) : (
-                <Text style={styles.publicarText}>Publicar</Text>
-              )}
-            </Pressable>
+              aria-busy={enviando || undefined}
+              className={estilos.publicar}>
+              {enviando ? <span className={estilos.girando} role="status" aria-label="Publicando" /> : 'Publicar'}
+            </button>
           </>
         )}
-      </View>
-    </View>
+      </div>
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  box: {
-    backgroundColor: colors.card,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: colors.net,
-    padding: 16,
-    ...elev.card,
-  },
-  linha: { flexDirection: 'row', gap: 12, alignItems: 'flex-start' },
-  gatilho: {
-    flex: 1,
-    minHeight: 42,
-    justifyContent: 'center',
-    borderRadius: radius.sm,
-    borderWidth: 1,
-    borderColor: colors.net,
-    backgroundColor: colors.chalk,
-    paddingHorizontal: 14,
-  },
-  gatilhoText: { fontFamily: font.body, fontSize: 14.5, color: colors.inkSoft },
-  campo: {
-    flex: 1,
-    minHeight: 62,
-    borderRadius: radius.sm,
-    borderWidth: 1,
-    borderColor: colors.net,
-    padding: 12,
-    fontFamily: font.body,
-    fontSize: 14.5,
-    lineHeight: 21,
-    color: colors.ink,
-    textAlignVertical: 'top',
-  },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 },
-  thumbBox: { width: 84, height: 84, borderRadius: radius.sm, overflow: 'hidden' },
-  thumb: { width: '100%', height: '100%', backgroundColor: colors.net },
-  remover: {
-    position: 'absolute',
-    top: 3,
-    right: 3,
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: 'rgba(36,22,17,0.72)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  removerText: { color: '#fff', fontSize: 15, fontWeight: '700', marginTop: -2 },
-  erro: { fontFamily: font.body, fontSize: 13.5, color: colors.danger, marginTop: 10 },
-  acoes: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 12 },
-  addFoto: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 7,
-    height: 38,
-    paddingHorizontal: 12,
-    borderRadius: radius.sm,
-    borderWidth: 1,
-    borderColor: colors.net,
-  },
-  addFotoText: { fontFamily: font.body, fontWeight: '500', fontSize: 13, color: colors.inkSoft },
-  cancelar: { height: 38, paddingHorizontal: 10, justifyContent: 'center' },
-  cancelarText: { fontFamily: font.body, fontSize: 13, color: colors.inkSoft },
-  publicar: {
-    height: 38,
-    minWidth: 96,
-    paddingHorizontal: 18,
-    borderRadius: radius.sm,
-    backgroundColor: colors.clay,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  publicarText: { fontFamily: font.body, fontWeight: '600', fontSize: 13.5, color: colors.card },
-});

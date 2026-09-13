@@ -1,0 +1,66 @@
+.segmented {
+  display: flex;
+  flex-direction: row;
+  background: var(--card);
+  border: 1px solid var(--net);
+  border-radius: var(--r-sm);
+  padding: 3px;
+  gap: 3px;
+}
+
+.segment {
+  flex: 1;
+  height: 36px;
+  border-radius: var(--r-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.segment:hover {
+  background: var(--chalk);
+}
+
+.segment[aria-checked='true'],
+.segment[aria-checked='true']:hover {
+  background: var(--court);
+  color: var(--court-text);
+  font-weight: 600;
+}
+
+.chips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 0 13px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--net);
+  background: var(--card);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.chip:hover {
+  border-color: var(--ink-soft);
+}
+
+.chip[aria-checked='true'],
+.chip[aria-checked='true']:hover {
+  background: var(--court);
+  border-color: var(--court);
+  color: var(--court-text);
+  font-weight: 600;
+}

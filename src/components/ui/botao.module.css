@@ -1,0 +1,71 @@
+.btn {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--r-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14.5px;
+  border: 1px solid transparent;
+  transition: opacity 120ms ease;
+}
+
+.btn:hover:not(:disabled),
+.btn:active:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.full {
+  width: 100%;
+}
+
+.primary {
+  background: var(--clay);
+  color: var(--card);
+}
+
+.ink {
+  background: var(--court);
+  color: var(--court-text);
+}
+
+.ball {
+  background: var(--ball);
+  color: var(--ink);
+}
+
+.ghost {
+  border-color: rgba(241, 243, 241, 0.35);
+  color: var(--chalk);
+}
+
+.outline {
+  border-color: var(--net);
+  background: var(--card);
+  color: var(--ink);
+}
+
+/** Roda no lugar do rótulo enquanto a ação não volta. */
+.girando {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--r-pill);
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: girar 700ms linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

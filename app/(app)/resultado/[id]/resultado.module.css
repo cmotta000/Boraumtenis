@@ -1,0 +1,313 @@
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  color: var(--clay);
+}
+
+.contexto {
+  margin-top: 14px;
+}
+
+.contextoLocal {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.contextoQuando {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+
+.divisor {
+  margin: 22px 0;
+}
+
+.passo {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  color: var(--clay);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.passoSeguinte {
+  margin-top: 28px;
+}
+
+.dica {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-top: 8px;
+  line-height: 19px;
+}
+
+/* — 1: quem venceu — */
+
+.jogadores {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jogador {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--net);
+  padding: 12px;
+  text-align: left;
+}
+
+.jogador:hover {
+  border-color: var(--clay);
+}
+
+.jogador[aria-pressed='true'] {
+  background: var(--clay);
+  border-color: var(--clay);
+  color: var(--ball);
+}
+
+.jogadorNome {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.jogador[aria-pressed='true'] .jogadorNome {
+  color: var(--chalk);
+}
+
+/* — 2: placar — */
+
+.sets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.setLinha {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.setLabel {
+  width: 64px;
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.setInput {
+  width: 62px;
+  height: 52px;
+  flex: none;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--net);
+  background: #fff;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.setInput:focus {
+  border-color: var(--clay);
+}
+
+.setX {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+
+.remover {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--danger);
+  margin-left: 6px;
+}
+
+.addSet {
+  align-self: flex-start;
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--clay);
+}
+
+.addSet:hover {
+  opacity: 0.75;
+}
+
+.pontos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  background: var(--court);
+  border-radius: var(--r-lg);
+  padding: 18px;
+}
+
+.pontosVazio {
+  background: #fff;
+  border: 1px solid var(--net);
+}
+
+.pontosTextoVazio {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 20px;
+}
+
+.pontosPlacar {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--ball);
+}
+
+.pontosCorpo {
+  flex: 1;
+  min-width: 0;
+}
+
+.pontosValor {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--chalk);
+}
+
+.pontosNota {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--line);
+  margin-top: 2px;
+}
+
+/* — 3: post — */
+
+.legenda {
+  width: 100%;
+  min-height: 92px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--net);
+  background: #fff;
+  padding: 14px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  resize: vertical;
+}
+
+.legenda:focus {
+  border-color: var(--clay);
+}
+
+.fotosGrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.fotoBox {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--net);
+}
+
+.fotoRemover {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.fotoAdd {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--r-sm);
+  border: 1.5px dashed var(--net);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+}
+
+.fotoAdd:hover {
+  border-color: var(--clay);
+}
+
+.fotoAddText {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.erro {
+  color: var(--danger);
+  font-family: var(--font-body);
+  font-size: 14px;
+  margin-top: 18px;
+}
+
+.publicar {
+  margin-top: 24px;
+}
+
+.rodape {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 12px;
+  line-height: 19px;
+}
