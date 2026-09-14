@@ -1,0 +1,11 @@
+# O que nunca deve sair desta máquina no pacote de deploy.
+#
+# A CLI da Vercel cai no .gitignore quando este arquivo não existe — mas
+# `local/` guarda credencial em texto puro, e isso é forte demais para
+# depender de um comportamento padrão. Aqui fica explícito.
+local/
+.maestri/
+
+# Não servem para o build, só engordam o upload.
+supabase/
+ROADMAP.md
