@@ -32,3 +32,6 @@ local/
 
 # ferramenta de orquestração local — não faz parte do produto
 .maestri/
+
+.vercel
+.env*
