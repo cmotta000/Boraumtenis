@@ -314,6 +314,16 @@
   color: var(--ink);
 }
 
+/** Atalho para /confronto/[id], embaixo das tags de cada jogador. */
+.retrospecto {
+  display: inline-block;
+  margin-top: var(--esp-10);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--clay-ink);
+}
+
 .miniBtn {
   flex: 1;
   padding: 0 var(--esp-14);

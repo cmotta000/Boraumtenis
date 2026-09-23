@@ -100,6 +100,21 @@ const SEM_NOME: Perfil = {
   uf: null,
 };
 
+/**
+ * Atalho para o retrospecto contra um jogador desta partida.
+ *
+ * É aqui que ele precisa estar: a decisão de aceitar (ou de pedir pra entrar)
+ * é tomada olhando para esta lista, e "eu já joguei com esse cara?" é parte
+ * da decisão. Quem responde é a tela /confronto/[id]; este link só leva lá.
+ */
+function LinkRetrospecto({ userId }: { userId: string }) {
+  return (
+    <Link href={`/confronto/${userId}`} className={estilos.retrospecto}>
+      Ver retrospecto →
+    </Link>
+  );
+}
+
 export default function DetalhePartida() {
   const { id } = useParams<{ id: string }>();
   const { session } = useAuth();
@@ -535,6 +550,7 @@ export default function DetalhePartida() {
                     ) : (
                       <p className={estilos.reqSemPerfil}>Ainda não preencheu o perfil de jogador.</p>
                     )}
+                    {p.user_id !== me && <LinkRetrospecto userId={p.user_id} />}
                     <div className={estilos.reqActions}>
                       <button
                         type="button"
@@ -586,6 +602,7 @@ export default function DetalhePartida() {
                     ))}
                   </div>
                 )}
+                {p.user_id !== me && <LinkRetrospecto userId={p.user_id} />}
               </div>
             );
           })}

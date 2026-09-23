@@ -26,6 +26,32 @@ export type SetPlacar = { v: number; p: number };
 /** Jogador resumido, como vem nos arrays do feed. */
 export type LadoJogador = { id: string; nome: string; avatar: string | null };
 
+/**
+ * Um set do retrospecto, orientado por quem está olhando: os games que EU fiz
+ * contra os que ELE fez. Não é o `SetPlacar` (`v`/`p`, do ponto de vista de
+ * quem venceu) porque `historico_confrontos()` já vira o placar para o meu
+ * lado ainda no banco — é assim que o parceiro de dupla nunca precisa
+ * aparecer no retorno.
+ */
+export type SetConfronto = { eu: number; ele: number };
+
+/**
+ * Um jogo do retrospecto contra um adversário.
+ *
+ * `local` vem `null` quando o adversário não abre o perfil para mim. É máscara
+ * do banco, não ausência de dado — quem sabe diferenciar é `perfil_aberto`.
+ */
+export type ConfrontoItem = {
+  match_id: string | null;
+  data_hora: string | null;
+  local: string | null;
+  tipo: MatchTipo | null;
+  eu_venci: boolean;
+  sets_meus: number;
+  sets_dele: number;
+  sets: SetConfronto[];
+};
+
 /** Um post do feed: o resultado de uma partida ou uma publicação de fotos. */
 export type PostTipo = 'resultado' | 'foto';
 
@@ -612,6 +638,30 @@ export type Database = {
       vincular_atividade_partida: {
         Args: { p_activity_id: string; p_match_id: string };
         Returns: undefined;
+      };
+      /**
+       * Retrospecto do usuário logado contra outro jogador. Uma linha só: a
+       * conta sobre TODOS os confrontos confirmados mais os últimos jogos em
+       * `confrontos`. Só conta partida em que os dois estiveram em lados
+       * opostos da rede — dupla junto não é confronto.
+       */
+      historico_confrontos: {
+        Args: { p_adversario: string; p_limite?: number };
+        Returns: {
+          adversario_id: string;
+          adversario_nome: string | null;
+          /** `null` quando `pode_ver_fotos()` diz não. */
+          adversario_avatar: string | null;
+          /** `false` = perfil fechado para mim; o `local` dos jogos vem null. */
+          perfil_aberto: boolean;
+          jogos: number;
+          vitorias_minhas: number;
+          vitorias_dele: number;
+          sets_a_favor: number;
+          sets_contra: number;
+          saldo_sets: number;
+          confrontos: ConfrontoItem[];
+        }[];
       };
       /** Classificação de uma divisão. Sem `p_division_id`, a divisão de quem chamou. */
       liga_classificacao: {

@@ -46,6 +46,7 @@ const TITULOS: { prefixo: string; titulo: string }[] = [
   { prefixo: '/notificacoes', titulo: 'Notificações' },
   { prefixo: '/partida/', titulo: 'Partida' },
   { prefixo: '/resultado/', titulo: 'Registrar placar' },
+  { prefixo: '/confronto/', titulo: 'Retrospecto' },
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

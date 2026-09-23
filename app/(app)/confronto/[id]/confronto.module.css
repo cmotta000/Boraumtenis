@@ -1,0 +1,233 @@
+/**
+ * Retrospecto de confronto. Toda cor sai de src/theme/tokens.css — o arquivo
+ * não tem um único literal de cor, então os dois temas saem de graça.
+ */
+
+.carregando {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--esp-40);
+  color: var(--clay-ink);
+}
+
+.lede {
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 22px;
+  margin-top: var(--esp-16);
+}
+
+.bloco {
+  margin-top: var(--esp-22);
+}
+
+.section {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--ink-soft);
+  margin-bottom: var(--esp-12);
+}
+
+/* — Cartão do cabeçalho — */
+
+.card {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--net);
+  padding: var(--esp-22);
+  margin-top: var(--esp-8);
+}
+
+.quem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--esp-12);
+}
+
+.quemTexto {
+  min-width: 0;
+}
+
+.rotulo {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--clay-ink);
+}
+
+.nome {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 28px;
+  color: var(--ink);
+  margin-top: var(--esp-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* — O número grande do confronto — */
+
+.confrontoNumero {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-20);
+  margin-top: var(--esp-22);
+}
+
+.lado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-4);
+  flex: 1;
+  min-width: 0;
+}
+
+.ladoNum {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 46px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.ladoNome {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.versus {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--net);
+  flex: none;
+  /* Sobe até a linha dos números; o nome fica embaixo, fora da conta. */
+  align-self: flex-start;
+  margin-top: var(--esp-12);
+}
+
+.resumo {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--clay-ink);
+  font-weight: 600;
+  margin-top: var(--esp-12);
+}
+
+/* — A faixa de números secundários — */
+
+.numeros {
+  display: flex;
+  flex-direction: row;
+  margin-top: var(--esp-20);
+  border-top: 1px solid var(--net);
+  padding-top: var(--esp-14);
+}
+
+.numero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-4);
+}
+
+.numero + .numero {
+  border-left: 1px solid var(--net);
+}
+
+.numeroRotulo {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+}
+
+.numeroValor {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* — Estado vazio: ninguém enfrentou ninguém — */
+
+.vazio {
+  margin-top: var(--esp-18);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--ink);
+}
+
+/* — Aviso de perfil fechado — */
+
+.aviso {
+  background: var(--clay-wash);
+  border-radius: var(--r-sm);
+  padding: var(--esp-12) var(--esp-14);
+  margin-bottom: var(--esp-12);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 20px;
+  color: var(--ink-soft);
+}
+
+/* — A lista de jogos — */
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-12);
+}
+
+.jogo {
+  background: var(--card);
+  border: 1px solid var(--net);
+  border-radius: var(--r-lg);
+  padding: var(--esp-14);
+}
+
+.jogoTopo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-10);
+  margin-bottom: var(--esp-10);
+}
+
+.jogoData {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.4px;
+}
+
+.jogoLocal {
+  margin-top: var(--esp-10);
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
