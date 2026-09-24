@@ -141,6 +141,60 @@ trimestral, e a vitória deixou de valer sempre o mesmo.
 - [x] **Marco:** o jogador vê sua divisão, sua posição e o que falta pra subir
       sem abrir outra tela ✅
 
+## Fase 5.5 — Liga e gamificação avançada
+
+> **Wearables saíram do escopo em 23/09/2026 — o mercado fechou, não a técnica.**
+> A camada de dados chegou a ser construída e aplicada (`wearable_connections`,
+> com os tokens protegidos por privilégio de coluna). Ela segue no banco, vazia
+> e sem uso, para o dia em que fizer sentido. O que inviabilizou foi o preço e
+> o portão de terceiros:
+>
+> - **Strava**: desde 01/06/2026 não há tier grátis. Exige assinatura ativa
+>   (US$ 11,99/mês), começa em **1 atleta**, sobe sozinho até **10**, e passar
+>   disso depende de revisão do Strava. Dez usuários não é produto, é demo — e
+>   um comprador herdaria a mensalidade e o portão.
+> - **Garmin**: pausou as aprovações em setembro/2026 e tirou o formulário do
+>   ar, sem data de retorno. Só aceita pessoa jurídica.
+> - **Fitbit**: Web API sendo desligada em setembro/2026.
+> - **Apple Health / Health Connect**: seguem exigindo app nativo, que não existe
+>   aqui desde que o Expo saiu, em 12/09/2026.
+>
+> O que continua possível, se algum dia valer: importação de arquivo
+> (FIT/GPX/TCX, que todo relógio exporta, sem custo nem aprovação) e OAuth de
+> Whoop/Polar. Nenhum foi priorizado — o esforço rende mais na liga, que é o
+> que diferencia o produto. O cronômetro com GPS do navegador já cobre o
+> essencial sem depender de ninguém.
+
+### Gamificação além da Liga
+
+> A pendência de badges já estava registrada na Fase 5 (`(Você) Definir lista
+> inicial de badges` / `(Eu) Badges/troféus e pódio no perfil`); os itens
+> abaixo são o que a pesquisa de mercado (Playtomic, Rally, UTR, Padel
+> Fast/Tap Leagues) mostrou como diferencial de baixo custo, com dado que já
+> existe no banco.
+
+- [x] (Eu) **Head-to-head / scouting**: histórico de confrontos contra um
+      adversário específico antes de aceitar a partida — o dado já estava em
+      `match_results`, faltava a tela (é o recurso pago do Rally; aqui sai de
+      graça). **Feito e verificado em 23/09**: `historico_confrontos()` só conta
+      resultado confirmado e só lados opostos da rede, o placar sai orientado
+      por quem pergunta, e a tela bate número a número com a função.
+- [ ] (Você) Aprovar a lista de badges e as regras de cada um (a pendência
+      já registrada na Fase 5)
+- [ ] (Eu) Badges automáticos disparados em `confirmar_resultado` (mesmo
+      lugar onde ELO e pontos já são calculados): sequência de vitórias,
+      estreia em cada divisão, N partidas no mês
+- [ ] (Eu) **Streak semanal**: "jogou toda semana este mês" — gancho de
+      retenção mais barato que existe, não depende de wearable nem de sensor
+- [ ] (Eu) Selo permanente de "campeão da temporada X" no perfil, além do
+      pódio já existente na tela `/liga`
+- [ ] (Você) Decidir se o lançamento vira por cidade/clube em vez de nacional
+      — o risco que você já lista ("efeito de rede local") combina com o
+      raio de 70km: liga pequena e viva bate liga nacional rala
+- [ ] **Marco:** perfil mostra pelo menos um badge conquistado e uma tela de
+      H2H contra outro jogador
+
+
 ## Fase 6 — Polimento e Publicação WEB
 - [x] (Eu) **O build estava quebrado e ninguém tinha notado** (13/09/2026): a
       pasta `src/app/` (Expo Router morto) continuava sendo type-checada e
