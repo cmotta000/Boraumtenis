@@ -9,6 +9,7 @@ import { GradeFotos } from '@/components/galeria';
 import { Avatar, Btn, CourtLine, Pagina, Pill, Secao, SeletorTema, Spinner } from '@/components/ui';
 import { formatarDistancia, formatarDuracao } from '@/lib/atividades';
 import { useAuth } from '@/lib/auth';
+import { dataDaConquista, iconeDaConquista, useConquistas } from '@/lib/badges';
 import { quando } from '@/lib/datas';
 import type { Database, Esforco, GolpePreferido, MaoDominante } from '@/lib/database.types';
 import { escolherFotoDePerfil, trocarFotoDePerfil } from '@/lib/fotos';
@@ -71,6 +72,7 @@ export default function PerfilScreen() {
   const [trocandoFoto, setTrocandoFoto] = useState(false);
   const [erroFoto, setErroFoto] = useState<string | null>(null);
   const [atividades, setAtividades] = useState<Atividade[]>([]);
+  const { conquistas } = useConquistas(uid);
 
   const carregar = useCallback(async () => {
     if (!uid) return;
@@ -207,6 +209,33 @@ export default function PerfilScreen() {
           </div>
         ))}
       </div>
+
+      <CourtLine className={estilos.divisor} />
+
+      <Secao>Suas conquistas</Secao>
+      {conquistas.length > 0 ? (
+        <div className={estilos.conquistas}>
+          {conquistas.map((c) => {
+            const Icone = iconeDaConquista(c.icone);
+            return (
+              <div key={c.slug} className={estilos.conquista} title={c.descricao ?? undefined}>
+                <span className={estilos.conquistaIcone} aria-hidden>
+                  <Icone size={17} />
+                </span>
+                <div className={estilos.conquistaTexto}>
+                  <p className={estilos.conquistaNome}>{c.nome}</p>
+                  <p className={estilos.conquistaData}>{dataDaConquista(c.conquistado_em)}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <p className={estilos.semFotos}>
+          Nenhuma conquista ainda. Vença três partidas seguidas, jogue quatro vezes no mês ou suba de
+          divisão — os selos aparecem aqui sozinhos.
+        </p>
+      )}
 
       <CourtLine className={estilos.divisor} />
 

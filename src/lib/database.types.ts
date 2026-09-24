@@ -640,6 +640,22 @@ export type Database = {
         Returns: undefined;
       };
       /**
+       * Conquistas de um jogador. Do próprio dono sempre; de terceiro só sob
+       * `pode_ver_perfil()`. Não existe RPC que devolva a tabela `user_badges`
+       * de outra pessoa — o acesso direto é barrado pela policy.
+       */
+      badges_do_perfil: {
+        Args: { p_user_id: string };
+        Returns: {
+          slug: string;
+          nome: string;
+          descricao: string | null;
+          /** Nome do ícone lucide em kebab-case; a tela resolve por mapa fixo. */
+          icone: string | null;
+          conquistado_em: string;
+        }[];
+      };
+      /**
        * Retrospecto do usuário logado contra outro jogador. Uma linha só: a
        * conta sobre TODOS os confrontos confirmados mais os últimos jogos em
        * `confrontos`. Só conta partida em que os dois estiveram em lados

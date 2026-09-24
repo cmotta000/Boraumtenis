@@ -267,3 +267,73 @@
   color: var(--ink-soft);
   margin-top: var(--esp-2);
 }
+
+/* — Conquistas —
+   Grade de selos. Sem cor literal: tudo sai de src/theme/tokens.css, então os
+   dois temas vêm de graça. */
+
+/* 200px, e não 150px, por conta e não por gosto: o nome mais longo do catálogo
+   é "Estreia na Quadra Central" (25 caracteres, ~175px a 13.5px). Descontando
+   o padding do card (24px), o disco do ícone (34px) e o gap (10px), sobram
+   ~132px de texto — o nome quebra em duas linhas e aparece inteiro. Em tela de
+   celular o auto-fill cai para uma coluna larga e a maioria volta a caber em
+   uma linha. */
+.conquistas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--esp-10);
+}
+
+.conquista {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--esp-10);
+  background: var(--card);
+  border: 1px solid var(--net);
+  border-radius: var(--r-md);
+  padding: var(--esp-12);
+  box-shadow: var(--elev-card);
+}
+
+/* O disco do ícone usa o saibro diluído — o mesmo acento do resto do app,
+   e o único lugar da grade que carrega cor. */
+.conquistaIcone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: var(--clay-wash);
+  color: var(--clay-ink);
+}
+
+.conquistaTexto {
+  min-width: 0;
+}
+
+/* O nome QUEBRA, não corta.
+   A versão anterior tinha `white-space: nowrap` + `text-overflow: ellipsis`, e
+   era isso que produzia "Estreia no S…". Num selo, o nome é a recompensa:
+   cortá-lo é entregar o troféu com o nome raspado. Reticência serve para
+   rótulo acessório, não para o texto principal do card.
+   `overflow-wrap: break-word` é só uma rede — nenhuma palavra do catálogo
+   passa de 9 letras ("temporada"), então na prática a quebra é entre palavras. */
+.conquistaNome {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13.5px;
+  line-height: 18px;
+  color: var(--ink);
+  overflow-wrap: break-word;
+}
+
+.conquistaData {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.4px;
+  color: var(--ink-soft);
+  margin-top: var(--esp-2);
+}
